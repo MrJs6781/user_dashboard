@@ -5,7 +5,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
 
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { LoginData, LoginResponse } from "@/types/login";
 import { toast } from "sonner";
@@ -38,30 +38,29 @@ export default function Login() {
     });
   };
 
-  const mutation = useMutation<LoginResponse, Error, LoginData>(
-    async (data: LoginData) => {
+  const mutation = useMutation({
+    mutationKey: ["key"],
+    mutationFn: async (data: LoginData) => {
       const response = await axios.post(
         `http://test.cloudius.co/User/Login?Type=User`,
         data
       );
+      // console.log(response)
       return response.data;
     },
-    {
-      onSuccess: (data) => {
-        // console.log(data);
-        if (data.Status == "0") {
-          updateLocalStorageValue(`${data.Data[0]?.UserID}`);
-          Cookies.set("authToken", data.Data[0]?.Token);
-          navigate("/dashboard");
-        } else {
-          toast.error(data.Message);
-        }
-      },
-      onError: (data) => {
-        console.log(data);
-      },
-    }
-  );
+    onSuccess: (data: LoginResponse) => {
+      if (data.Status == "0") {
+        updateLocalStorageValue(`${data.Data[0]?.UserID}`);
+        Cookies.set("authToken", data.Data[0]?.Token);
+        navigate("/dashboard");
+      } else {
+        toast.error(data.Message);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err);
+    },
+  });
 
   // if (mutation.isLoading) {
   //   return <Loading />;
@@ -119,7 +118,7 @@ export default function Login() {
           onClick={handleSubmit}
           disabled={username.length > 0 && password.length > 0 ? false : true}
         >
-          <p className="text-[15px] font-vazirM">ورود</p>
+          <p className="text-[15px] font-vazirM text-black">ورود</p>
         </button>
       </div>
     </div>

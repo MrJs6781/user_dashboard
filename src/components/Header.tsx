@@ -9,6 +9,7 @@ import { FaEdit, FaRegUserCircle } from "react-icons/fa";
 import { FaChartBar } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa";
 import { ModeToggle } from "./mode-toggle";
+import { BiMessageSquareDetail } from "react-icons/bi";
 
 type headerListType = {
   id: number;
@@ -89,8 +90,9 @@ export default function Header() {
         ))}
       </ul>
       <span className="flex items-center gap-4">
+        <BiMessageSquareDetail className="cursor-pointer text-[20px]"  />
         <ModeToggle />
-        <FaRegUserCircle className="cursor-pointer text-[24px]" />
+        <FaRegUserCircle className="cursor-pointer text-[20px]" />
       </span>
     </div>
   );
