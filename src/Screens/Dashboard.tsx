@@ -1,7 +1,6 @@
-import React from 'react'
-
 export default function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div className='w-full h-screen overflow-hidden flex flex-col items-start'>
+    </div>
   )
 }

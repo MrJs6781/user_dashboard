@@ -1,35 +1,26 @@
 import { useState, useEffect } from "react";
 
-type UseLocalStorageReturnType<T> = [
-  T,
-  (newValue: T) => void,
-  (key: string) => void
-];
-
-const useLocalStorage = <T>(
-  key: string,
-  defaultValue: T
-): UseLocalStorageReturnType<T> => {
-  const [value, setValue] = useState<T>(defaultValue);
+const useLocalStorage = <T>(key: string, defaultValue: T) => {
+  // Initialize state with the default value
+  const [value, setValue] = useState<T>(() => {
+    // Get stored value from localStorage if it exists
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? (JSON.parse(storedValue) as T) : defaultValue;
+  });
 
   useEffect(() => {
-    const storedValue = localStorage.getItem(key);
-    if (storedValue) {
-      setValue(JSON.parse(storedValue) as T);
-    }
-  }, [key]);
+    // Update localStorage whenever the value changes
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
 
+  // Function to update the value in state and localStorage
   const updateValue = (newValue: T) => {
     setValue(newValue);
     localStorage.setItem(key, JSON.stringify(newValue));
   };
 
-  const removeValue = (key: string) => {
-    setValue(defaultValue);
-    localStorage.removeItem(key);
-  };
-
-  return [value, updateValue, removeValue];
+  // Only return the updateValue function
+  return updateValue;
 };
 
 export default useLocalStorage;

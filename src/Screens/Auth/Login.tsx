@@ -11,13 +11,13 @@ import { LoginData, LoginResponse } from "@/types/login";
 import { toast } from "sonner";
 import useLocalStorage from "@/Hooks/useStorage";
 import Cookies from "js-cookie";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const [data, setData, removeData] = useLocalStorage("UserID", 0);
+  const updateLocalStorageValue = useLocalStorage<string>("UserID", "");
   const navigate = useNavigate();
 
   const hidePasswordHandler = () => {
@@ -48,11 +48,11 @@ export default function Login() {
     },
     {
       onSuccess: (data) => {
-        console.log(data);
+        // console.log(data);
         if (data.Status == "0") {
-          setData(data.Data[0]?.UserID);
+          updateLocalStorageValue(`${data.Data[0]?.UserID}`);
           Cookies.set("authToken", data.Data[0]?.Token);
-          navigate('/dashboard');
+          navigate("/dashboard");
         } else {
           toast.error(data.Message);
         }
@@ -73,20 +73,19 @@ export default function Login() {
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl"
         style={{ backdropFilter: "blur(50px)" }}
       >
-        <h5 className="text-white font-robotoB text-[30px] text-center">
-          Login Page
-        </h5>
+        <h5 className="text-white font-vazirB text-[30px] text-center">ورود</h5>
         <form
           action=""
+          style={{ direction: "rtl" }}
           className="w-full max-w-[380px] flex flex-col items-start gap-4 mt-4"
         >
           <span className="w-full h-[45px] rounded-[20px] border border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type="text"
-              placeholder="Username : "
+              placeholder="نام کاربری : "
               value={username}
               onChange={(e) => setUserName(e.target.value)}
-              className="w-[93%] h-full bg-transparent outline-none border-none text-white placeholder:text-white font-robotoM text-[14px]"
+              className="w-[93%] h-full bg-transparent outline-none border-none text-white placeholder:text-white font-vazirM text-[14px]"
               maxLength={30}
             />
             <FaUser className="text-white text-[18px] cursor-pointer" />
@@ -94,10 +93,10 @@ export default function Login() {
           <span className="w-full h-[45px] rounded-[20px] gap-2 border border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type={isShowPassword == false ? "password" : "text"}
-              placeholder="Password : "
+              placeholder="کلمه عبور : "
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-[93%] h-full bg-transparent outline-none border-none text-white placeholder:text-white font-robotoM text-[14px]"
+              className="w-[93%] h-full bg-transparent outline-none border-none text-white placeholder:text-white font-vazirM text-[14px]"
               maxLength={20}
             />
             {password.length > 0 && isShowPassword && (
@@ -120,7 +119,7 @@ export default function Login() {
           onClick={handleSubmit}
           disabled={username.length > 0 && password.length > 0 ? false : true}
         >
-          <p className="text-[15px] font-robotoM">Login</p>
+          <p className="text-[15px] font-vazirM">ورود</p>
         </button>
       </div>
     </div>
