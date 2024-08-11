@@ -5,10 +5,20 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
 
+import { useMutation } from "react-query";
+import axios from "axios";
+import { LoginData, LoginResponse } from "@/types/login";
+import { toast } from "sonner";
+import useLocalStorage from "@/Hooks/useStorage";
+import Cookies from "js-cookie";
+import { useNavigate } from 'react-router-dom';
+
 export default function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [data, setData, removeData] = useLocalStorage("UserID", 0);
+  const navigate = useNavigate();
 
   const hidePasswordHandler = () => {
     setIsShowPassword(false);
@@ -17,6 +27,45 @@ export default function Login() {
   const showPasswordHandler = () => {
     setIsShowPassword(true);
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    mutation.mutate({
+      UserName: username,
+      Password: password,
+      DeviceID: "",
+      Info: "",
+    });
+  };
+
+  const mutation = useMutation<LoginResponse, Error, LoginData>(
+    async (data: LoginData) => {
+      const response = await axios.post(
+        `http://test.cloudius.co/User/Login?Type=User`,
+        data
+      );
+      return response.data;
+    },
+    {
+      onSuccess: (data) => {
+        console.log(data);
+        if (data.Status == "0") {
+          setData(data.Data[0]?.UserID);
+          Cookies.set("authToken", data.Data[0]?.Token);
+          navigate('/dashboard');
+        } else {
+          toast.error(data.Message);
+        }
+      },
+      onError: (data) => {
+        console.log(data);
+      },
+    }
+  );
+
+  // if (mutation.isLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className="w-full h-screen flex items-center justify-center overflow-hidden bg-login_page bg-cover bg-no-repeat bg-center">
@@ -66,7 +115,11 @@ export default function Login() {
             <RiLockPasswordFill className="text-white text-[18px] cursor-pointer" />
           </span>
         </form>
-        <button className="w-full bg-white outline-none border-none rounded-[20px] cursor-pointer flex items-center justify-center h-[45px]">
+        <button
+          className="w-full bg-white outline-none border-none rounded-[20px] cursor-pointer flex items-center justify-center h-[45px] disabled:opacity-60 disabled:cursor-not-allowed"
+          onClick={handleSubmit}
+          disabled={username.length > 0 && password.length > 0 ? false : true}
+        >
           <p className="text-[15px] font-robotoM">Login</p>
         </button>
       </div>
