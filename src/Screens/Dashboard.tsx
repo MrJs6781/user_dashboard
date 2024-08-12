@@ -212,12 +212,11 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [dashboardData, setDashboardData] = useState<ResponseData>();
 
-  const { data: fetchedData, isLoading: loadingDashboardData } =
-    useFetchDashboardData();
+  const { data: fetchedData } = useFetchDashboardData();
 
   useEffect(() => {
     if (fetchedData) {
-      console.log(fetchedData);
+      // console.log(fetchedData);
       if (fetchedData.Status == 0) {
         setDashboardData(fetchedData);
       } else if (fetchedData.Status == "-103") {
