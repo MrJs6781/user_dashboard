@@ -88,6 +88,9 @@ module.exports = {
         vazirM: "vazir_m",
         vazirS: "vazir_s",
       },
+      screens : {
+        'mini' : "450px"
+      }
     },
   },
   plugins: [
