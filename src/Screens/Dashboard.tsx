@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ResponseData } from "@/types/Dashboard";
 import { useFetchDashboardConsume } from "@/Hooks/useFetchDashboardConsume";
+import ComboChart from "@/components/LineChart";
 
 const dashboardBoxes = [
   {
@@ -209,9 +210,18 @@ const dashboardBoxes = [
   },
 ];
 
+interface DataItem {
+  TimeStamp: string;
+  Download: string;
+  Upload: string;
+}
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const [dashboardData, setDashboardData] = useState<ResponseData>();
+  const [labels, setLabels] = useState<string[]>([]);
+  const [downloadData, setDownloadData] = useState<number[]>([]);
+  const [uploadData, setUploadData] = useState<number[]>([]);
 
   const { data: fetchedData } = useFetchDashboardData();
   const { data: consumeData } = useFetchDashboardConsume();
@@ -232,12 +242,34 @@ export default function Dashboard() {
   }, [fetchedData]);
 
   useEffect(() => {
-    console.log(consumeData);
+    // console.log(consumeData);
+    const parsedLabels = consumeData?.Data?.map(
+      (item: DataItem) => item.TimeStamp
+    );
+    const parsedDownloadData = consumeData?.Data?.map((item: DataItem) =>
+      convertToKB(item.Download)
+    );
+    const parsedUploadData = consumeData?.Data?.map((item: DataItem) =>
+      convertToKB(item.Upload)
+    );
+
+    setLabels(parsedLabels);
+    setDownloadData(parsedDownloadData);
+    setUploadData(parsedUploadData);
   }, [consumeData]);
+
+  const convertToKB = (value: string): number => {
+    if (value.includes("KB")) {
+      return parseFloat(value);
+    } else if (value.includes("B")) {
+      return parseFloat(value) / 1024;
+    }
+    return 0;
+  };
 
   return (
     <div
-      className="w-full h-screen overflow-hidden flex flex-col items-start"
+      className="w-full h-screen overflow-auto flex flex-col items-start"
       style={{ direction: "rtl" }}
     >
       <Header dashboardData={dashboardData?.Data[0]} />
@@ -312,6 +344,9 @@ export default function Dashboard() {
           </li>
         ))}
       </ul>
+      <div className="mt-6 w-full flex items-center justify-center flex-col gap-4">
+        <ComboChart labels={labels} data={{ download: downloadData, upload: uploadData }} />
+      </div>
     </div>
   );
 }
