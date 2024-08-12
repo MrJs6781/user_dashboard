@@ -12,6 +12,8 @@ import { toast } from "sonner";
 import useLocalStorage from "@/Hooks/useStorage";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { BackgroundBeams } from "@/components/ui/background-beams";
+import { Boxes } from "@/components/ui/background-boxes";
 
 export default function Login() {
   const [username, setUserName] = useState("");
@@ -33,8 +35,6 @@ export default function Login() {
     mutation.mutate({
       UserName: username,
       Password: password,
-      DeviceID: "",
-      Info: "",
     });
   };
 
@@ -49,6 +49,7 @@ export default function Login() {
       return response.data;
     },
     onSuccess: (data: LoginResponse) => {
+      // console.log(data)
       if (data.Status == "0") {
         updateLocalStorageValue(`${data.Data[0]?.UserID}`);
         Cookies.set("authToken", data.Data[0]?.Token);
@@ -67,9 +68,14 @@ export default function Login() {
   // }
 
   return (
-    <div className="w-full h-screen flex items-center justify-center overflow-hidden bg-login_page bg-cover bg-no-repeat bg-center">
+    // <div className="w-full h-screen flex items-center justify-center overflow-hidden">
+    //   {/* <Boxes /> */}
+    //   {/* <BackgroundBeams /> */}
+    // </div>
+    <div className="h-[48rem] w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
+      {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div> */}
       <div
-        className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl"
+        className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
         style={{ backdropFilter: "blur(50px)" }}
       >
         <h5 className="text-white font-vazirB text-[30px] text-center">ورود</h5>

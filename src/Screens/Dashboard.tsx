@@ -12,15 +12,14 @@ export default function Dashboard() {
   const { isLoading, error, data: fetchedData } = useFetchDashboardData();
 
   useEffect(() => {
-    // console.log(fetchedData)
     if (fetchedData) {
-      console.log(fetchedData);
+      // console.log(fetchedData);
       if (fetchedData.Status == 0) {
         setDashboardData(fetchedData);
       } else if (fetchedData.Status == "-103") {
-        // Cookies.remove("authToken");
-        // localStorage.clear();
-        // navigate("/");
+        Cookies.remove("authToken");
+        localStorage.clear();
+        navigate("/");
         toast.error(fetchedData.Message);
       } else {
         toast.error(fetchedData.Message);
