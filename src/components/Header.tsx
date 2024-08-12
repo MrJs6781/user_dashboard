@@ -12,11 +12,13 @@ import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
 import { UserAccount } from "@/types/Dashboard";
+import { Link } from "react-router-dom";
 
 type headerListType = {
   id: number;
   icon: React.ReactNode;
   title: string;
+  link: string;
 };
 
 const headerListData = [
@@ -25,6 +27,7 @@ const headerListData = [
     icon: (
       <AiOutlineDashboard className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
+    link: "/dashboard",
     title: "داشبورد",
   },
   {
@@ -32,6 +35,7 @@ const headerListData = [
     icon: (
       <FaChartLine className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
+    link: "/products_continuation",
     title: "تمدید",
   },
   {
@@ -39,6 +43,7 @@ const headerListData = [
     icon: (
       <BiSolidSave className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
+    link: "/",
     title: "اعتبار حجمی",
   },
   {
@@ -46,6 +51,7 @@ const headerListData = [
     icon: (
       <TbMobiledata className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
+    link: "/",
     title: "ریزمصرف",
   },
   {
@@ -53,6 +59,7 @@ const headerListData = [
     icon: (
       <LiaRandomSolid className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
+    link: "/",
     title: "سابقه اتصال",
   },
   {
@@ -60,6 +67,7 @@ const headerListData = [
     icon: (
       <FaEdit className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
+    link: "/",
     title: "گزارش خطا",
   },
   {
@@ -67,6 +75,7 @@ const headerListData = [
     icon: (
       <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
+    link: "/",
     title: "کاردکس",
   },
   {
@@ -74,6 +83,7 @@ const headerListData = [
     icon: (
       <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
+    link: "/",
     title: "خروج",
   },
 ];
@@ -85,7 +95,7 @@ interface HeaderProps {
 export default function Header({ dashboardData }: HeaderProps) {
   return (
     <div
-      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b glass"
+      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b glass fixed top-0 z-20"
       style={{
         borderTopLeftRadius: "0",
         borderTopRightRadius: "0",
@@ -113,15 +123,16 @@ export default function Header({ dashboardData }: HeaderProps) {
       </span>
       <ul className="w-fit h-full hidden lg:flex items-center justify-start gap-4 list-none">
         {headerListData.map((item: headerListType) => (
-          <li
+          <Link
             key={item.id}
+            to={item.link}
             className="flex items-center gap-2 cursor-pointer h-full"
           >
             {item.icon}
             <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
               {item.title}
             </p>
-          </li>
+          </Link>
         ))}
       </ul>
       <span className="flex items-center gap-4">
