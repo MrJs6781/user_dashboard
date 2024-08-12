@@ -4,6 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { UserAccount } from "@/types/Dashboard";
 import { FaRegUserCircle } from "react-icons/fa";
 
 const profileUserData = [
@@ -120,7 +121,11 @@ const profileUserData = [
   },
 ];
 
-export default function ProfileUser() {
+interface ProfileUserProps {
+  ProfileUserData: UserAccount;
+}
+
+export default function ProfileUser({ ProfileUserData }: ProfileUserProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -133,7 +138,44 @@ export default function ProfileUser() {
             className="w-full flex items-center justify-between px-2 cursor-pointer"
             style={{ direction: "rtl" }}
           >
-            <p className="font-vazirB text-[14px]">{item.title}</p>
+            <span className="flex items-center gap-2">
+              <p className="font-vazirB text-[14px]">{item.title}</p>
+              {item.id == 1 && (
+                <small className="font-vazirM text-[12px]" style={{direction : "ltr"}}>
+                  {ProfileUserData?.CreationTime
+                    ? ProfileUserData?.CreationTime
+                    : "مشخص نیست"}
+                </small>
+              )}
+              {item.id == 2 && (
+                <small className="font-vazirM text-[12px]">
+                  {ProfileUserData?.FirstLogin
+                    ? ProfileUserData?.FirstLogin
+                    : "مشخص نیست"}
+                </small>
+              )}
+              {item.id == 3 && (
+                <small className="font-vazirM text-[12px]">
+                  {ProfileUserData?.ExpirationTime
+                    ? ProfileUserData?.ExpirationTime
+                    : "ندارد"}
+                </small>
+              )}
+              {item.id == 4 && (
+                <small className="font-vazirM text-[12px]">
+                  {ProfileUserData?.OnlineCount
+                    ? ProfileUserData?.OnlineCount
+                    : 0}
+                </small>
+              )}
+              {item.id == 5 && (
+                <small className="font-vazirM text-[12px]">
+                  {ProfileUserData?.IsTrafficBase == true
+                    ? "میباشد"
+                    : "نمیباشد"}
+                </small>
+              )}
+            </span>
             {item.icon}
           </DropdownMenuItem>
         ))}

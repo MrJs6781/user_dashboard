@@ -33,6 +33,8 @@ export default function Login() {
     mutation.mutate({
       UserName: username,
       Password: password,
+      DeviceID : "",
+      Info : "",
     });
   };
 

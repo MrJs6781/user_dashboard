@@ -11,6 +11,7 @@ import { FaPowerOff } from "react-icons/fa";
 import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
+import { UserAccount } from "@/types/Dashboard";
 
 type headerListType = {
   id: number;
@@ -77,11 +78,20 @@ const headerListData = [
   },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  dashboardData: UserAccount | undefined;
+}
+
+export default function Header({ dashboardData }: HeaderProps) {
   return (
     <div
       className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b glass"
-      style={{ borderTopLeftRadius: "0", borderTopRightRadius: "0" , borderBottomLeftRadius : "12px" , borderBottomRightRadius : "12px" }}
+      style={{
+        borderTopLeftRadius: "0",
+        borderTopRightRadius: "0",
+        borderBottomLeftRadius: "12px",
+        borderBottomRightRadius: "12px",
+      }}
     >
       <span className="w-[50px] flex lg:hidden items-center justify-start">
         <svg
@@ -103,7 +113,10 @@ export default function Header() {
       </span>
       <ul className="w-fit h-full hidden lg:flex items-center justify-start gap-4 list-none">
         {headerListData.map((item: headerListType) => (
-          <li key={item.id} className="flex items-center gap-2 cursor-pointer h-full">
+          <li
+            key={item.id}
+            className="flex items-center gap-2 cursor-pointer h-full"
+          >
             {item.icon}
             <p className="text-[13px] font-vazirM text-[#000000] dark:text-white">
               {item.title}
@@ -114,7 +127,7 @@ export default function Header() {
       <span className="flex items-center gap-4">
         <BiMessageSquareDetail className="cursor-pointer text-[20px]" />
         <ModeToggle />
-        <ProfileUser />
+        <ProfileUser ProfileUserData={dashboardData!} />
       </span>
     </div>
   );

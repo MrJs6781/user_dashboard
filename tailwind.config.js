@@ -83,10 +83,10 @@ module.exports = {
       fontFamily: {
         robotoB: "roboto_b",
         robotoM: "roboto_m",
-        robotoS: "roboto_s",
+        robotoS: "roboto_l",
         vazirB: "vazir_b",
         vazirM: "vazir_m",
-        vazirS: "vazir_s",
+        vazirS: "vazir_l",
       },
       screens : {
         'mini' : "450px"
