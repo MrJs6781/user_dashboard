@@ -44,3 +44,10 @@ export interface UserAccount {
   WalletRemained: string;
   LimitLoginDevices: number;
 }
+
+export interface DataItem {
+  TimeStamp: string;
+  Download: string;
+  Upload: string;
+  Consume: string;
+}

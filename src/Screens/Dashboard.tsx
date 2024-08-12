@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ResponseData } from "@/types/Dashboard";
+import { useFetchDashboardConsume } from "@/Hooks/useFetchDashboardConsume";
 
 const dashboardBoxes = [
   {
@@ -213,10 +214,10 @@ export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState<ResponseData>();
 
   const { data: fetchedData } = useFetchDashboardData();
+  const { data: consumeData } = useFetchDashboardConsume();
 
   useEffect(() => {
     if (fetchedData) {
-      // console.log(fetchedData);
       if (fetchedData.Status == 0) {
         setDashboardData(fetchedData);
       } else if (fetchedData.Status == "-103") {
@@ -229,6 +230,10 @@ export default function Dashboard() {
       }
     }
   }, [fetchedData]);
+
+  useEffect(() => {
+    console.log(consumeData);
+  }, [consumeData]);
 
   return (
     <div

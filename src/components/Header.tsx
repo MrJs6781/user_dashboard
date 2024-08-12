@@ -118,7 +118,7 @@ export default function Header({ dashboardData }: HeaderProps) {
             className="flex items-center gap-2 cursor-pointer h-full"
           >
             {item.icon}
-            <p className="text-[13px] font-vazirM text-[#000000] dark:text-white">
+            <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
               {item.title}
             </p>
           </li>
@@ -127,7 +127,7 @@ export default function Header({ dashboardData }: HeaderProps) {
       <span className="flex items-center gap-4">
         <BiMessageSquareDetail className="cursor-pointer text-[20px]" />
         <ModeToggle />
-        <ProfileUser ProfileUserData={dashboardData!} />
+        <ProfileUser />
       </span>
     </div>
   );
