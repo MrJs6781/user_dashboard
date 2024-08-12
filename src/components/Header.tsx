@@ -5,11 +5,12 @@ import { FaChartLine } from "react-icons/fa6";
 import { BiSolidSave } from "react-icons/bi";
 import { TbMobiledata } from "react-icons/tb";
 import { LiaRandomSolid } from "react-icons/lia";
-import { FaEdit, FaRegUserCircle } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import { FaChartBar } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa";
 import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
+import ProfileUser from "./ProfileUser";
 
 type headerListType = {
   id: number;
@@ -78,7 +79,10 @@ const headerListData = [
 
 export default function Header() {
   return (
-    <div className="w-full flex items-center justify-between px-6 h-[60px] shadow-xl rounded-br-[15px] rouded-bl-[15px] dark:border-b-[#eeeeee50] dark:border-b">
+    <div
+      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b glass"
+      style={{ borderTopLeftRadius: "0", borderTopRightRadius: "0" }}
+    >
       <ul className="w-fit flex items-center justify-start gap-4 list-none">
         {headerListData.map((item: headerListType) => (
           <li key={item.id} className="flex items-center gap-2 cursor-pointer">
@@ -90,9 +94,9 @@ export default function Header() {
         ))}
       </ul>
       <span className="flex items-center gap-4">
-        <BiMessageSquareDetail className="cursor-pointer text-[20px]"  />
+        <BiMessageSquareDetail className="cursor-pointer text-[20px]" />
         <ModeToggle />
-        <FaRegUserCircle className="cursor-pointer text-[20px]" />
+        <ProfileUser />
       </span>
     </div>
   );

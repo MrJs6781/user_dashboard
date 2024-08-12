@@ -12,8 +12,6 @@ import { toast } from "sonner";
 import useLocalStorage from "@/Hooks/useStorage";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { BackgroundBeams } from "@/components/ui/background-beams";
-import { Boxes } from "@/components/ui/background-boxes";
 
 export default function Login() {
   const [username, setUserName] = useState("");

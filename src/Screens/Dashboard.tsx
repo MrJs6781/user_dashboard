@@ -7,25 +7,25 @@ import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [dashboardData, setDashboardData] = useState({});
+  // const [dashboardData, setDashboardData] = useState({});
 
-  const { isLoading, error, data: fetchedData } = useFetchDashboardData();
+  // const { isLoading, error, data: fetchedData } = useFetchDashboardData();
 
-  useEffect(() => {
-    if (fetchedData) {
-      // console.log(fetchedData);
-      if (fetchedData.Status == 0) {
-        setDashboardData(fetchedData);
-      } else if (fetchedData.Status == "-103") {
-        Cookies.remove("authToken");
-        localStorage.clear();
-        navigate("/");
-        toast.error(fetchedData.Message);
-      } else {
-        toast.error(fetchedData.Message);
-      }
-    }
-  }, [fetchedData]);
+  // useEffect(() => {
+  //   if (fetchedData) {
+  //     // console.log(fetchedData);
+  //     if (fetchedData.Status == 0) {
+  //       setDashboardData(fetchedData);
+  //     } else if (fetchedData.Status == "-103") {
+  //       Cookies.remove("authToken");
+  //       localStorage.clear();
+  //       navigate("/");
+  //       toast.error(fetchedData.Message);
+  //     } else {
+  //       toast.error(fetchedData.Message);
+  //     }
+  //   }
+  // }, [fetchedData]);
 
   return (
     <div
