@@ -1,7 +1,11 @@
 import Header from "@/components/Header";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
+import { useUpdateProfile } from "@/Hooks/useUpdateProfile";
 import { PhoneNumberRegex } from "@/Regex/PhoneNumber";
 import { ResponseData } from "@/types/Dashboard";
+import { EditProfileUser } from "@/types/Profile";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { FaPhoneAlt, FaUser } from "react-icons/fa";
@@ -15,13 +19,18 @@ export default function EditProfile() {
   const [username, setUserName] = useState("");
   const [email, setUserEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { data: fetchedData } = useFetchDashboardData();
 
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
+        // console.log(fetchedData)
         setDashboardData(fetchedData);
+        setUserName(fetchedData?.Data[0]?.Title);
+        setUserEmail(fetchedData?.Data[0]?.Email);
+        setMobileNumber(fetchedData?.Data[0]?.Mobile);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.clear();
@@ -47,8 +56,60 @@ export default function EditProfile() {
   };
 
   const handleSubmit = () => {
-    
-  }
+    setIsLoading(true);
+    mutation.mutate({
+      Title: username,
+      Email: email,
+      Mobile: mobileNumber,
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["editProfileKey"],
+    mutationFn: async (data: EditProfileUser) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/EditProfile?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(data),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      console.log(data);
+      if (data.Status == "0") {
+        toast.success("پروفایل کاربری شما با موفقیت آپدیت شد :)");
+        setIsLoading(false);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else if (data.Status == "-103") {
+        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        setTimeout(() => {
+          Cookies.remove("authToken");
+          localStorage.clear();
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error(data.Message);
+        setIsLoading(false);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsLoading(false);
+    },
+  });
 
   return (
     <div
@@ -103,11 +164,7 @@ export default function EditProfile() {
         <button
           className="w-full dark:bg-white bg-purple-600 outline-none border-none rounded-[20px] cursor-pointer flex items-center justify-center h-[45px] disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleSubmit}
-          //   disabled={
-          //     (username.length > 0 && email.length > 0 && ph) || isLoading
-          //       ? false
-          //       : true
-          //   }
+          disabled={isLoading == true ? true : false}
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
             ذخیره تغییرات

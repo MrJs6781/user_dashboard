@@ -242,7 +242,6 @@ export default function Dashboard() {
   }, [fetchedData]);
 
   useEffect(() => {
-    // console.log(consumeData);
     const parsedLabels = consumeData?.Data?.map(
       (item: DataItem) => item.TimeStamp
     );

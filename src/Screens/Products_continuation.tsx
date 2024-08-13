@@ -235,7 +235,7 @@ export default function Products_continuation() {
       style={{ direction: "rtl" }}
     >
       <Header dashboardData={dashboardData?.Data[0]} />
-      <ul className="w-full auto_grid items-center justify-start gap-4 sm:gap-6 mt-6 px-6">
+      <ul className="w-full auto_grid items-center justify-start gap-4 sm:gap-6 mt-20 px-6">
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
