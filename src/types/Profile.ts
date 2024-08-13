@@ -5,3 +5,8 @@ export interface EditProfileUser {
   ExternalUser?: string;
   ExternalServer?: string;
 }
+
+export interface EditPasswordUser {
+  OldPassword : string;
+  Password : string
+}

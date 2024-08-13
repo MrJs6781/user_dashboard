@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { IoEye, IoEyeOffSharp } from "react-icons/io5";
+import { useMutation } from "@tanstack/react-query";
+import { EditPasswordUser } from "@/types/Profile";
 
 export default function EditPassword() {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ export default function EditPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowNewPassword, setIsShowNewPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const hidePasswordHandler = () => {
     setIsShowPassword(false);
@@ -36,8 +39,11 @@ export default function EditPassword() {
 
   useEffect(() => {
     if (fetchedData) {
+      // console.log(fetchedData)
       if (fetchedData.Status == 0) {
         setDashboardData(fetchedData);
+        setPassword(fetchedData?.Data[0]?.Password);
+        setIsShowPassword(true);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.clear();
@@ -49,7 +55,60 @@ export default function EditPassword() {
     }
   }, [fetchedData]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    setIsLoading(true);
+    mutation.mutate({
+      OldPassword: password,
+      Password: newPassword,
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["editPasswordKey"],
+    mutationFn: async (data: EditPasswordUser) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/ChangePassword?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(data),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      console.log(data);
+      if (data.Status == "0") {
+        toast.success("رمز عبور شما با موفقیت آپدیت شد :)");
+        setIsLoading(false);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else if (data.Status == "-103") {
+        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        setTimeout(() => {
+          Cookies.remove("authToken");
+          localStorage.clear();
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error(data.Message);
+        setIsLoading(false);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsLoading(false);
+    },
+  });
 
   return (
     <div
@@ -116,11 +175,7 @@ export default function EditPassword() {
         <button
           className="w-full dark:bg-white bg-purple-600 outline-none border-none rounded-[20px] cursor-pointer flex items-center justify-center h-[45px] disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleSubmit}
-          //   disabled={
-          //     (username.length > 0 && email.length > 0 && ph) || isLoading
-          //       ? false
-          //       : true
-          //   }
+          disabled={isLoading ? true : false}
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
             ذخیره تغییرات
