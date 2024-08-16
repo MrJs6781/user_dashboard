@@ -98,6 +98,10 @@
   src: url("./assets/fonts/Vazirmatn-Light.ttf");
 }
 
+* {
+  scrollbar-width: none;
+}
+
 .glass {
   background: linear-gradient(
     135deg,
@@ -120,4 +124,9 @@
 .auto_grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.auto_grid_user_products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }

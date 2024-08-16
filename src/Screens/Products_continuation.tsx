@@ -1,8 +1,14 @@
 import Header from "@/components/Header";
+import RenewCart from "@/components/RenewCart";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
+import { useFetchUserProducts } from "@/Hooks/useFetchUserProducts";
 import { ResponseData } from "@/types/Dashboard";
+import {
+  UserApiProductsResponse,
+  UserProductResponse,
+} from "@/types/UserProducts";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -211,8 +217,11 @@ const dashboardBoxes = [
 export default function Products_continuation() {
   const navigate = useNavigate();
   const [dashboardData, setDashboardData] = useState<ResponseData>();
+  const [userProductsData, setUserProductsData] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const { data: fetchedData } = useFetchDashboardData();
+  const { data: userProducts } = useFetchUserProducts({});
 
   useEffect(() => {
     if (fetchedData) {
@@ -229,9 +238,36 @@ export default function Products_continuation() {
     }
   }, [fetchedData]);
 
+  useEffect(() => {
+    if (userProducts) {
+      if (userProducts.Status == 0) {
+        setUserProductsData(userProducts.Data);
+      } else if (userProducts.Status == "-103") {
+        Cookies.remove("authToken");
+        localStorage.clear();
+        navigate("/");
+        toast.error(userProducts.Message);
+      } else {
+        toast.error(userProducts.Message);
+      }
+    }
+  }, [userProducts]);
+
+  const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+    if (e.target.value.length == 0) {
+      setUserProductsData(userProducts.Data);
+    } else {
+      const filterData = userProductsData.filter((item: UserProductResponse) =>
+        item.Title.includes(searchValue)
+      );
+      setUserProductsData(filterData);
+    }
+  };
+
   return (
     <div
-      className="w-full h-screen overflow-auto flex flex-col items-start"
+      className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
       style={{ direction: "rtl" }}
     >
       <Header dashboardData={dashboardData?.Data[0]} />
@@ -306,6 +342,39 @@ export default function Products_continuation() {
           </li>
         ))}
       </ul>
+      <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-hidden">
+        <div className="w-full flex items-center justify-start">
+          <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
+            <input
+              type="text"
+              placeholder="جستجو بر اساس نام محصول مورد نظر"
+              value={searchValue}
+              onChange={(e) => changeSearchHandler(e)}
+              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-search cursor-pointer"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </span>
+        </div>
+        <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
+          {userProductsData?.map((item: UserProductResponse, i: number) => (
+            <RenewCart key={i} data={item} />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
