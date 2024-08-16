@@ -14,6 +14,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
     "@tanstack/react-query": "^5.51.23",
+    "@tanstack/react-table": "^8.20.1",
     "@types/react-chartjs-2": "^2.5.7",
     "axios": "^1.7.3",
     "chart.js": "^4.4.3",

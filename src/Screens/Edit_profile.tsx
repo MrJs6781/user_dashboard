@@ -1,11 +1,9 @@
 import Header from "@/components/Header";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
-import { useUpdateProfile } from "@/Hooks/useUpdateProfile";
 import { PhoneNumberRegex } from "@/Regex/PhoneNumber";
 import { ResponseData } from "@/types/Dashboard";
 import { EditProfileUser } from "@/types/Profile";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { FaPhoneAlt, FaUser } from "react-icons/fa";

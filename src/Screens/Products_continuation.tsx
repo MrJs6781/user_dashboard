@@ -1,12 +1,12 @@
 import Header from "@/components/Header";
 import RenewCart from "@/components/RenewCart";
+import RenewTable from "@/components/RenewTable";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
+import { useFetchRenew } from "@/Hooks/useFetchRenew";
 import { useFetchUserProducts } from "@/Hooks/useFetchUserProducts";
+import { cn } from "@/lib/utils";
 import { ResponseData } from "@/types/Dashboard";
-import {
-  UserApiProductsResponse,
-  UserProductResponse,
-} from "@/types/UserProducts";
+import { UserProductResponse } from "@/types/UserProducts";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -219,9 +219,11 @@ export default function Products_continuation() {
   const [dashboardData, setDashboardData] = useState<ResponseData>();
   const [userProductsData, setUserProductsData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [isActiveService, setIsActiveService] = useState("Data");
 
   const { data: fetchedData } = useFetchDashboardData();
   const { data: userProducts } = useFetchUserProducts({});
+  const { data: userRenew } = useFetchRenew();
 
   useEffect(() => {
     if (fetchedData) {
@@ -342,38 +344,66 @@ export default function Products_continuation() {
           </li>
         ))}
       </ul>
-      <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-hidden">
-        <div className="w-full flex items-center justify-start">
-          <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
-            <input
-              type="text"
-              placeholder="جستجو بر اساس نام محصول مورد نظر"
-              value={searchValue}
-              onChange={(e) => changeSearchHandler(e)}
-              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-search cursor-pointer"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </span>
+      <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
+        <div className="w-full flex items-center justify-center gap-8">
+          <h5
+            className={cn(
+              "font-vazirB text-[15px] cursor-pointer",
+              isActiveService == "Chart" ? "opacity-70" : ""
+            )}
+            onClick={() => setIsActiveService("Data")}
+          >
+            تمدید / خرید سرویس
+          </h5>
+          <h5
+            className={cn(
+              "font-vazirB text-[15px] cursor-pointer",
+              isActiveService == "Data" ? "opacity-70" : ""
+            )}
+            onClick={() => setIsActiveService("Chart")}
+          >
+            نمایش لیست سرویس ها
+          </h5>
         </div>
-        <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
-          {userProductsData?.map((item: UserProductResponse, i: number) => (
-            <RenewCart key={i} data={item} />
-          ))}
-        </ul>
+        {isActiveService == "Data" ? (
+          <>
+            <div className="w-full flex items-center justify-start">
+              <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
+                <input
+                  type="text"
+                  placeholder="جستجو بر اساس نام محصول مورد نظر"
+                  value={searchValue}
+                  onChange={(e) => changeSearchHandler(e)}
+                  className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-search cursor-pointer"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+              </span>
+            </div>
+            <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
+              {userProductsData?.map((item: UserProductResponse, i: number) => (
+                <RenewCart key={i} data={item} />
+              ))}
+            </ul>
+          </>
+        ) : (
+          <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+            <RenewTable data={userRenew.Data} />
+          </div>
+        )}
       </div>
     </div>
   );
