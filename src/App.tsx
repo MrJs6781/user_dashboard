@@ -5,6 +5,8 @@ import Dashboard from "./Screens/Dashboard";
 import Products_continuation from "./Screens/Products_continuation";
 import EditPassword from "./Screens/Edit_password";
 import EditProfile from "./Screens/Edit_profile";
+import Trafic from "./Screens/Trafic";
+import MicroConsumption from "./Screens/micro_consumption";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         />
         <Route path="/edit_password" element={<EditPassword />} />
         <Route path="/edit_profile" element={<EditProfile />} />
+        <Route path="/trafic" element={<Trafic />} />
+        <Route path="/micro_consumption" element={<MicroConsumption />} />
       </Routes>
     </BrowserRouter>
   );

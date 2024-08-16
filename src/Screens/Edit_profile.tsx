@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { PhoneNumberRegex } from "@/Regex/PhoneNumber";
-import { ResponseData } from "@/types/Dashboard";
 import { EditProfileUser } from "@/types/Profile";
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
@@ -13,7 +12,6 @@ import { toast } from "sonner";
 
 export default function EditProfile() {
   const navigate = useNavigate();
-  const [dashboardData, setDashboardData] = useState<ResponseData>();
   const [username, setUserName] = useState("");
   const [email, setUserEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -24,8 +22,6 @@ export default function EditProfile() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
-        // console.log(fetchedData)
-        setDashboardData(fetchedData);
         setUserName(fetchedData?.Data[0]?.Title);
         setUserEmail(fetchedData?.Data[0]?.Email);
         setMobileNumber(fetchedData?.Data[0]?.Mobile);
@@ -114,7 +110,7 @@ export default function EditProfile() {
       className="w-full h-screen overflow-auto flex items-center justify-center"
       style={{ direction: "rtl" }}
     >
-      <Header dashboardData={dashboardData?.Data[0]} />
+      <Header  />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
         style={{ backdropFilter: "blur(50px)" }}

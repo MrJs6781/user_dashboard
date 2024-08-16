@@ -1,11 +1,9 @@
 import Header from "@/components/Header";
-import { useEffect, useState } from "react";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
-import { toast } from "sonner";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFetchDashboardConsume } from "@/Hooks/useFetchDashboardConsume";
-import ComboChart from "@/components/LineChart";
+import { toast } from "sonner";
 
 const dashboardBoxes = [
   {
@@ -209,20 +207,9 @@ const dashboardBoxes = [
   },
 ];
 
-interface DataItem {
-  TimeStamp: string;
-  Download: string;
-  Upload: string;
-}
-
-export default function Dashboard() {
+export default function MicroConsumption() {
   const navigate = useNavigate();
-  const [labels, setLabels] = useState<string[]>([]);
-  const [downloadData, setDownloadData] = useState<number[]>([]);
-  const [uploadData, setUploadData] = useState<number[]>([]);
-
   const { data: fetchedData } = useFetchDashboardData();
-  const { data: consumeData } = useFetchDashboardConsume();
 
   useEffect(() => {
     if (fetchedData) {
@@ -238,34 +225,9 @@ export default function Dashboard() {
     }
   }, [fetchedData]);
 
-  useEffect(() => {
-    const parsedLabels = consumeData?.Data?.map(
-      (item: DataItem) => item.TimeStamp
-    );
-    const parsedDownloadData = consumeData?.Data?.map((item: DataItem) =>
-      convertToKB(item.Download)
-    );
-    const parsedUploadData = consumeData?.Data?.map((item: DataItem) =>
-      convertToKB(item.Upload)
-    );
-
-    setLabels(parsedLabels);
-    setDownloadData(parsedDownloadData);
-    setUploadData(parsedUploadData);
-  }, [consumeData]);
-
-  const convertToKB = (value: string): number => {
-    if (value.includes("KB")) {
-      return parseFloat(value);
-    } else if (value.includes("B")) {
-      return parseFloat(value) / 1024;
-    }
-    return 0;
-  };
-
   return (
     <div
-      className="w-full h-screen overflow-auto flex flex-col items-start"
+      className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
       style={{ direction: "rtl" }}
     >
       <Header />
@@ -297,10 +259,10 @@ export default function Dashboard() {
                 </small>
               )}
               {/* {item.id == 4 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
-                  {fetchedData?.Data[0]?.RemainedTime}
-                </small>
-              )} */}
+                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                      {fetchedData?.Data[0]?.RemainedTime}
+                    </small>
+                  )} */}
               {item.id == 5 && (
                 <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
                   {fetchedData?.Data[0]?.CreationTime
@@ -340,9 +302,6 @@ export default function Dashboard() {
           </li>
         ))}
       </ul>
-      <div className="mt-6 w-full flex items-center justify-center flex-col gap-4">
-        <ComboChart labels={labels} data={{ download: downloadData, upload: uploadData }} />
-      </div>
     </div>
   );
 }

@@ -11,14 +11,13 @@ import { FaPowerOff } from "react-icons/fa";
 import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
-import { UserAccount } from "@/types/Dashboard";
 import { Link } from "react-router-dom";
 
 type headerListType = {
   id: number;
   icon: React.ReactNode;
   title: string;
-  link: string;
+  link?: string;
 };
 
 const headerListData = [
@@ -43,8 +42,8 @@ const headerListData = [
     icon: (
       <BiSolidSave className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
-    link: "/",
-    title: "اعتبار حجمی",
+    link: "/trafic",
+    title: "ترافیک",
   },
   {
     id: 4,
@@ -76,23 +75,26 @@ const headerListData = [
       <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
     link: "/",
-    title: "کاردکس",
+    title: "کاردکس ترافیک",
   },
   {
     id: 8,
     icon: (
-      <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
     link: "/",
+    title: "کاردکس مالی",
+  },
+  {
+    id: 9,
+    icon: (
+      <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+    ),
     title: "خروج",
   },
 ];
 
-interface HeaderProps {
-  dashboardData: UserAccount | undefined;
-}
-
-export default function Header({ dashboardData }: HeaderProps) {
+export default function Header() {
   return (
     <div
       className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b glass fixed top-0 z-20"
@@ -122,18 +124,34 @@ export default function Header({ dashboardData }: HeaderProps) {
         </svg>
       </span>
       <ul className="w-fit h-full hidden lg:flex items-center justify-start gap-4 list-none">
-        {headerListData.map((item: headerListType) => (
-          <Link
-            key={item.id}
-            to={item.link}
-            className="flex items-center gap-2 cursor-pointer h-full"
-          >
-            {item.icon}
-            <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
-              {item.title}
-            </p>
-          </Link>
-        ))}
+        {headerListData.map((item: headerListType) => {
+          if (item.link) {
+            return (
+              <Link
+                key={item.id}
+                to={item.link}
+                className="flex items-center gap-2 cursor-pointer h-full"
+              >
+                {item.icon}
+                <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
+                  {item.title}
+                </p>
+              </Link>
+            );
+          } else {
+            return (
+              <li
+                key={item.id}
+                className="flex items-center gap-2 cursor-pointer h-full"
+              >
+                {item.icon}
+                <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
+                  {item.title}
+                </p>
+              </li>
+            );
+          }
+        })}
       </ul>
       <span className="flex items-center gap-4">
         <BiMessageSquareDetail className="cursor-pointer text-[20px]" />

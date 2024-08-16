@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
-import { ResponseData } from "@/types/Dashboard";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +11,6 @@ import { EditPasswordUser } from "@/types/Profile";
 
 export default function EditPassword() {
   const navigate = useNavigate();
-  const [dashboardData, setDashboardData] = useState<ResponseData>();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -39,9 +37,7 @@ export default function EditPassword() {
 
   useEffect(() => {
     if (fetchedData) {
-      // console.log(fetchedData)
       if (fetchedData.Status == 0) {
-        setDashboardData(fetchedData);
         setPassword(fetchedData?.Data[0]?.Password);
         setIsShowPassword(true);
       } else if (fetchedData.Status == "-103") {
@@ -115,7 +111,7 @@ export default function EditPassword() {
       className="w-full h-screen overflow-auto flex items-center justify-center"
       style={{ direction: "rtl" }}
     >
-      <Header dashboardData={dashboardData?.Data[0]} />
+      <Header />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
         style={{ backdropFilter: "blur(50px)" }}

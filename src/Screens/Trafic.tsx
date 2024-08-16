@@ -1,11 +1,11 @@
 import Header from "@/components/Header";
-import { useEffect, useState } from "react";
+import TrafficTable from "@/components/TrafficTable";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
-import { toast } from "sonner";
+import { useFetchTrafficData } from "@/Hooks/useFetchTrafficData";
 import Cookies from "js-cookie";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFetchDashboardConsume } from "@/Hooks/useFetchDashboardConsume";
-import ComboChart from "@/components/LineChart";
+import { toast } from "sonner";
 
 const dashboardBoxes = [
   {
@@ -209,20 +209,13 @@ const dashboardBoxes = [
   },
 ];
 
-interface DataItem {
-  TimeStamp: string;
-  Download: string;
-  Upload: string;
-}
-
-export default function Dashboard() {
+export default function Trafic() {
   const navigate = useNavigate();
-  const [labels, setLabels] = useState<string[]>([]);
-  const [downloadData, setDownloadData] = useState<number[]>([]);
-  const [uploadData, setUploadData] = useState<number[]>([]);
-
   const { data: fetchedData } = useFetchDashboardData();
-  const { data: consumeData } = useFetchDashboardConsume();
+  const [searchValue, setSearchValue] = useState("");
+  
+  const { data: trafficData } = useFetchTrafficData();
+  const [getTrafficData , setTrafficData] = useState();
 
   useEffect(() => {
     if (fetchedData) {
@@ -239,33 +232,27 @@ export default function Dashboard() {
   }, [fetchedData]);
 
   useEffect(() => {
-    const parsedLabels = consumeData?.Data?.map(
-      (item: DataItem) => item.TimeStamp
-    );
-    const parsedDownloadData = consumeData?.Data?.map((item: DataItem) =>
-      convertToKB(item.Download)
-    );
-    const parsedUploadData = consumeData?.Data?.map((item: DataItem) =>
-      convertToKB(item.Upload)
-    );
-
-    setLabels(parsedLabels);
-    setDownloadData(parsedDownloadData);
-    setUploadData(parsedUploadData);
-  }, [consumeData]);
-
-  const convertToKB = (value: string): number => {
-    if (value.includes("KB")) {
-      return parseFloat(value);
-    } else if (value.includes("B")) {
-      return parseFloat(value) / 1024;
+    if (trafficData) {
+      if (trafficData.Status == 0) {
+        setTrafficData(trafficData.Data);
+      } else if (trafficData.Status == "-103") {
+        Cookies.remove("authToken");
+        localStorage.clear();
+        navigate("/");
+        toast.error(trafficData.Message);
+      } else {
+        toast.error(trafficData.Message);
+      }
     }
-    return 0;
+  }, [trafficData]);
+
+  const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
   };
 
   return (
     <div
-      className="w-full h-screen overflow-auto flex flex-col items-start"
+      className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
       style={{ direction: "rtl" }}
     >
       <Header />
@@ -297,10 +284,10 @@ export default function Dashboard() {
                 </small>
               )}
               {/* {item.id == 4 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
-                  {fetchedData?.Data[0]?.RemainedTime}
-                </small>
-              )} */}
+                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                      {fetchedData?.Data[0]?.RemainedTime}
+                    </small>
+                  )} */}
               {item.id == 5 && (
                 <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
                   {fetchedData?.Data[0]?.CreationTime
@@ -340,8 +327,36 @@ export default function Dashboard() {
           </li>
         ))}
       </ul>
-      <div className="mt-6 w-full flex items-center justify-center flex-col gap-4">
-        <ComboChart labels={labels} data={{ download: downloadData, upload: uploadData }} />
+      <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
+        <div className="w-full flex items-center justify-start gap-6">
+          <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
+            <input
+              type="text"
+              placeholder="جستجو کنید"
+              value={searchValue}
+              onChange={(e) => changeSearchHandler(e)}
+              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-search cursor-pointer"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </span>
+        </div>
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+          <TrafficTable data={trafficData?.Data} />
+        </div>
       </div>
     </div>
   );

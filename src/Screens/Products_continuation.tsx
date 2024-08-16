@@ -5,7 +5,6 @@ import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchRenew } from "@/Hooks/useFetchRenew";
 import { useFetchUserProducts } from "@/Hooks/useFetchUserProducts";
 import { cn } from "@/lib/utils";
-import { ResponseData } from "@/types/Dashboard";
 import { UserProductResponse } from "@/types/UserProducts";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -216,7 +215,6 @@ const dashboardBoxes = [
 
 export default function Products_continuation() {
   const navigate = useNavigate();
-  const [dashboardData, setDashboardData] = useState<ResponseData>();
   const [userProductsData, setUserProductsData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [isActiveService, setIsActiveService] = useState("Data");
@@ -228,7 +226,6 @@ export default function Products_continuation() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
-        setDashboardData(fetchedData);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.clear();
@@ -272,7 +269,7 @@ export default function Products_continuation() {
       className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
       style={{ direction: "rtl" }}
     >
-      <Header dashboardData={dashboardData?.Data[0]} />
+      <Header />
       <ul className="w-full auto_grid items-center justify-start gap-4 sm:gap-6 mt-20 px-6">
         {dashboardBoxes?.map((item) => (
           <li
