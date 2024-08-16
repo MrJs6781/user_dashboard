@@ -400,9 +400,37 @@ export default function Products_continuation() {
             </ul>
           </>
         ) : (
-          <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-            <RenewTable data={userRenew.Data} />
-          </div>
+          <>
+            <div className="w-full flex items-center justify-start gap-6">
+              <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
+                <input
+                  type="text"
+                  placeholder="جستجو کنید"
+                  value={searchValue}
+                  onChange={(e) => changeSearchHandler(e)}
+                  className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-search cursor-pointer"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+              </span>
+            </div>
+            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+              <RenewTable data={userRenew.Data} />
+            </div>
+          </>
         )}
       </div>
     </div>
