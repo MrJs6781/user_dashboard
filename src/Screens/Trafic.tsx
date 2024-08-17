@@ -211,11 +211,10 @@ const dashboardBoxes = [
 
 export default function Trafic() {
   const navigate = useNavigate();
-  const { data: fetchedData } = useFetchDashboardData();
   const [searchValue, setSearchValue] = useState("");
   
+  const { data: fetchedData } = useFetchDashboardData();
   const { data: trafficData } = useFetchTrafficData();
-  const [getTrafficData , setTrafficData] = useState();
 
   useEffect(() => {
     if (fetchedData) {
@@ -234,7 +233,7 @@ export default function Trafic() {
   useEffect(() => {
     if (trafficData) {
       if (trafficData.Status == 0) {
-        setTrafficData(trafficData.Data);
+        // setTrafficData(trafficData.Data);
       } else if (trafficData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.clear();

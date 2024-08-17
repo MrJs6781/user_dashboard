@@ -1,7 +1,9 @@
+import ConsumeTable from "@/components/ConsumeTable";
 import Header from "@/components/Header";
+import { useConsumeFetch } from "@/Hooks/useConsumeFetch";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -210,6 +212,9 @@ const dashboardBoxes = [
 export default function MicroConsumption() {
   const navigate = useNavigate();
   const { data: fetchedData } = useFetchDashboardData();
+  const { data: consumeFetch } = useConsumeFetch();
+
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     if (fetchedData) {
@@ -224,6 +229,24 @@ export default function MicroConsumption() {
       }
     }
   }, [fetchedData]);
+
+  useEffect(() => {
+    if (consumeFetch) {
+      if (consumeFetch.Status == 0) {
+      } else if (consumeFetch.Status == "-103") {
+        Cookies.remove("authToken");
+        localStorage.clear();
+        navigate("/");
+        toast.error(consumeFetch.Message);
+      } else {
+        toast.error(consumeFetch.Message);
+      }
+    }
+  }, [consumeFetch]);
+
+  const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
   return (
     <div
@@ -302,6 +325,37 @@ export default function MicroConsumption() {
           </li>
         ))}
       </ul>
+      <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
+        <div className="w-full flex items-center justify-start gap-6">
+          <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
+            <input
+              type="text"
+              placeholder="جستجو کنید"
+              value={searchValue}
+              onChange={(e) => changeSearchHandler(e)}
+              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-search cursor-pointer"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </span>
+        </div>
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+          <ConsumeTable data={consumeFetch?.Data} />
+        </div>
+      </div>
     </div>
   );
 }

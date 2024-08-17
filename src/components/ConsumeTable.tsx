@@ -7,11 +7,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TrafficData } from "@/types/Traffic";
+import { ConsumeData } from "@/types/Consume";
 
-const tableName = ["ترافیک", "زمان", "شرح"];
+const tableName = ["آپلود", "دانلود", "زمان", "سرور"];
 
-const TrafficTable: React.FC<{ data: TrafficData[] }> = ({ data }) => {
+const ConsumeTable: React.FC<{ data: ConsumeData[] }> = ({ data }) => {
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
@@ -31,13 +31,16 @@ const TrafficTable: React.FC<{ data: TrafficData[] }> = ({ data }) => {
           {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell className="text-center px-4 py-5 font-vazirM">
-                {item.Traffic}
+                {item.Upload}
+              </TableCell>
+              <TableCell className="text-center px-4 py-5 font-vazirM">
+                {item.Download}
               </TableCell>
               <TableCell className="text-center px-4 py-5 font-vazirM">
                 {item.TimeStamp}
               </TableCell>
               <TableCell className="text-center px-4 py-5 font-vazirM">
-                {item.Description}
+                {item.RasTitle}
               </TableCell>
             </TableRow>
           ))}
@@ -47,4 +50,4 @@ const TrafficTable: React.FC<{ data: TrafficData[] }> = ({ data }) => {
   );
 };
 
-export default TrafficTable;
+export default ConsumeTable;

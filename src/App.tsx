@@ -7,6 +7,10 @@ import EditPassword from "./Screens/Edit_password";
 import EditProfile from "./Screens/Edit_profile";
 import Trafic from "./Screens/Trafic";
 import MicroConsumption from "./Screens/micro_consumption";
+import ConnectionHistory from "./Screens/Connection_history";
+import ErrorReport from "./Screens/Error_report";
+import CardexTraffic from "./Screens/Cardex_traffic";
+import CardexFinancial from "./Screens/Cardex_financial";
 
 function App() {
   return (
@@ -22,6 +26,10 @@ function App() {
         <Route path="/edit_profile" element={<EditProfile />} />
         <Route path="/trafic" element={<Trafic />} />
         <Route path="/micro_consumption" element={<MicroConsumption />} />
+        <Route path="/connection_history" element={<ConnectionHistory />} />
+        <Route path="/error_report" element={<ErrorReport />} />
+        <Route path="/cardex_traffic" element={<CardexTraffic />} />
+        <Route path="/cardex_financial" element={<CardexFinancial />} />
       </Routes>
     </BrowserRouter>
   );

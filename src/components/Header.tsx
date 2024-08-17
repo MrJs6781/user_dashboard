@@ -50,7 +50,7 @@ const headerListData = [
     icon: (
       <TbMobiledata className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
-    link: "/",
+    link: "/micro_consumption",
     title: "ریزمصرف",
   },
   {
@@ -58,7 +58,7 @@ const headerListData = [
     icon: (
       <LiaRandomSolid className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
-    link: "/",
+    link: "/connection_history",
     title: "سابقه اتصال",
   },
   {
@@ -66,7 +66,7 @@ const headerListData = [
     icon: (
       <FaEdit className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
-    link: "/",
+    link: "/error_report",
     title: "گزارش خطا",
   },
   {
@@ -74,7 +74,7 @@ const headerListData = [
     icon: (
       <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
-    link: "/",
+    link: "/cardex_traffic",
     title: "کاردکس ترافیک",
   },
   {
@@ -82,7 +82,7 @@ const headerListData = [
     icon: (
       <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
     ),
-    link: "/",
+    link: "/cardex_financial",
     title: "کاردکس مالی",
   },
   {
