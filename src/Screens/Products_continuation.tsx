@@ -1,3 +1,4 @@
+import { DatePickerWithRange } from "@/components/DatePickerWithJalaliRange";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import RenewCart from "@/components/RenewCart";
@@ -430,6 +431,7 @@ export default function Products_continuation() {
                   <path d="m21 21-4.3-4.3" />
                 </svg>
               </span>
+              <DatePickerWithRange />
             </div>
             <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
               <RenewTable data={userRenew?.Data} />
