@@ -25,7 +25,7 @@ const headerListData = [
   {
     id: 1,
     icon: (
-      <AiOutlineDashboard className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <AiOutlineDashboard className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/dashboard",
     title: "داشبورد",
@@ -33,7 +33,7 @@ const headerListData = [
   {
     id: 2,
     icon: (
-      <FaChartLine className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <FaChartLine className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/products_continuation",
     title: "تمدید",
@@ -41,7 +41,7 @@ const headerListData = [
   {
     id: 3,
     icon: (
-      <BiSolidSave className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <BiSolidSave className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/trafic",
     title: "ترافیک",
@@ -49,7 +49,7 @@ const headerListData = [
   {
     id: 4,
     icon: (
-      <TbMobiledata className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <TbMobiledata className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/micro_consumption",
     title: "ریزمصرف",
@@ -57,7 +57,7 @@ const headerListData = [
   {
     id: 5,
     icon: (
-      <LiaRandomSolid className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <LiaRandomSolid className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/connection_history",
     title: "سابقه اتصال",
@@ -65,7 +65,7 @@ const headerListData = [
   {
     id: 6,
     icon: (
-      <FaEdit className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <FaEdit className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/error_report",
     title: "گزارش خطا",
@@ -73,7 +73,7 @@ const headerListData = [
   {
     id: 7,
     icon: (
-      <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/cardex_traffic",
     title: "کاردکس ترافیک",
@@ -81,7 +81,7 @@ const headerListData = [
   {
     id: 8,
     icon: (
-      <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/cardex_financial",
     title: "کاردکس مالی",
@@ -89,7 +89,7 @@ const headerListData = [
   {
     id: 9,
     icon: (
-      <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000095] dark:text-[#ffffff]" />
+      <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     title: "خروج",
   },
@@ -109,7 +109,7 @@ export default function Header() {
 
   return (
     <div
-      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b glass fixed top-0 z-20"
+      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b fixed top-0 z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
       style={{
         borderTopLeftRadius: "0",
         borderTopRightRadius: "0",
@@ -145,7 +145,7 @@ export default function Header() {
                 className="flex items-center gap-2 cursor-pointer h-full"
               >
                 {item.icon}
-                <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
+                <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
                   {item.title}
                 </p>
               </Link>
@@ -158,7 +158,7 @@ export default function Header() {
                 onClick={logOutHandler}
               >
                 {item.icon}
-                <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
+                <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
                   {item.title}
                 </p>
               </li>

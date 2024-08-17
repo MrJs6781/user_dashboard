@@ -3,6 +3,7 @@ import LottiePlayer from "@/components/Loading";
 import TrafficTable from "@/components/TrafficTable";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchTrafficData } from "@/Hooks/useFetchTrafficData";
+import { cn } from "@/lib/utils";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -265,64 +266,64 @@ export default function Trafic() {
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
-            className="w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
+            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
             style={{ backdropFilter: "blur(20px)" }}
           >
             {item.icon}
             <span className="flex flex-col items-start gap-1">
-              <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
+              <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
                 {item.title} :{" "}
               </p>
               {item.id == 1 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.RemainedTime} روز
                 </small>
               )}
               {item.id == 2 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.RemainedTraffic}
                 </small>
               )}
               {item.id == 3 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.WalletRemained} تومان
                 </small>
               )}
               {/* {item.id == 4 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
-                      {fetchedData?.Data[0]?.RemainedTime}
-                    </small>
-                  )} */}
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  {fetchedData?.Data[0]?.RemainedTime}
+                </small>
+              )} */}
               {item.id == 5 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.CreationTime
                     ? fetchedData?.Data[0]?.CreationTime
                     : ""}
                 </small>
               )}
               {item.id == 6 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.FirstLogin
                     ? fetchedData?.Data[0]?.FirstLogin
                     : "مشخص نیست"}
                 </small>
               )}
               {item.id == 7 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.ExpirationTime
                     ? fetchedData?.Data[0]?.ExpirationTime
                     : "ندارد"}
                 </small>
               )}
               {item.id == 8 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.OnlineCount
                     ? fetchedData?.Data[0]?.OnlineCount
                     : "ندارد"}
                 </small>
               )}
               {item.id == 9 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad]">
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.IsTrafficBase == true
                     ? "میباشد"
                     : "نمیباشد"}
