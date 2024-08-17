@@ -14,6 +14,15 @@ import ProfileUser from "./ProfileUser";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
 type headerListType = {
   id: number;
   icon: React.ReactNode;
@@ -118,22 +127,61 @@ export default function Header() {
       }}
     >
       <span className="w-[50px] flex lg:hidden items-center justify-start">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-align-justify"
-        >
-          <line x1="3" x2="21" y1="6" y2="6" />
-          <line x1="3" x2="21" y1="12" y2="12" />
-          <line x1="3" x2="21" y1="18" y2="18" />
-        </svg>
+        <Sheet>
+          <SheetTrigger>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-align-justify"
+            >
+              <line x1="3" x2="21" y1="6" y2="6" />
+              <line x1="3" x2="21" y1="12" y2="12" />
+              <line x1="3" x2="21" y1="18" y2="18" />
+            </svg>
+          </SheetTrigger>
+          <SheetContent style={{ direction: "rtl" }}>
+            <SheetHeader>
+              <ul className="w-full flex flex-col items-start gap-6 mt-8">
+                {headerListData.map((item: headerListType) => {
+                  if (item.link) {
+                    return (
+                      <Link
+                        key={item.id}
+                        to={item.link}
+                        className="flex items-center gap-2 cursor-pointer h-full border-b w-full pb-2"
+                      >
+                        {item.icon}
+                        <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                          {item.title}
+                        </p>
+                      </Link>
+                    );
+                  } else {
+                    return (
+                      <li
+                        key={item.id}
+                        className="flex items-center gap-2 cursor-pointer h-full"
+                        onClick={logOutHandler}
+                      >
+                        {item.icon}
+                        <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                          {item.title}
+                        </p>
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
       </span>
       <ul className="w-fit h-full hidden lg:flex items-center justify-start gap-4 list-none">
         {headerListData.map((item: headerListType) => {
