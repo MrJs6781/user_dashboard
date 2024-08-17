@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import LottiePlayer from "@/components/Loading";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { PhoneNumberRegex } from "@/Regex/PhoneNumber";
 import { EditProfileUser } from "@/types/Profile";
@@ -17,7 +18,8 @@ export default function EditProfile() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data: fetchedData } = useFetchDashboardData();
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardData();
 
   useEffect(() => {
     if (fetchedData) {
@@ -105,12 +107,16 @@ export default function EditProfile() {
     },
   });
 
+  if (fetchedDataLoading) {
+    return <LottiePlayer />;
+  }
+
   return (
     <div
       className="w-full h-screen overflow-auto flex items-center justify-center"
       style={{ direction: "rtl" }}
     >
-      <Header  />
+      <Header />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
         style={{ backdropFilter: "blur(50px)" }}

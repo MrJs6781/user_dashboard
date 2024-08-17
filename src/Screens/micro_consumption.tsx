@@ -1,5 +1,6 @@
 import ConsumeTable from "@/components/ConsumeTable";
 import Header from "@/components/Header";
+import LottiePlayer from "@/components/Loading";
 import { useConsumeFetch } from "@/Hooks/useConsumeFetch";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import Cookies from "js-cookie";
@@ -211,8 +212,8 @@ const dashboardBoxes = [
 
 export default function MicroConsumption() {
   const navigate = useNavigate();
-  const { data: fetchedData } = useFetchDashboardData();
-  const { data: consumeFetch } = useConsumeFetch();
+  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
+  const { data: consumeFetch , isLoading : consumeFetchLoading } = useConsumeFetch();
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -247,6 +248,10 @@ export default function MicroConsumption() {
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  if (fetchedDataLoading || consumeFetchLoading) {
+    return <LottiePlayer />;
+  }
 
   return (
     <div

@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useFetchDashboardConsume } from "@/Hooks/useFetchDashboardConsume";
 import ComboChart from "@/components/LineChart";
+import LottiePlayer from "@/components/Loading";
 
 const dashboardBoxes = [
   {
@@ -221,8 +222,8 @@ export default function Dashboard() {
   const [downloadData, setDownloadData] = useState<number[]>([]);
   const [uploadData, setUploadData] = useState<number[]>([]);
 
-  const { data: fetchedData } = useFetchDashboardData();
-  const { data: consumeData } = useFetchDashboardConsume();
+  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
+  const { data: consumeData , isLoading : consumeDataLoading } = useFetchDashboardConsume();
 
   useEffect(() => {
     if (fetchedData) {
@@ -262,6 +263,12 @@ export default function Dashboard() {
     }
     return 0;
   };
+
+  if (fetchedDataLoading || consumeDataLoading) {
+    return (
+      <LottiePlayer />
+    )
+  }
 
   return (
     <div

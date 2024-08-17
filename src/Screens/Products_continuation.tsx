@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import LottiePlayer from "@/components/Loading";
 import RenewCart from "@/components/RenewCart";
 import RenewTable from "@/components/RenewTable";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
@@ -219,9 +220,11 @@ export default function Products_continuation() {
   const [searchValue, setSearchValue] = useState("");
   const [isActiveService, setIsActiveService] = useState("Data");
 
-  const { data: fetchedData } = useFetchDashboardData();
-  const { data: userProducts } = useFetchUserProducts({});
-  const { data: userRenew } = useFetchRenew();
+  const { isLoading: fetchedDataLoading, data: fetchedData } =
+    useFetchDashboardData();
+  const { isLoading: userProductsLoading, data: userProducts } =
+    useFetchUserProducts({});
+  const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew();
 
   useEffect(() => {
     if (fetchedData) {
@@ -263,6 +266,10 @@ export default function Products_continuation() {
       setUserProductsData(filterData);
     }
   };
+
+  if (fetchedDataLoading || userProductsLoading || userRenewLoading) {
+    return <LottiePlayer />;
+  }
 
   return (
     <div

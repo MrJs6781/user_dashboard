@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import LottiePlayer from "@/components/Loading";
 import TrafficTable from "@/components/TrafficTable";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchTrafficData } from "@/Hooks/useFetchTrafficData";
@@ -212,9 +213,11 @@ const dashboardBoxes = [
 export default function Trafic() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
-  
-  const { data: fetchedData } = useFetchDashboardData();
-  const { data: trafficData } = useFetchTrafficData();
+
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardData();
+  const { data: trafficData, isLoading: trafficDataLoading } =
+    useFetchTrafficData();
 
   useEffect(() => {
     if (fetchedData) {
@@ -247,6 +250,10 @@ export default function Trafic() {
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  if (fetchedDataLoading || trafficDataLoading) {
+    return <LottiePlayer />;
+  }
 
   return (
     <div

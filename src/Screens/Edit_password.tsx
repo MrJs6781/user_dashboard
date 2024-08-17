@@ -8,6 +8,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { IoEye, IoEyeOffSharp } from "react-icons/io5";
 import { useMutation } from "@tanstack/react-query";
 import { EditPasswordUser } from "@/types/Profile";
+import LottiePlayer from "@/components/Loading";
 
 export default function EditPassword() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function EditPassword() {
     setIsShowNewPassword(true);
   };
 
-  const { data: fetchedData } = useFetchDashboardData();
+  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
 
   useEffect(() => {
     if (fetchedData) {
@@ -105,6 +106,10 @@ export default function EditPassword() {
       setIsLoading(false);
     },
   });
+
+  if (fetchedDataLoading) {
+    return <LottiePlayer />;
+  }
 
   return (
     <div
