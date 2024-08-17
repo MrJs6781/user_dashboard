@@ -425,7 +425,7 @@ export default function Products_continuation() {
               </span>
             </div>
             <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-              <RenewTable data={userRenew.Data} />
+              <RenewTable data={userRenew?.Data} />
             </div>
           </>
         )}

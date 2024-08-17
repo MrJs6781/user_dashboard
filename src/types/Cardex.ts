@@ -21,3 +21,36 @@ export interface CardexTrafficApiResponse {
   RowPerPage: number;
   Data: CardexTraffic[];
 }
+
+export interface CardexUser {
+  Typ: string;
+  UserName: string;
+}
+
+export interface CardexFinancial {
+  TransactionID: number;
+  TimeStamp: string;
+  ProductTitle: string | null;
+  SellCount: number | null;
+  Fi: string | null;
+  Price: string;
+  Type: string;
+  IsActive: boolean;
+  BuySellParty: string | null;
+  Users: CardexUser[] | null;
+  Description: string;
+}
+
+export interface CardexFinancialResponse {
+  Status: number;
+  Message: string;
+  Title: string;
+  Hint: string;
+  Name: string;
+  Type: string;
+  TotalPageCount: number;
+  TotalDataCount: number;
+  PageNo: number;
+  RowPerPage: number;
+  Data: CardexFinancial[];
+}

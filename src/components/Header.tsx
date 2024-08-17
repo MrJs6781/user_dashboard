@@ -11,7 +11,8 @@ import { FaPowerOff } from "react-icons/fa";
 import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 type headerListType = {
   id: number;
@@ -95,6 +96,17 @@ const headerListData = [
 ];
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const logOutHandler = () => {
+    Cookies.remove("authToken");
+    localStorage.clear();
+    navigate("/");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
+
   return (
     <div
       className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b glass fixed top-0 z-20"
@@ -143,6 +155,7 @@ export default function Header() {
               <li
                 key={item.id}
                 className="flex items-center gap-2 cursor-pointer h-full"
+                onClick={logOutHandler}
               >
                 {item.icon}
                 <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
