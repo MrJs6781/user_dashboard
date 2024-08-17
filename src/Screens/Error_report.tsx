@@ -1,7 +1,9 @@
+import ErrorReportsTable from "@/components/ErrorReportsTable";
 import Header from "@/components/Header";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
+import { useFetchErrorReports } from "@/Hooks/useFetchErrorReport";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -209,7 +211,10 @@ const dashboardBoxes = [
 
 export default function ErrorReport() {
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState("");
+
   const { data: fetchedData } = useFetchDashboardData();
+  const { data: errorReports } = useFetchErrorReports();
 
   useEffect(() => {
     if (fetchedData) {
@@ -224,6 +229,24 @@ export default function ErrorReport() {
       }
     }
   }, [fetchedData]);
+
+  useEffect(() => {
+    if (errorReports) {
+      if (errorReports.Status == 0) {
+      } else if (errorReports.Status == "-103") {
+        Cookies.remove("authToken");
+        localStorage.clear();
+        navigate("/");
+        toast.error(errorReports.Message);
+      } else {
+        toast.error(errorReports.Message);
+      }
+    }
+  }, [errorReports]);
+
+  const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
   return (
     <div
@@ -302,6 +325,37 @@ export default function ErrorReport() {
           </li>
         ))}
       </ul>
+      <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
+        <div className="w-full flex items-center justify-start gap-6">
+          <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
+            <input
+              type="text"
+              placeholder="جستجو کنید"
+              value={searchValue}
+              onChange={(e) => changeSearchHandler(e)}
+              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-search cursor-pointer"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </span>
+        </div>
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+          <ErrorReportsTable data={errorReports?.Data} />
+        </div>
+      </div>
     </div>
   );
 }
