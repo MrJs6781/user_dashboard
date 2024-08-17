@@ -1,5 +1,6 @@
 import CardexTrafficTable from "@/components/CardexTrafficTable";
 import Header from "@/components/Header";
+import LottiePlayer from "@/components/Loading";
 import { useCardexTraffic } from "@/Hooks/useCardexTraffic";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import Cookies from "js-cookie";
@@ -213,8 +214,10 @@ export default function CardexTraffic() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
 
-  const { data: fetchedData } = useFetchDashboardData();
-  const { data: cardexTraffic } = useCardexTraffic();
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardData();
+  const { data: cardexTraffic, isLoading: cardexTrafficLoading } =
+    useCardexTraffic();
 
   useEffect(() => {
     if (fetchedData) {
@@ -247,6 +250,10 @@ export default function CardexTraffic() {
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  if (fetchedDataLoading || cardexTrafficLoading) {
+    return <LottiePlayer />;
+  }
 
   return (
     <div

@@ -1,5 +1,6 @@
 import ConnectionHistoryTable from "@/components/ConnectionHistoryTable";
 import Header from "@/components/Header";
+import LottiePlayer from "@/components/Loading";
 import { useConnectionHistory } from "@/Hooks/useConnectionHistory";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import Cookies from "js-cookie";
@@ -213,8 +214,8 @@ export default function ConnectionHistory() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
 
-  const { data: fetchedData } = useFetchDashboardData();
-  const { data: connectionHistory } = useConnectionHistory();
+  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
+  const { data: connectionHistory , isLoading : connectionHistoryLoading } = useConnectionHistory();
 
   useEffect(() => {
     if (fetchedData) {
@@ -247,6 +248,10 @@ export default function ConnectionHistory() {
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  if (fetchedDataLoading || connectionHistoryLoading) {
+    return <LottiePlayer />;
+  }
 
   return (
     <div

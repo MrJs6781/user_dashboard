@@ -1,5 +1,6 @@
 import ErrorReportsTable from "@/components/ErrorReportsTable";
 import Header from "@/components/Header";
+import LottiePlayer from "@/components/Loading";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchErrorReports } from "@/Hooks/useFetchErrorReport";
 import Cookies from "js-cookie";
@@ -213,8 +214,8 @@ export default function ErrorReport() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
 
-  const { data: fetchedData } = useFetchDashboardData();
-  const { data: errorReports } = useFetchErrorReports();
+  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
+  const { data: errorReports , isLoading : errorReportsLoading } = useFetchErrorReports();
 
   useEffect(() => {
     if (fetchedData) {
@@ -247,6 +248,10 @@ export default function ErrorReport() {
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  if (fetchedDataLoading || errorReportsLoading) {
+    return <LottiePlayer />;
+  }
 
   return (
     <div
