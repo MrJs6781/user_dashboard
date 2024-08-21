@@ -258,14 +258,14 @@ export default function Products_continuation() {
 
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    if (e.target.value.length == 0) {
-      setUserProductsData(userProducts.Data);
-    } else {
-      const filterData = userProductsData.filter((item: UserProductResponse) =>
-        item.Title.includes(searchValue)
-      );
-      setUserProductsData(filterData);
-    }
+    // if (e.target.value.length == 0) {
+    //   setUserProductsData(userProducts.Data);
+    // } else {
+    //   const filterData = userProductsData.filter((item: UserProductResponse) =>
+    //     item.Title.includes(searchValue)
+    //   );
+    //   setUserProductsData(filterData);
+    // }
   };
 
   if (fetchedDataLoading || userProductsLoading || userRenewLoading) {

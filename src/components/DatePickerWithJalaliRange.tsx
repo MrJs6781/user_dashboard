@@ -1,5 +1,4 @@
 import * as React from "react";
-import { addDays } from "date-fns";
 import dayjs from "dayjs";
 import jalaliday from "jalaliday";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -23,11 +22,6 @@ dayjs().calendar("jalali");
 // تابع برای تبدیل تاریخ میلادی به تاریخ شمسی
 function formatDateToJalali(date: Date): string {
   return dayjs(date).calendar("jalali").format("YYYY/MM/DD");
-}
-
-// تابع برای دریافت تاریخ شمسی امروز
-function getTodayJalali(): Date {
-  return dayjs().calendar("jalali").toDate();
 }
 
 export function DatePickerWithRange({

@@ -99,8 +99,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronRight className="h-4 w-4" />, // تغییر آیکون برای راست به چپ
-        IconRight: ({ ...props }) => <ChevronLeft className="h-4 w-4" />, // تغییر آیکون برای راست به چپ
+        IconLeft: () => <ChevronRight className="h-4 w-4" />, // تغییر آیکون برای راست به چپ
+        IconRight: () => <ChevronLeft className="h-4 w-4" />, // تغییر آیکون برای راست به چپ
       }}
       formatters={{
         formatCaption: (date) =>

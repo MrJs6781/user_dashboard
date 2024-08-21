@@ -1,10 +1,73 @@
-import { UserProductResponse } from "@/types/UserProducts";
+import { UserProductResponse, UserRenewAdd } from "@/types/UserProducts";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 interface RenewCartProps {
   data: UserProductResponse;
 }
 
 export default function RenewCart({ data }: RenewCartProps) {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = () => {
+    setIsLoading(true);
+    mutation.mutate({
+      ProductID: `${data.ProductID}`,
+      Description: "",
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["renewAdd"],
+    mutationFn: async (MutateData: UserRenewAdd) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/Renew/Add?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      console.log(data);
+      if (data.Status == "0") {
+        toast.success("سرویس مورد نظر شما با موفقیت تمدید شد :)");
+        setIsLoading(false);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else if (data.Status == "-103") {
+        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        setTimeout(() => {
+          Cookies.remove("authToken");
+          localStorage.clear();
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error(data.Message);
+        setIsLoading(false);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsLoading(false);
+    },
+  });
+
   return (
     <div className="w-full max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border">
       <img
@@ -46,10 +109,11 @@ export default function RenewCart({ data }: RenewCartProps) {
           تومان
         </span>
       </span>
-      <button className="w-[95%] mx-auto mb-4 rounded-[12px] h-[50px] flex items-center justify-center outline-none cursor-pointer border-none bg-[#a855f7] dark:bg-[#1e293b]">
-        <p className="text-[15px] font-vazirB text-white">
-          تمدید
-        </p>
+      <button
+        className="w-[95%] mx-auto mb-4 rounded-[12px] h-[50px] flex items-center justify-center outline-none cursor-pointer border-none bg-[#a855f7] dark:bg-[#1e293b]"
+        onClick={handleSubmit}
+      >
+        <p className="text-[15px] font-vazirB text-white">تمدید</p>
       </button>
     </div>
   );
