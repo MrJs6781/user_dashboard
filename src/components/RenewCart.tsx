@@ -1,6 +1,6 @@
-import { UserProductResponse, UserRenewAdd } from "@/types/UserProducts";
+import { UserProductResponse } from "@/types/UserProducts";
+import { UserRenewAdd } from "@/types/Renew";
 import Cookies from "js-cookie";
-import { useState } from "react";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,8 @@ interface RenewCartProps {
 
 export default function RenewCart({ data }: RenewCartProps) {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
-    setIsLoading(true);
     mutation.mutate({
       ProductID: `${data.ProductID}`,
       Description: "",
@@ -46,7 +44,6 @@ export default function RenewCart({ data }: RenewCartProps) {
       console.log(data);
       if (data.Status == "0") {
         toast.success("سرویس مورد نظر شما با موفقیت تمدید شد :)");
-        setIsLoading(false);
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -59,12 +56,10 @@ export default function RenewCart({ data }: RenewCartProps) {
         }, 1000);
       } else {
         toast.error(data.Message);
-        setIsLoading(false);
       }
     },
     onError: (err: any) => {
       console.log(err);
-      setIsLoading(false);
     },
   });
 

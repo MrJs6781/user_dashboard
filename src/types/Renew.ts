@@ -30,3 +30,18 @@ export interface RenewResponse {
   RowPerPage: number;
   Data: RenewData[];
 }
+
+export interface UserRenewAdd {
+  ProductID: string;
+  Description?: string;
+}
+
+export interface UserRenewQuery {
+  FromDate?: string;
+  ToDate?: string;
+  Query?: string;
+  Operand?: string;
+  PageNo?: string;
+  RowPerPage?: string;
+  SortIndex?: number;
+}

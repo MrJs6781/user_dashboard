@@ -107,8 +107,8 @@ function Calendar({
           `${MONTHS[dayjs(date).calendar("jalali").month()]} ${dayjs(date)
             .calendar("jalali")
             .format("YYYY")}`,
-        formatDay: (date) =>
-          dayjs(date).calendar("jalali").format("D"),
+        // formatDay: (day) => day.getDate().toLocaleString("fa-IR"),
+        formatDay: (date) => dayjs(date).calendar("jalali").format("D"),
         formatWeekdayName: (date) => WEEKDAYS_LONG[date.getDay()],
       }}
       {...props}

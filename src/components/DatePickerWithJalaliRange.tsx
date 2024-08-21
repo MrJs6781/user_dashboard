@@ -22,16 +22,20 @@ dayjs().calendar("jalali");
 // تابع برای تبدیل تاریخ میلادی به تاریخ شمسی
 function formatDateToJalali(date: Date): string {
   return dayjs(date).calendar("jalali").format("YYYY/MM/DD");
+  // return dayjs(date).format("YYYY/MM/DD");
+}
+
+interface DatePickerWithRangeProps {
+  date: DateRange | undefined;
+  setDate: any;
 }
 
 export function DatePickerWithRange({
-  className,
-}: React.HTMLAttributes<HTMLDivElement>) {
-  // تنظیم تاریخ پیش‌فرض به تاریخ شمسی امروز
-  const [date, setDate] = React.useState<DateRange | undefined>();
-
+  date,
+  setDate,
+}: DatePickerWithRangeProps) {
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn("grid gap-2")}>
       <Popover>
         <PopoverTrigger asChild>
           <Button

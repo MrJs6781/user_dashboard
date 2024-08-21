@@ -35,8 +35,3 @@ export interface UserApiProductsResponse {
   RowPerPage: number;
   Data: UserProductResponse[];
 }
-
-export interface UserRenewAdd {
-  ProductID: string;
-  Description?: string;
-}

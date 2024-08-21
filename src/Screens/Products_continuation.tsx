@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import RenewCart from "@/components/RenewCart";
 import RenewTable from "@/components/RenewTable";
+import { Button } from "@/components/ui/button";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchRenew } from "@/Hooks/useFetchRenew";
 import { useFetchUserProducts } from "@/Hooks/useFetchUserProducts";
@@ -12,6 +13,10 @@ import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { DateRange } from "react-day-picker";
+import { useMutation } from "@tanstack/react-query";
+import { UserRenewQuery } from "@/types/Renew";
+import dayjs from "dayjs";
 
 const dashboardBoxes = [
   {
@@ -220,6 +225,8 @@ export default function Products_continuation() {
   const [userProductsData, setUserProductsData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [isActiveService, setIsActiveService] = useState("Data");
+  const [date, setDate] = useState<DateRange | undefined>();
+  const [userRenewDataTable , setUserRenewDataTable] = useState([]);
 
   const { isLoading: fetchedDataLoading, data: fetchedData } =
     useFetchDashboardData();
@@ -256,6 +263,14 @@ export default function Products_continuation() {
     }
   }, [userProducts]);
 
+  useEffect(() => {
+    if (userRenew) {
+      if (userRenew.Status == 0) {
+        setUserRenewDataTable(userRenew.Data);
+      }
+    }
+  }, [userRenew]);
+
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
     // if (e.target.value.length == 0) {
@@ -267,6 +282,66 @@ export default function Products_continuation() {
     //   setUserProductsData(filterData);
     // }
   };
+
+  const searchProductsList = () => {
+    console.log(date);
+    const getFromDate = dayjs(date?.from)
+      .calendar("jalali")
+      .format("YYYY/MM/DD");
+    const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
+    console.log(getFromDate);
+    console.log(getToDate);
+    mutation.mutate({
+      FromDate: getFromDate,
+      ToDate: getToDate,
+      Query: searchValue,
+      Operand: "%",
+      PageNo: "0",
+      RowPerPage: "0",
+      SortIndex: 0,
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["renewFetchWithQuery"],
+    mutationFn: async (MutateData: UserRenewQuery) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/Renew/Fetch?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      console.log(data);
+      if (data.Status == "0") {
+        setUserRenewDataTable(data?.Data)
+      } else if (data.Status == "-103") {
+        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        setTimeout(() => {
+          Cookies.remove("authToken");
+          localStorage.clear();
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error(data.Message);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err);
+    },
+  });
 
   if (fetchedDataLoading || userProductsLoading || userRenewLoading) {
     return <LottiePlayer />;
@@ -282,7 +357,9 @@ export default function Products_continuation() {
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
-            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
+            className={cn(
+              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
+            )}
             style={{ backdropFilter: "blur(20px)" }}
           >
             {item.icon}
@@ -406,7 +483,7 @@ export default function Products_continuation() {
           </>
         ) : (
           <>
-            <div className="w-full flex items-center justify-start gap-6">
+            <div className="w-full flex items-center justify-start gap-6 flex-wrap">
               <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
                 <input
                   type="text"
@@ -431,10 +508,16 @@ export default function Products_continuation() {
                   <path d="m21 21-4.3-4.3" />
                 </svg>
               </span>
-              <DatePickerWithRange />
+              <DatePickerWithRange date={date} setDate={setDate} />
+              <Button
+                className="bg-[#a855f7] dark:bg-[#1e293b]"
+                onClick={searchProductsList}
+              >
+                جستجو کنید
+              </Button>
             </div>
             <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-              <RenewTable data={userRenew?.Data} />
+              <RenewTable data={userRenewDataTable} />
             </div>
           </>
         )}
