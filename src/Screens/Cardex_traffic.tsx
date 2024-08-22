@@ -1,11 +1,18 @@
 import CardexTrafficTable from "@/components/CardexTrafficTable";
+import { DatePickerWithRange } from "@/components/DatePickerWithJalaliRange";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useCardexTraffic } from "@/Hooks/useCardexTraffic";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";
+import { TrafficCardexFetchData } from "@/types/Cardex";
+import { useMutation } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
+import { DateRange } from "react-day-picker";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -214,6 +221,10 @@ const dashboardBoxes = [
 export default function CardexTraffic() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+  const [date, setDate] = useState<DateRange | undefined>();
+  const [justActiveState, setJustActiveState] = useState(true);
+  const [isShowLoading, setIsShowLoading] = useState(false);
+  const [cardexTrafficFetchData, setCardexTrafficFetchData] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -237,11 +248,7 @@ export default function CardexTraffic() {
   useEffect(() => {
     if (cardexTraffic) {
       if (cardexTraffic.Status == 0) {
-      } else if (cardexTraffic.Status == "-103") {
-        Cookies.remove("authToken");
-        localStorage.clear();
-        navigate("/");
-        toast.error(cardexTraffic.Message);
+        setCardexTrafficFetchData(cardexTraffic?.Data);
       } else {
         toast.error(cardexTraffic.Message);
       }
@@ -252,7 +259,71 @@ export default function CardexTraffic() {
     setSearchValue(e.target.value);
   };
 
-  if (fetchedDataLoading || cardexTrafficLoading) {
+  const searchProductsList = () => {
+    setIsShowLoading(true);
+    if (date != undefined) {
+      const getFromDate = dayjs(date?.from)
+        .calendar("jalali")
+        .format("YYYY/MM/DD");
+      const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
+      mutation.mutate({
+        FromDate: getFromDate?.length > 0 ? getFromDate : "",
+        ToDate: getToDate?.length > 0 ? getToDate : "",
+        Query: searchValue,
+        JustActive: justActiveState,
+        Operand: "%",
+        PageNo: 0,
+        RowPerPage: 0,
+        SortIndex: 1,
+      });
+    } else {
+      mutation.mutate({
+        Query: searchValue,
+        JustActive: justActiveState,
+        Operand: "%",
+        PageNo: 0,
+        RowPerPage: 0,
+        SortIndex: 1,
+      });
+    }
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["cardexTrafficWithQuery"],
+    mutationFn: async (MutateData: TrafficCardexFetchData) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/Traffic/Cardex?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      if (data.Status == "0") {
+        setCardexTrafficFetchData(data?.Data);
+      } else {
+        toast.error(data.Message);
+      }
+      setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsShowLoading(false);
+    },
+  });
+
+  if (fetchedDataLoading || cardexTrafficLoading || isShowLoading) {
     return <LottiePlayer />;
   }
 
@@ -266,7 +337,9 @@ export default function CardexTraffic() {
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
-            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
+            className={cn(
+              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
+            )}
             style={{ backdropFilter: "blur(20px)" }}
           >
             {item.icon}
@@ -334,7 +407,22 @@ export default function CardexTraffic() {
         ))}
       </ul>
       <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-        <div className="w-full flex items-center justify-start gap-6">
+        <div className="w-full flex items-center justify-start gap-6 flex-wrap">
+          <span className="w-fit flex items-center justify-start gap-2">
+            <Checkbox
+              checked={justActiveState}
+              onCheckedChange={() => {
+                setJustActiveState(!justActiveState);
+              }}
+              id="terms1"
+            />
+            <label
+              htmlFor="terms1"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              نمایش فقط فعال
+            </label>
+          </span>
           <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
             <input
               type="text"
@@ -359,9 +447,16 @@ export default function CardexTraffic() {
               <path d="m21 21-4.3-4.3" />
             </svg>
           </span>
+          <DatePickerWithRange date={date} setDate={setDate} />
+          <Button
+            className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
+            onClick={searchProductsList}
+          >
+            جستجو کنید
+          </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <CardexTrafficTable data={cardexTraffic?.Data} />
+          <CardexTrafficTable data={cardexTrafficFetchData} />
         </div>
       </div>
     </div>

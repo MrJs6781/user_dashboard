@@ -15,6 +15,7 @@ export const useConnectionHistory = () => {
       {
         method: "POST",
         headers: myHeaders,
+        body : JSON.stringify({SortIndex : 1}),
         redirect: "follow",
       }
     );

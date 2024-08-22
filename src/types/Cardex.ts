@@ -54,3 +54,14 @@ export interface CardexFinancialResponse {
   RowPerPage: number;
   Data: CardexFinancial[];
 }
+
+export interface TrafficCardexFetchData {
+  FromDate?: string;
+  ToDate?: string;
+  JustActive?: boolean;
+  Query?: string;
+  Operand?: string;
+  PageNo?: number;
+  RowPerPage?: number;
+  SortIndex?: number;
+}
