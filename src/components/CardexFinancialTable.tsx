@@ -40,37 +40,39 @@ const CardexFinancialTable: React.FC<{ data: CardexFinancial[] }> = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {item.TimeStamp}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {item.ProductTitle}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {item.SellCount}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {item.Fi}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {item.Price}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {item.BuySellParty}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {item.Type}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {String(item.Users)}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
-                {item.Description}
-              </TableCell>
-            </TableRow>
-          ))}
+          {data?.map((item, index) => {
+            return (
+              <TableRow key={index}>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {item.TimeStamp}
+                </TableCell>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {item.ProductTitle ? item.ProductTitle : "نامشخص"}
+                </TableCell>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {item.SellCount ? item.SellCount : "0"}
+                </TableCell>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {item.Fi ? item.Fi : "نامشخص"}
+                </TableCell>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {item.Price}
+                </TableCell>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {item.BuySellParty ? item.BuySellParty : "نامشخص"}
+                </TableCell>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {item.Type}
+                </TableCell>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {String(item?.Users)}
+                </TableCell>
+                <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#09203fb7] to-[#000000ad] px-4 py-5 font-vazirB">
+                  {item.Description ? item.Description : "ندارد"}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>

@@ -388,7 +388,7 @@ export default function ConnectionHistory() {
           <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
             <input
               type="text"
-              placeholder="جستجو کنید"
+              placeholder="دنبال چی میگردی..."
               value={searchValue}
               onChange={(e) => changeSearchHandler(e)}
               className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
