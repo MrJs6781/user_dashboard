@@ -284,13 +284,13 @@ export default function Products_continuation() {
   };
 
   const searchProductsList = () => {
-    console.log(date);
+    // console.log(date);
     const getFromDate = dayjs(date?.from)
       .calendar("jalali")
       .format("YYYY/MM/DD");
     const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
-    console.log(getFromDate);
-    console.log(getToDate);
+    // console.log(getFromDate);
+    // console.log(getToDate);
     mutation.mutate({
       FromDate: getFromDate,
       ToDate: getToDate,
@@ -510,7 +510,7 @@ export default function Products_continuation() {
               </span>
               <DatePickerWithRange date={date} setDate={setDate} />
               <Button
-                className="bg-[#a855f7] dark:bg-[#1e293b]"
+                className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
                 onClick={searchProductsList}
               >
                 جستجو کنید

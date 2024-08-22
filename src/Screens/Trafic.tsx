@@ -1,13 +1,20 @@
+import { DatePickerWithRange } from "@/components/DatePickerWithJalaliRange";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import TrafficTable from "@/components/TrafficTable";
+import { Button } from "@/components/ui/button";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchTrafficData } from "@/Hooks/useFetchTrafficData";
 import { cn } from "@/lib/utils";
+import { TrafficQuery } from "@/types/Traffic";
+import { useMutation } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
+import { DateRange } from "react-day-picker";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const dashboardBoxes = [
   {
@@ -214,6 +221,10 @@ const dashboardBoxes = [
 export default function Trafic() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+  const [trafficDataTable, setTrafficDataTable] = useState([]);
+  const [date, setDate] = useState<DateRange | undefined>();
+  const [justActiveState, setJustActiveState] = useState(true);
+  const [isShowLoading, setIsShowLoading] = useState(false);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -237,11 +248,7 @@ export default function Trafic() {
   useEffect(() => {
     if (trafficData) {
       if (trafficData.Status == 0) {
-      } else if (trafficData.Status == "-103") {
-        Cookies.remove("authToken");
-        localStorage.clear();
-        navigate("/");
-        toast.error(trafficData.Message);
+        setTrafficDataTable(trafficData.Data);
       } else {
         toast.error(trafficData.Message);
       }
@@ -252,7 +259,62 @@ export default function Trafic() {
     setSearchValue(e.target.value);
   };
 
-  if (fetchedDataLoading || trafficDataLoading) {
+  const searchProductsList = () => {
+    setIsShowLoading(true);
+    const getFromDate = dayjs(date?.from)
+      .calendar("jalali")
+      .format("YYYY/MM/DD");
+    const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
+    mutation.mutate({
+      // UserTrafficID: "",
+      FromDate: getFromDate,
+      ToDate: getToDate,
+      Query: searchValue,
+      JustActive: justActiveState,
+      Operand: "%",
+      PageNo: "0",
+      RowPerPage: "0",
+      SortIndex: 0,
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["trafficWithQuery"],
+    mutationFn: async (MutateData: TrafficQuery) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/Traffic/Fetch?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      // console.log(data);
+      if (data.Status == "0") {
+        setTrafficDataTable(data?.Data);
+      } else {
+        toast.error(data.Message);
+      }
+      setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsShowLoading(false);
+    },
+  });
+
+  if (fetchedDataLoading || trafficDataLoading || isShowLoading) {
     return <LottiePlayer />;
   }
 
@@ -266,7 +328,9 @@ export default function Trafic() {
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
-            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
+            className={cn(
+              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
+            )}
             style={{ backdropFilter: "blur(20px)" }}
           >
             {item.icon}
@@ -334,7 +398,22 @@ export default function Trafic() {
         ))}
       </ul>
       <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-        <div className="w-full flex items-center justify-start gap-6">
+        <div className="w-full flex items-center justify-start gap-6 flex-wrap">
+          <span className="w-fit flex items-center justify-start gap-2">
+            <Checkbox
+              checked={justActiveState}
+              onCheckedChange={() => {
+                setJustActiveState(!justActiveState);
+              }}
+              id="terms1"
+            />
+            <label
+              htmlFor="terms1"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              نمایش فقط فعال
+            </label>
+          </span>
           <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
             <input
               type="text"
@@ -359,9 +438,16 @@ export default function Trafic() {
               <path d="m21 21-4.3-4.3" />
             </svg>
           </span>
+          <DatePickerWithRange date={date} setDate={setDate} />
+          <Button
+            className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
+            onClick={searchProductsList}
+          >
+            جستجو کنید
+          </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <TrafficTable data={trafficData?.Data} />
+          <TrafficTable data={trafficDataTable} />
         </div>
       </div>
     </div>

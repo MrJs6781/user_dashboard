@@ -19,3 +19,14 @@ export interface TrafficResponse {
   RowPerPage: number;
   Data: TrafficData[];
 }
+export interface TrafficQuery {
+  UserTrafficID?: number;
+  FromDate?: string;
+  ToDate?: string;
+  Query?: string;
+  JustActive?: boolean;
+  Operand?: string;
+  PageNo?: string;
+  RowPerPage?: string;
+  SortIndex?: number;
+}
