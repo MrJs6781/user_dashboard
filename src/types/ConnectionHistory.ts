@@ -30,3 +30,11 @@ export interface HistoryApiResponse {
   RowPerPage: number;
   Data: HistoryData[];
 }
+
+export interface ConnectionHistoryWithQuery {
+  Query?: string;
+  Operand?: string;
+  PageNo?: number;
+  RowPerPage?: number;
+  SortIndex?: number;
+}

@@ -1,9 +1,13 @@
 import ConnectionHistoryTable from "@/components/ConnectionHistoryTable";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useConnectionHistory } from "@/Hooks/useConnectionHistory";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";
+import { ConnectionHistoryWithQuery } from "@/types/ConnectionHistory";
+import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -214,9 +218,13 @@ const dashboardBoxes = [
 export default function ConnectionHistory() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+  const [isShowLoading, setIsShowLoading] = useState(false);
+  const [connectionHistoryData, setConnectionHistoryData] = useState([]);
 
-  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
-  const { data: connectionHistory , isLoading : connectionHistoryLoading } = useConnectionHistory();
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardData();
+  const { data: connectionHistory, isLoading: connectionHistoryLoading } =
+    useConnectionHistory();
 
   useEffect(() => {
     if (fetchedData) {
@@ -235,11 +243,7 @@ export default function ConnectionHistory() {
   useEffect(() => {
     if (connectionHistory) {
       if (connectionHistory.Status == 0) {
-      } else if (connectionHistory.Status == "-103") {
-        Cookies.remove("authToken");
-        localStorage.clear();
-        navigate("/");
-        toast.error(connectionHistory.Message);
+        setConnectionHistoryData(connectionHistory?.Data);
       } else {
         toast.error(connectionHistory.Message);
       }
@@ -250,7 +254,53 @@ export default function ConnectionHistory() {
     setSearchValue(e.target.value);
   };
 
-  if (fetchedDataLoading || connectionHistoryLoading) {
+  const searchProductsList = () => {
+    setIsShowLoading(true);
+    mutation.mutate({
+      Query: searchValue,
+      Operand: "%",
+      PageNo: 0,
+      RowPerPage: 0,
+      SortIndex: 0,
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["historyWithQuery"],
+    mutationFn: async (MutateData: ConnectionHistoryWithQuery) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/History/Fetch?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      if (data.Status == "0") {
+        setConnectionHistoryData(data?.Data);
+      } else {
+        toast.error(data.Message);
+      }
+      setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsShowLoading(false);
+    },
+  });
+
+  if (fetchedDataLoading || connectionHistoryLoading || isShowLoading) {
     return <LottiePlayer />;
   }
 
@@ -264,7 +314,9 @@ export default function ConnectionHistory() {
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
-            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
+            className={cn(
+              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
+            )}
             style={{ backdropFilter: "blur(20px)" }}
           >
             {item.icon}
@@ -332,7 +384,7 @@ export default function ConnectionHistory() {
         ))}
       </ul>
       <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-        <div className="w-full flex items-center justify-start gap-6">
+        <div className="w-full flex items-center justify-start gap-6 flex-wrap">
           <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
             <input
               type="text"
@@ -357,9 +409,15 @@ export default function ConnectionHistory() {
               <path d="m21 21-4.3-4.3" />
             </svg>
           </span>
+          <Button
+            className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
+            onClick={searchProductsList}
+          >
+            جستجو کنید
+          </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <ConnectionHistoryTable data={connectionHistory?.Data} />
+          <ConnectionHistoryTable data={connectionHistoryData} />
         </div>
       </div>
     </div>

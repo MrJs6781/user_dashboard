@@ -398,7 +398,7 @@ export default function MicroConsumption() {
         ))}
       </ul>
       <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-        <div className="w-full flex items-center justify-start gap-6">
+        <div className="w-full flex items-center justify-start gap-6 flex-wrap">
           <span className="w-fit flex items-center justify-start gap-2">
             <Checkbox
               checked={justActiveState}
