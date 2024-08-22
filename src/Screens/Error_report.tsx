@@ -1,9 +1,12 @@
 import ErrorReportsTable from "@/components/ErrorReportsTable";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
+import { Button } from "@/components/ui/button";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchErrorReports } from "@/Hooks/useFetchErrorReport";
 import { cn } from "@/lib/utils";
+import { ErrorReportsWithQuery } from "@/types/ErrorReports";
+import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -214,9 +217,13 @@ const dashboardBoxes = [
 export default function ErrorReport() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+  const [isShowLoading, setIsShowLoading] = useState(false);
+  const [errorReportsTableData, setErrorReportsTableData] = useState([]);
 
-  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
-  const { data: errorReports , isLoading : errorReportsLoading } = useFetchErrorReports();
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardData();
+  const { data: errorReports, isLoading: errorReportsLoading } =
+    useFetchErrorReports();
 
   useEffect(() => {
     if (fetchedData) {
@@ -235,11 +242,7 @@ export default function ErrorReport() {
   useEffect(() => {
     if (errorReports) {
       if (errorReports.Status == 0) {
-      } else if (errorReports.Status == "-103") {
-        Cookies.remove("authToken");
-        localStorage.clear();
-        navigate("/");
-        toast.error(errorReports.Message);
+        setErrorReportsTableData(errorReports?.Data);
       } else {
         toast.error(errorReports.Message);
       }
@@ -250,7 +253,53 @@ export default function ErrorReport() {
     setSearchValue(e.target.value);
   };
 
-  if (fetchedDataLoading || errorReportsLoading) {
+  const searchProductsList = () => {
+    setIsShowLoading(true);
+    mutation.mutate({
+      Query: searchValue,
+      Operand: "%",
+      PageNo: 0,
+      RowPerPage: 0,
+      SortIndex: 0,
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["errorReportsWithQuery"],
+    mutationFn: async (MutateData: ErrorReportsWithQuery) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/Log/Fetch?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      if (data.Status == "0") {
+        setErrorReportsTableData(data?.Data);
+      } else {
+        toast.error(data.Message);
+      }
+      setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsShowLoading(false);
+    },
+  });
+
+  if (fetchedDataLoading || errorReportsLoading || isShowLoading) {
     return <LottiePlayer />;
   }
 
@@ -264,7 +313,9 @@ export default function ErrorReport() {
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
-            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
+            className={cn(
+              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
+            )}
             style={{ backdropFilter: "blur(20px)" }}
           >
             {item.icon}
@@ -357,9 +408,15 @@ export default function ErrorReport() {
               <path d="m21 21-4.3-4.3" />
             </svg>
           </span>
+          <Button
+            className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
+            onClick={searchProductsList}
+          >
+            جستجو کنید
+          </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <ErrorReportsTable data={errorReports?.Data} />
+          <ErrorReportsTable data={errorReportsTableData} />
         </div>
       </div>
     </div>

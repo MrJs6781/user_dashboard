@@ -30,3 +30,11 @@ export interface ErrorReportsApiResponse {
   RowPerPage: number;
   Data: ErrorReports[];
 }
+
+export interface ErrorReportsWithQuery {
+  Query?: string;
+  Operand?: string;
+  PageNo?: number;
+  RowPerPage?: number;
+  SortIndex?: number;
+}
