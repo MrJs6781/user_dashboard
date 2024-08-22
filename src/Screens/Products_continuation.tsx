@@ -226,13 +226,14 @@ export default function Products_continuation() {
   const [searchValue, setSearchValue] = useState("");
   const [isActiveService, setIsActiveService] = useState("Data");
   const [date, setDate] = useState<DateRange | undefined>();
-  const [userRenewDataTable , setUserRenewDataTable] = useState([]);
+  const [userRenewDataTable, setUserRenewDataTable] = useState([]);
 
   const { isLoading: fetchedDataLoading, data: fetchedData } =
     useFetchDashboardData();
   const { isLoading: userProductsLoading, data: userProducts } =
     useFetchUserProducts({});
   const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew();
+  const [isShowLoading, setIsShowLoading] = useState(false);
 
   useEffect(() => {
     if (fetchedData) {
@@ -285,6 +286,7 @@ export default function Products_continuation() {
 
   const searchProductsList = () => {
     // console.log(date);
+    setIsShowLoading(true);
     const getFromDate = dayjs(date?.from)
       .calendar("jalali")
       .format("YYYY/MM/DD");
@@ -324,9 +326,9 @@ export default function Products_continuation() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      console.log(data);
+      // console.log(data);
       if (data.Status == "0") {
-        setUserRenewDataTable(data?.Data)
+        setUserRenewDataTable(data?.Data);
       } else if (data.Status == "-103") {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
@@ -337,13 +339,20 @@ export default function Products_continuation() {
       } else {
         toast.error(data.Message);
       }
+      setIsShowLoading(false);
     },
     onError: (err: any) => {
       console.log(err);
+      setIsShowLoading(false);
     },
   });
 
-  if (fetchedDataLoading || userProductsLoading || userRenewLoading) {
+  if (
+    fetchedDataLoading ||
+    userProductsLoading ||
+    userRenewLoading ||
+    isShowLoading
+  ) {
     return <LottiePlayer />;
   }
 

@@ -4,10 +4,17 @@ import LottiePlayer from "@/components/Loading";
 import { useConsumeFetch } from "@/Hooks/useConsumeFetch";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";
+import { useMutation } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
+import { DateRange } from "react-day-picker";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Checkbox } from "@/components/ui/checkbox";
+import { DatePickerWithRange } from "@/components/DatePickerWithJalaliRange";
+import { Button } from "@/components/ui/button";
+import { ConsumeFetchData } from "@/types/Consume";
 
 const dashboardBoxes = [
   {
@@ -213,10 +220,16 @@ const dashboardBoxes = [
 
 export default function MicroConsumption() {
   const navigate = useNavigate();
-  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
-  const { data: consumeFetch , isLoading : consumeFetchLoading } = useConsumeFetch();
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardData();
+  const { data: consumeFetch, isLoading: consumeFetchLoading } =
+    useConsumeFetch();
 
+  const [consumeFetchData, setConsumeFetchData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [date, setDate] = useState<DateRange | undefined>();
+  const [justActiveState, setJustActiveState] = useState(true);
+  const [isShowLoading, setIsShowLoading] = useState(false);
 
   useEffect(() => {
     if (fetchedData) {
@@ -235,11 +248,7 @@ export default function MicroConsumption() {
   useEffect(() => {
     if (consumeFetch) {
       if (consumeFetch.Status == 0) {
-      } else if (consumeFetch.Status == "-103") {
-        Cookies.remove("authToken");
-        localStorage.clear();
-        navigate("/");
-        toast.error(consumeFetch.Message);
+        setConsumeFetchData(consumeFetch?.Data);
       } else {
         toast.error(consumeFetch.Message);
       }
@@ -250,7 +259,62 @@ export default function MicroConsumption() {
     setSearchValue(e.target.value);
   };
 
-  if (fetchedDataLoading || consumeFetchLoading) {
+  const searchProductsList = () => {
+    setIsShowLoading(true);
+    const getFromDate = dayjs(date?.from)
+      .calendar("jalali")
+      .format("YYYY/MM/DD");
+    const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
+    mutation.mutate({
+      // UserConsumeID: "",
+      FromDate: getFromDate,
+      ToDate: getToDate,
+      Query: searchValue,
+      JustActive: justActiveState,
+      Operand: "%",
+      PageNo: 0,
+      RowPerPage: 0,
+      SortIndex: 0,
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["consumeWithQuery"],
+    mutationFn: async (MutateData: ConsumeFetchData) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/Consume/Fetch?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      // console.log(data);
+      if (data.Status == "0") {
+        setConsumeFetchData(data?.Data);
+      } else {
+        toast.error(data.Message);
+      }
+      setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsShowLoading(false);
+    },
+  });
+
+  if (fetchedDataLoading || consumeFetchLoading || isShowLoading) {
     return <LottiePlayer />;
   }
 
@@ -264,7 +328,9 @@ export default function MicroConsumption() {
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
-            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
+            className={cn(
+              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
+            )}
             style={{ backdropFilter: "blur(20px)" }}
           >
             {item.icon}
@@ -333,6 +399,21 @@ export default function MicroConsumption() {
       </ul>
       <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
         <div className="w-full flex items-center justify-start gap-6">
+          <span className="w-fit flex items-center justify-start gap-2">
+            <Checkbox
+              checked={justActiveState}
+              onCheckedChange={() => {
+                setJustActiveState(!justActiveState);
+              }}
+              id="terms1"
+            />
+            <label
+              htmlFor="terms1"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              نمایش فقط فعال
+            </label>
+          </span>
           <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
             <input
               type="text"
@@ -357,9 +438,16 @@ export default function MicroConsumption() {
               <path d="m21 21-4.3-4.3" />
             </svg>
           </span>
+          <DatePickerWithRange date={date} setDate={setDate} />
+          <Button
+            className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
+            onClick={searchProductsList}
+          >
+            جستجو کنید
+          </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <ConsumeTable data={consumeFetch?.Data} />
+          <ConsumeTable data={consumeFetchData} />
         </div>
       </div>
     </div>

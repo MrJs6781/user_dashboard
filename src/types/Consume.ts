@@ -20,3 +20,15 @@ export interface ConsumeApiResponse {
   RowPerPage: number;
   Data: ConsumeData[];
 }
+
+export interface ConsumeFetchData {
+  UserConsumeID?: number;
+  FromDate?: string;
+  ToDate?: string;
+  JustActive?: boolean;
+  Query?: string;
+  Operand?: string;
+  PageNo?: number;
+  RowPerPage?: number;
+  SortIndex?: number;
+}
