@@ -181,7 +181,7 @@ export default function Header() {
           </SheetContent>
         </Sheet>
       </span>
-      <ul className="w-fit h-full hidden lg:flex items-center justify-start gap-4 list-none">
+      <ul className="w-fit h-full hidden lg:flex items-center justify-start gap-6 list-none">
         {headerListData.map((item: headerListType) => {
           if (item.link) {
             return (

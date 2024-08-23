@@ -17,7 +17,7 @@ export const useFetchErrorReports = () => {
       {
         method: "POST",
         headers: myHeaders,
-        body : JSON.stringify({SortIndex : 1}),
+        body : JSON.stringify({SortIndex : 1 , RowPerPage : 8}),
         redirect: "follow",
       }
     );

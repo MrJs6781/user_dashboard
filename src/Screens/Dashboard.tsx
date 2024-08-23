@@ -223,6 +223,7 @@ interface DataItem {
   TimeStamp: string;
   Download: string;
   Upload: string;
+  Consume: string;
 }
 
 export default function Dashboard() {
@@ -230,6 +231,7 @@ export default function Dashboard() {
   const [labels, setLabels] = useState<string[]>([]);
   const [downloadData, setDownloadData] = useState<number[]>([]);
   const [uploadData, setUploadData] = useState<number[]>([]);
+  const [totalData, setTotalData] = useState<number[]>([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -260,10 +262,14 @@ export default function Dashboard() {
     const parsedUploadData = consumeData?.Data?.map((item: DataItem) =>
       convertToKB(item.Upload)
     );
+    const parsedConsumeData = consumeData?.Data?.map((item: DataItem) =>
+      convertToKB(item.Consume)
+    );
 
     setLabels(parsedLabels);
     setDownloadData(parsedDownloadData);
     setUploadData(parsedUploadData);
+    setTotalData(parsedConsumeData);
   }, [consumeData]);
 
   const convertToKB = (value: string): number => {
@@ -366,7 +372,7 @@ export default function Dashboard() {
       <div className="mt-6 w-full flex items-center justify-center flex-col gap-4">
         <ComboChart
           labels={labels}
-          data={{ download: downloadData, upload: uploadData }}
+          data={{ download: downloadData, upload: uploadData , total : totalData }}
         />
       </div>
     </div>

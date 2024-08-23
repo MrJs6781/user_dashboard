@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 interface RenewCartProps {
   data: UserProductResponse;
+  index: number;
 }
 
-export default function RenewCart({ data }: RenewCartProps) {
+export default function RenewCart({ data, index }: RenewCartProps) {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -64,7 +65,14 @@ export default function RenewCart({ data }: RenewCartProps) {
   });
 
   return (
-    <div className="w-full max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border">
+    <div
+      className="w-full max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation"
+      style={
+        {
+          "--i": index + 1, // تعیین مقدار --i برای هر آیتم
+        } as React.CSSProperties
+      }
+    >
       <img
         src={data.ImageUrl ? data.ImageUrl : "/public/product_image.jpg"}
         alt="Image"

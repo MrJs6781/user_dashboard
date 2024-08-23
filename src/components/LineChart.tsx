@@ -11,6 +11,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  LineController,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
@@ -19,6 +20,7 @@ ChartJS.register(
   LinearScale,
   BarElement,
   LineElement,
+  LineController,
   PointElement,
   Title,
   Tooltip,
@@ -27,15 +29,24 @@ ChartJS.register(
 
 interface ComboChartProps {
   labels: string[];
-  data: { download: number[]; upload: number[] };
+  data: { download: number[]; upload: number[] , total : number[] };
 }
 
 const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
+
   const chartData = {
     labels,
     datasets: [
       {
         type: "bar" as const,
+        label: "مجموع",
+        data: data.total,
+        backgroundColor: "rgba(50, 80, 180, 0.2)",
+        borderColor: "rgba(50, 80, 180, 1)",
+        borderWidth: 1,
+      },
+      {
+        type: "line" as const,
         label: "دانلود",
         data: data.download,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -68,7 +79,7 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
       },
       title: {
         display: true,
-        text: "ترکیب نمودار دانلود و آپلود",
+        text: "نمودار میزان مصرفی شما",
         font: {
           size: 16,
           family: "vazir_b, sans-serif", // Apply font family

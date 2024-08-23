@@ -1,4 +1,3 @@
-import * as React from "react";
 import dayjs from "dayjs";
 import jalaliday from "jalaliday";
 import { Calendar as CalendarIcon } from "lucide-react";

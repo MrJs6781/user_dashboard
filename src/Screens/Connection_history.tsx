@@ -2,7 +2,6 @@ import ConnectionHistoryTable from "@/components/ConnectionHistoryTable";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useConnectionHistory } from "@/Hooks/useConnectionHistory";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";

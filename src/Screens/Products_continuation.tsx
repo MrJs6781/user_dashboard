@@ -363,7 +363,7 @@ export default function Products_continuation() {
     >
       <Header />
       <ul className="w-full auto_grid items-center justify-start gap-4 sm:gap-6 mt-20 px-6">
-        {dashboardBoxes?.map((item , index) => (
+        {dashboardBoxes?.map((item, index) => (
           <li
             key={item.id}
             className={cn(
@@ -458,7 +458,7 @@ export default function Products_continuation() {
             )}
             onClick={() => setIsActiveService("Chart")}
           >
-            نمایش لیست سرویس ها
+            لیست تمدید های قبلی
           </h5>
         </div>
         {isActiveService == "Data" ? (
@@ -491,7 +491,7 @@ export default function Products_continuation() {
             </div>
             <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
               {userProductsData?.map((item: UserProductResponse, i: number) => (
-                <RenewCart key={i} data={item} />
+                <RenewCart key={i} data={item} index={i + 1} />
               ))}
             </ul>
           </>

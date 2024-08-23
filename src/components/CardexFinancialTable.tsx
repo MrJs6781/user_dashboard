@@ -59,10 +59,10 @@ const CardexFinancialTable: React.FC<{ data: CardexFinancial[] }> = ({
                   {item.Price}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                  {item.BuySellParty ? item.BuySellParty : "نامشخص"}
+                  {item.Type ? item.Type : "نامشخص"}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                  {item.Type}
+                  {item.BuySellParty ? item.BuySellParty : "_"}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
                   {String(item?.Users)}

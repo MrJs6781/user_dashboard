@@ -420,8 +420,9 @@ export default function ErrorReport() {
             جستجو کنید
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+        <div className="w-full flex flex-col items-start justify-center overflow-x-scroll min-w-[800px]">
           <ErrorReportsTable data={errorReportsTableData} />
+          {/* <PaginationComponent /> */}
         </div>
       </div>
     </div>

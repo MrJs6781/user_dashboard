@@ -134,6 +134,7 @@ export default function EditPassword() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
               maxLength={30}
+              readOnly
             />
             {password.length > 0 && isShowPassword && (
               <IoEye
