@@ -135,3 +135,15 @@
 .rtl_direction_calender {
   direction: rtl;
 }
+
+.fade_in_animation {
+  opacity: 0;
+  animation: fade-in 500ms forwards;
+  animation-delay: calc(0.1s * var(--i));
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}

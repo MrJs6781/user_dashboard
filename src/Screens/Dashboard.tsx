@@ -31,7 +31,7 @@ const dashboardBoxes = [
         <path d="M11 6h6a2 2 0 0 1 2 2v10" />
       </svg>
     ),
-    bg : "#a3e635",
+    bg: "#a3e635",
     title: "تعداد روزهای باقیمانده",
   },
   {
@@ -54,7 +54,7 @@ const dashboardBoxes = [
         <line x1="12" x2="12" y1="15" y2="3" />
       </svg>
     ),
-    bg : "",
+    bg: "",
     title: "مقدار حجم باقیمانده",
   },
   {
@@ -77,7 +77,7 @@ const dashboardBoxes = [
         <path d="M3 11h3c.8 0 1.6.3 2.1.9l1.1.9c1.6 1.6 4.1 1.6 5.7 0l1.1-.9c.5-.5 1.3-.9 2.1-.9H21" />
       </svg>
     ),
-    bg : "",
+    bg: "",
     title: "موجودی کیف پول",
   },
   // {
@@ -122,7 +122,7 @@ const dashboardBoxes = [
         <path d="M3 10h18" />
       </svg>
     ),
-    bg : "",
+    bg: "",
     title: "تاریخ ساخت",
   },
   {
@@ -143,7 +143,7 @@ const dashboardBoxes = [
         <path d="M20 6 9 17l-5-5" />
       </svg>
     ),
-    bg : "",
+    bg: "",
     title: "زمان اولین اتصال",
   },
   {
@@ -165,7 +165,7 @@ const dashboardBoxes = [
         <path d="m4.9 4.9 14.2 14.2" />
       </svg>
     ),
-    bg : "",
+    bg: "",
     title: "تاریخ انقضا",
   },
   {
@@ -189,7 +189,7 @@ const dashboardBoxes = [
         <path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
-    bg : "",
+    bg: "",
     title: "تعداد آنلاین با این کاربری",
   },
   {
@@ -214,7 +214,7 @@ const dashboardBoxes = [
         <circle cx="7" cy="18" r="2" />
       </svg>
     ),
-    bg : "",
+    bg: "",
     title: "کاربر حجمی",
   },
 ];
@@ -231,8 +231,10 @@ export default function Dashboard() {
   const [downloadData, setDownloadData] = useState<number[]>([]);
   const [uploadData, setUploadData] = useState<number[]>([]);
 
-  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
-  const { data: consumeData , isLoading : consumeDataLoading } = useFetchDashboardConsume();
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardData();
+  const { data: consumeData, isLoading: consumeDataLoading } =
+    useFetchDashboardConsume();
 
   useEffect(() => {
     if (fetchedData) {
@@ -274,9 +276,7 @@ export default function Dashboard() {
   };
 
   if (fetchedDataLoading || consumeDataLoading) {
-    return (
-      <LottiePlayer />
-    )
+    return <LottiePlayer />;
   }
 
   return (
@@ -286,11 +286,18 @@ export default function Dashboard() {
     >
       <Header />
       <ul className="w-full auto_grid items-center justify-start gap-4 sm:gap-6 mt-20 px-6">
-        {dashboardBoxes?.map((item) => (
+        {dashboardBoxes?.map((item, index) => (
           <li
             key={item.id}
-            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
-            style={{ backdropFilter: "blur(20px)" }}
+            className={cn(
+              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3 fade_in_animation"
+            )}
+            style={
+              {
+                backdropFilter: "blur(20px)",
+                "--i": index + 1, // تعیین مقدار --i برای هر آیتم
+              } as React.CSSProperties
+            } // نوع‌دهی اجباری به عنوان CSSProperties
           >
             {item.icon}
             <span className="flex flex-col items-start gap-1">
@@ -357,7 +364,10 @@ export default function Dashboard() {
         ))}
       </ul>
       <div className="mt-6 w-full flex items-center justify-center flex-col gap-4">
-        <ComboChart labels={labels} data={{ download: downloadData, upload: uploadData }} />
+        <ComboChart
+          labels={labels}
+          data={{ download: downloadData, upload: uploadData }}
+        />
       </div>
     </div>
   );

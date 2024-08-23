@@ -323,13 +323,18 @@ export default function CardexFinancial() {
     >
       <Header />
       <ul className="w-full auto_grid items-center justify-start gap-4 sm:gap-6 mt-20 px-6">
-        {dashboardBoxes?.map((item) => (
+        {dashboardBoxes?.map((item, index) => (
           <li
             key={item.id}
             className={cn(
               "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
             )}
-            style={{ backdropFilter: "blur(20px)" }}
+            style={
+              {
+                backdropFilter: "blur(20px)",
+                "--i": index + 1, // تعیین مقدار --i برای هر آیتم
+              } as React.CSSProperties
+            } // نوع‌دهی اجباری به عنوان CSSProperties
           >
             {item.icon}
             <span className="flex flex-col items-start gap-1">
