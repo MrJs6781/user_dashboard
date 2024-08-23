@@ -65,3 +65,14 @@ export interface TrafficCardexFetchData {
   RowPerPage?: number;
   SortIndex?: number;
 }
+
+export interface TrafficFinancialCardexFetchData {
+  Type?: string;
+  // FromDate?: string;
+  // ToDate?: string;
+  Query?: string;
+  Operand?: string;
+  PageNo?: number;
+  RowPerPage?: number;
+  SortIndex?: number;
+}

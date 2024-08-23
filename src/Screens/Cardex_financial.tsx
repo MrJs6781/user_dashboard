@@ -1,13 +1,24 @@
 import CardexFinancialTable from "@/components/CardexFinancialTable";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
+import { Button } from "@/components/ui/button";
 import { useCardexFinancial } from "@/Hooks/useCardexFinancial";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";
+import { TrafficFinancialCardexFetchData } from "@/types/Cardex";
+import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const dashboardBoxes = [
   {
@@ -214,9 +225,17 @@ const dashboardBoxes = [
 export default function CardexFinancial() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+  // const [date, setDate] = useState<DateRange | undefined>();
+  const [isShowLoading, setIsShowLoading] = useState(false);
+  const [cardexTrafficFinancialData, setCardexTrafficFinancialData] = useState(
+    []
+  );
+  const [cardexFinancialType, setCardexFinancialType] = useState("");
 
-  const { data: fetchedData , isLoading : fetchedDataLoading } = useFetchDashboardData();
-  const { data: cardexFinancial , isLoading : cardexFinancialLoading } = useCardexFinancial();
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardData();
+  const { data: cardexFinancial, isLoading: cardexFinancialLoading } =
+    useCardexFinancial();
 
   useEffect(() => {
     if (fetchedData) {
@@ -235,11 +254,7 @@ export default function CardexFinancial() {
   useEffect(() => {
     if (cardexFinancial) {
       if (cardexFinancial.Status == 0) {
-      } else if (cardexFinancial.Status == "-103") {
-        Cookies.remove("authToken");
-        localStorage.clear();
-        navigate("/");
-        toast.error(cardexFinancial.Message);
+        setCardexTrafficFinancialData(cardexFinancial?.Data);
       } else {
         toast.error(cardexFinancial.Message);
       }
@@ -250,7 +265,54 @@ export default function CardexFinancial() {
     setSearchValue(e.target.value);
   };
 
-  if (fetchedDataLoading || cardexFinancialLoading) {
+  const searchProductsList = () => {
+    setIsShowLoading(true);
+    mutation.mutate({
+      Type: cardexFinancialType,
+      Query: searchValue,
+      Operand: "%",
+      PageNo: 0,
+      RowPerPage: 0,
+      SortIndex: 1,
+    });
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["cardexFinancialTrafficWithQuery"],
+    mutationFn: async (MutateData: TrafficFinancialCardexFetchData) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/User/Shop/Cardex?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      if (data.Status == "0") {
+        setCardexTrafficFinancialData(data?.Data);
+      } else {
+        toast.error(data.Message);
+      }
+      setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsShowLoading(false);
+    },
+  });
+
+  if (fetchedDataLoading || cardexFinancialLoading || isShowLoading) {
     return <LottiePlayer />;
   }
 
@@ -264,7 +326,9 @@ export default function CardexFinancial() {
         {dashboardBoxes?.map((item) => (
           <li
             key={item.id}
-            className={cn("w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3")}
+            className={cn(
+              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
+            )}
             style={{ backdropFilter: "blur(20px)" }}
           >
             {item.icon}
@@ -332,7 +396,29 @@ export default function CardexFinancial() {
         ))}
       </ul>
       <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-        <div className="w-full flex items-center justify-start gap-6">
+        <div className="w-full flex items-center justify-start gap-6 flex-wrap">
+          <Select
+            value={cardexFinancialType}
+            onValueChange={setCardexFinancialType}
+          >
+            <SelectTrigger
+              className="w-[180px] font-vazirM"
+              style={{ direction: "rtl" }}
+            >
+              <SelectValue placeholder="نوع تراکنش" />
+            </SelectTrigger>
+            <SelectContent style={{ direction: "rtl" }}>
+              <SelectItem className="font-vazirM" value="W">
+                کیف پول
+              </SelectItem>
+              <SelectItem className="font-vazirM" value="I">
+                خرید
+              </SelectItem>
+              <SelectItem className="font-vazirM" value="X">
+                فروش
+              </SelectItem>
+            </SelectContent>
+          </Select>
           <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
             <input
               type="text"
@@ -357,9 +443,15 @@ export default function CardexFinancial() {
               <path d="m21 21-4.3-4.3" />
             </svg>
           </span>
+          <Button
+            className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
+            onClick={searchProductsList}
+          >
+            جستجو کنید
+          </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <CardexFinancialTable data={cardexFinancial?.Data} />
+          <CardexFinancialTable data={cardexTrafficFinancialData} />
         </div>
       </div>
     </div>
