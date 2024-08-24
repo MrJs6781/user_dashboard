@@ -475,12 +475,14 @@ export default function Products_continuation() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
+      <div className="w-full h-auto mt-8 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
         <div className="w-full flex items-center justify-center gap-8">
           <h5
             className={cn(
               "font-vazirB text-[15px] cursor-pointer",
-              isActiveService == "Chart" ? "opacity-70" : ""
+              isActiveService == "Chart"
+                ? "opacity-70"
+                : "border-2 p-4 dark:border-white border-black"
             )}
             onClick={() => setIsActiveService("Data")}
           >
@@ -489,7 +491,9 @@ export default function Products_continuation() {
           <h5
             className={cn(
               "font-vazirB text-[15px] cursor-pointer",
-              isActiveService == "Data" ? "opacity-70" : ""
+              isActiveService == "Data"
+                ? "opacity-70"
+                : "border-2 p-4 dark:border-white border-black"
             )}
             onClick={() => setIsActiveService("Chart")}
           >
@@ -559,7 +563,8 @@ export default function Products_continuation() {
               </span>
               <DatePickerWithRange date={date} setDate={setDate} />
               <Button
-                className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
+                className="bg-[#a855f7] dark:bg-[#1e293b] md:text-white text-[17px]"
+                size="lg"
                 onClick={searchProductsList}
               >
                 جستجو کنید

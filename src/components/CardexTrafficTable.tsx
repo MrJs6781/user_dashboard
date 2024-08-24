@@ -33,22 +33,22 @@ const CardexTrafficTable: React.FC<{ data: CardexTraffic[] }> = ({
           {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Traffic ? item.Traffic : "نامشخص"}
+                {item.Traffic ? item.Traffic : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Upload ? item.Upload : "0"}
+                {item.Upload ? item.Upload : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Download ? item.Download : "0"}
+                {item.Download ? item.Download : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Consume ? item.Consume : "0"}
+                {item.Consume ? item.Consume : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
                 {item.Date}
               </TableCell>
               <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Description ? item.Description : "ندارد"}
+                {item.Description ? item.Description : "_"}
               </TableCell>
             </TableRow>
           ))}

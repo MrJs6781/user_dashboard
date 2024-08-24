@@ -10,7 +10,6 @@ import {
 import { ErrorReports } from "@/types/ErrorReports";
 
 const tableName = [
-  "آیدی",
   "سرور",
   "آی پی مشتری",
   "دانلود",
@@ -41,9 +40,6 @@ const ErrorReportsTable: React.FC<{ data: ErrorReports[] }> = ({ data }) => {
           {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {index + 1}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
                 {item.NasIP}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
@@ -67,7 +63,7 @@ const ErrorReportsTable: React.FC<{ data: ErrorReports[] }> = ({ data }) => {
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
                 {String(item.PacketMethod)
                   ? String(item.PacketMethod)
-                  : "نامشخص"}
+                  : "_"}
               </TableCell>
             </TableRow>
           ))}

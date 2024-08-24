@@ -449,8 +449,9 @@ export default function ConnectionHistory() {
             </svg>
           </span>
           <Button
-            className="bg-[#a855f7] dark:bg-[#1e293b] text-white"
+            className="bg-[#a855f7] dark:bg-[#1e293b] text-white md:text-[17px]"
             onClick={searchProductsList}
+            size="lg"
           >
             جستجو کنید
           </Button>

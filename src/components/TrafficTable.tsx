@@ -31,13 +31,13 @@ const TrafficTable: React.FC<{ data: TrafficData[] }> = ({ data }) => {
           {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.Traffic ? item.Traffic : "نامشخص"}
+                {item.Traffic ? item.Traffic : "_"}
               </TableCell>
               <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.TimeStamp ? item.TimeStamp : "نامشخص"}
+                {item.TimeStamp ? item.TimeStamp : "_"}
               </TableCell>
               <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.Description ? item.Description : "ندارد"}
+                {item.Description ? item.Description : "_"}
               </TableCell>
             </TableRow>
           ))}

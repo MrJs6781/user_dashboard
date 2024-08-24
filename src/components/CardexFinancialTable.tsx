@@ -47,19 +47,19 @@ const CardexFinancialTable: React.FC<{ data: CardexFinancial[] }> = ({
                   {item.TimeStamp}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                  {item.ProductTitle ? item.ProductTitle : "نامشخص"}
+                  {item.ProductTitle ? item.ProductTitle : "_"}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                  {item.SellCount ? item.SellCount : "0"}
+                  {item.SellCount ? item.SellCount : "_"}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                  {item.Fi ? item.Fi : "نامشخص"}
+                  {item.Fi ? item.Fi : "_"}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
                   {item.Price}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                  {item.Type ? item.Type : "نامشخص"}
+                  {item.Type ? item.Type : "_"}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
                   {item.BuySellParty ? item.BuySellParty : "_"}
@@ -68,7 +68,7 @@ const CardexFinancialTable: React.FC<{ data: CardexFinancial[] }> = ({
                   {String(item?.Users)}
                 </TableCell>
                 <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                  {item.Description ? item.Description : "ندارد"}
+                  {item.Description ? item.Description : "_"}
                 </TableCell>
               </TableRow>
             );

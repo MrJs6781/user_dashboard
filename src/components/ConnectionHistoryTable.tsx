@@ -44,34 +44,34 @@ const ConnectionHistoryTable: React.FC<{ data: HistoryData[] }> = ({
           {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.StartTime}
+                {item.StartTime ? item.StartTime : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Duration}
+                {item.Duration ? item.Duration : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.StopTime}
+                {item.StopTime ? item.StopTime : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.RasTitle}
+                {item.RasTitle ? item.RasTitle : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.NasIP}
+                {item.NasIP ? item.NasIP : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.CurrentUpload}
+                {item.CurrentUpload ? item.CurrentUpload : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.CurrentDownload}
+                {item.CurrentDownload ? item.CurrentDownload : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.TrafficRemained}
+                {item.TrafficRemained ? item.TrafficRemained : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.LastUpdate}
+                {item.LastUpdate ? item.LastUpdate : "_"}
               </TableCell>
               <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.LastAction}
+                {item.LastAction ? item.LastAction : "_"}
               </TableCell>
             </TableRow>
           ))}
