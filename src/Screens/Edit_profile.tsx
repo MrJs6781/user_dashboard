@@ -29,7 +29,7 @@ export default function EditProfile() {
         setMobileNumber(fetchedData?.Data[0]?.Mobile);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-        localStorage.clear();
+            localStorage.removeItem('UserID');;
         navigate("/");
         toast.error(fetchedData.Message);
       } else {
@@ -93,7 +93,7 @@ export default function EditProfile() {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
           Cookies.remove("authToken");
-          localStorage.clear();
+              localStorage.removeItem('UserID');;
           navigate("/");
         }, 1000);
       } else {

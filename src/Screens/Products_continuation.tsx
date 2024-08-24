@@ -242,7 +242,7 @@ export default function Products_continuation() {
       if (fetchedData.Status == 0) {
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-        localStorage.clear();
+            localStorage.removeItem('UserID');;
         navigate("/");
         toast.error(fetchedData.Message);
       } else {
@@ -257,7 +257,7 @@ export default function Products_continuation() {
         setUserProductsData(userProducts.Data);
       } else if (userProducts.Status == "-103") {
         Cookies.remove("authToken");
-        localStorage.clear();
+            localStorage.removeItem('UserID');;
         navigate("/");
         toast.error(userProducts.Message);
       } else {
@@ -335,7 +335,7 @@ export default function Products_continuation() {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
           Cookies.remove("authToken");
-          localStorage.clear();
+              localStorage.removeItem('UserID');;
           navigate("/");
         }, 1000);
       } else {

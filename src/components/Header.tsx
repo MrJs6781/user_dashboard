@@ -110,7 +110,7 @@ export default function Header() {
 
   const logOutHandler = () => {
     Cookies.remove("authToken");
-    localStorage.clear();
+    localStorage.removeItem('UserID');
     navigate("/");
     setTimeout(() => {
       window.location.reload();

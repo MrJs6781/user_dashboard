@@ -232,7 +232,7 @@ export default function ConnectionHistory() {
       if (fetchedData.Status == 0) {
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-        localStorage.clear();
+            localStorage.removeItem('UserID');;
         navigate("/");
         toast.error(fetchedData.Message);
       } else {

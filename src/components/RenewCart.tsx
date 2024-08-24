@@ -52,7 +52,7 @@ export default function RenewCart({ data, index }: RenewCartProps) {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
           Cookies.remove("authToken");
-          localStorage.clear();
+              localStorage.removeItem('UserID');;
           navigate("/");
         }, 1000);
       } else {
