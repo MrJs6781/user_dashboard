@@ -13,6 +13,7 @@ import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useLocation } from "react-router-dom";
 
 import {
   Sheet,
@@ -20,6 +21,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 type headerListType = {
   id: number;
@@ -104,6 +106,7 @@ const headerListData = [
 
 export default function Header() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const logOutHandler = () => {
     Cookies.remove("authToken");
@@ -188,10 +191,17 @@ export default function Header() {
               <Link
                 key={item.id}
                 to={item.link}
-                className="flex items-center gap-2 cursor-pointer h-full"
+                className={cn("flex items-center gap-2 cursor-pointer")}
               >
                 {item.icon}
-                <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                <p
+                  className={cn(
+                    "text-[14px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
+                    pathname == item.link
+                      ? "text-[15px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000]"
+                      : ""
+                  )}
+                >
                   {item.title}
                 </p>
               </Link>
@@ -204,7 +214,7 @@ export default function Header() {
                 onClick={logOutHandler}
               >
                 {item.icon}
-                <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                <p className="text-[14px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
                   {item.title}
                 </p>
               </li>
