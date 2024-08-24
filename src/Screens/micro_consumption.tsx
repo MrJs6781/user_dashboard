@@ -15,6 +15,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DatePickerWithRange } from "@/components/DatePickerWithJalaliRange";
 import { Button } from "@/components/ui/button";
 import { ConsumeFetchData } from "@/types/Consume";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const dashboardBoxes = [
   {
@@ -324,84 +326,117 @@ export default function MicroConsumption() {
       style={{ direction: "rtl" }}
     >
       <Header />
-      <ul className="w-full auto_grid items-center justify-start gap-4 sm:gap-6 mt-20 px-6">
-        {dashboardBoxes?.map((item , index) => (
-          <li
+      <Swiper
+        spaceBetween={10}
+        breakpoints={{
+          1000: {
+            slidesPerView: 4.5,
+            spaceBetween: 15,
+          },
+          700: {
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+          450: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+          },
+          0: {
+            slidesPerView: 1.4,
+            spaceBetween: 15,
+          },
+        }}
+        className="w-full mt-20 px-6"
+      >
+        {dashboardBoxes?.map((item, index) => (
+          <SwiperSlide
+            style={{
+              width: "100px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "8px",
+              cursor: "grab",
+            }}
             key={item.id}
-            className={cn(
-              "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3"
-            )}
-            style={
-              {
-                backdropFilter: "blur(20px)",
-                "--i": index + 1, // تعیین مقدار --i برای هر آیتم
-              } as React.CSSProperties
-            } // نوع‌دهی اجباری به عنوان CSSProperties
           >
-            {item.icon}
-            <span className="flex flex-col items-start gap-1">
-              <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                {item.title} :{" "}
-              </p>
-              {item.id == 1 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.RemainedTime} روز
-                </small>
+            <li
+              key={item.id}
+              className={cn(
+                "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3 fade_in_animation"
               )}
-              {item.id == 2 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.RemainedTraffic}
-                </small>
-              )}
-              {item.id == 3 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.WalletRemained} تومان
-                </small>
-              )}
-              {/* {item.id == 4 && (
+              style={
+                {
+                  backdropFilter: "blur(20px)",
+                  "--i": index + 1, // تعیین مقدار --i برای هر آیتم
+                } as React.CSSProperties
+              } // نوع‌دهی اجباری به عنوان CSSProperties
+            >
+              {item.icon}
+              <span className="flex flex-col items-start gap-1">
+                <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                  {item.title} :{" "}
+                </p>
+                {item.id == 1 && (
+                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {fetchedData?.Data[0]?.RemainedTime} روز
+                  </small>
+                )}
+                {item.id == 2 && (
+                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {fetchedData?.Data[0]?.RemainedTraffic}
+                  </small>
+                )}
+                {item.id == 3 && (
+                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {fetchedData?.Data[0]?.WalletRemained} تومان
+                  </small>
+                )}
+                {/* {item.id == 4 && (
                 <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.RemainedTime}
                 </small>
               )} */}
-              {item.id == 5 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.CreationTime
-                    ? fetchedData?.Data[0]?.CreationTime
-                    : ""}
-                </small>
-              )}
-              {item.id == 6 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.FirstLogin
-                    ? fetchedData?.Data[0]?.FirstLogin
-                    : "مشخص نیست"}
-                </small>
-              )}
-              {item.id == 7 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.ExpirationTime
-                    ? fetchedData?.Data[0]?.ExpirationTime
-                    : "ندارد"}
-                </small>
-              )}
-              {item.id == 8 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.OnlineCount
-                    ? fetchedData?.Data[0]?.OnlineCount
-                    : "ندارد"}
-                </small>
-              )}
-              {item.id == 9 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.IsTrafficBase == true
-                    ? "میباشد"
-                    : "نمیباشد"}
-                </small>
-              )}
-            </span>
-          </li>
+                {item.id == 5 && (
+                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {fetchedData?.Data[0]?.CreationTime
+                      ? fetchedData?.Data[0]?.CreationTime
+                      : ""}
+                  </small>
+                )}
+                {item.id == 6 && (
+                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {fetchedData?.Data[0]?.FirstLogin
+                      ? fetchedData?.Data[0]?.FirstLogin
+                      : "مشخص نیست"}
+                  </small>
+                )}
+                {item.id == 7 && (
+                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {fetchedData?.Data[0]?.ExpirationTime
+                      ? fetchedData?.Data[0]?.ExpirationTime
+                      : "ندارد"}
+                  </small>
+                )}
+                {item.id == 8 && (
+                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {fetchedData?.Data[0]?.OnlineCount
+                      ? fetchedData?.Data[0]?.OnlineCount
+                      : "ندارد"}
+                  </small>
+                )}
+                {item.id == 9 && (
+                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {fetchedData?.Data[0]?.IsTrafficBase == true
+                      ? "میباشد"
+                      : "نمیباشد"}
+                  </small>
+                )}
+              </span>
+            </li>
+          </SwiperSlide>
         ))}
-      </ul>
+      </Swiper>
       <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
         <div className="w-full flex items-center justify-start gap-6 flex-wrap">
           <span className="w-fit flex items-center justify-start gap-2">
