@@ -33,7 +33,6 @@ interface ComboChartProps {
 }
 
 const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
-
   const chartData = {
     labels,
     datasets: [

@@ -281,12 +281,19 @@ export default function Dashboard() {
   }, [consumeData]);
 
   const convertToKB = (value: string): number => {
-    if (value.includes("KB")) {
+    const valueInLowerCase = value.toLowerCase(); // برای یکسان‌سازی حروف بزرگ و کوچک
+
+    if (valueInLowerCase.includes("KB")) {
       return parseFloat(value);
-    } else if (value.includes("B")) {
+    } else if (valueInLowerCase.includes("b")) {
       return parseFloat(value) / 1024;
+    } else if (valueInLowerCase.includes("MB")) {
+      return parseFloat(value) * 1024;
+    } else if (valueInLowerCase.includes("GB")) {
+      return parseFloat(value) * 1024 * 1024;
+    } else {
+      return 0;
     }
-    return 0;
   };
 
   if (fetchedDataLoading || consumeDataLoading) {
