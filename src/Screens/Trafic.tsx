@@ -227,18 +227,19 @@ export default function Trafic() {
   const [date, setDate] = useState<DateRange | undefined>();
   const [justActiveState, setJustActiveState] = useState(true);
   const [isShowLoading, setIsShowLoading] = useState(false);
+  const [trafficTableHeader , setTrafficTableHeader] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: trafficData, isLoading: trafficDataLoading } =
-    useFetchTrafficData();
+    useFetchTrafficData(1);
 
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-            localStorage.removeItem('UserID');;
+        localStorage.removeItem("UserID");
         navigate("/");
         toast.error(fetchedData.Message);
       } else {
@@ -250,6 +251,13 @@ export default function Trafic() {
   useEffect(() => {
     if (trafficData) {
       if (trafficData.Status == 0) {
+        let arr: any = [];
+        trafficData?.Title.split(",")?.map((renewData: string) => {
+          if (renewData.length > 0) {
+            arr.push(renewData);
+          }
+        });
+        setTrafficTableHeader(arr);
         setTrafficDataTable(trafficData.Data);
       } else {
         toast.error(trafficData.Message);
@@ -488,7 +496,7 @@ export default function Trafic() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <TrafficTable data={trafficDataTable} />
+          <TrafficTable data={trafficDataTable} headerData={trafficTableHeader} />
         </div>
       </div>
     </div>

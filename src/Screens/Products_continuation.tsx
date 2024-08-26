@@ -236,8 +236,8 @@ export default function Products_continuation() {
     useFetchUserProducts({ languageId: 1 });
   const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew(1);
   const [isShowLoading, setIsShowLoading] = useState(false);
-  let [renewTableHeader, setRenewTableHeader]: any = useState([]);
-  let [userProductsHeader, setUserProductsHeader]: any = useState([]);
+  const [renewTableHeader, setRenewTableHeader]: any = useState([]);
+  const [userProductsHeader, setUserProductsHeader]: any = useState([]);
 
   useEffect(() => {
     if (fetchedData) {
