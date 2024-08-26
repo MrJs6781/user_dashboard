@@ -198,7 +198,7 @@ export default function Header() {
                   className={cn(
                     "text-[14px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
                     pathname == item.link
-                      ? "text-[15px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000]"
+                      ? "text-[15px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] border-b-4 border-black dark:border-white"
                       : ""
                   )}
                 >

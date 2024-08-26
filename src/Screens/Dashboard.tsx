@@ -237,16 +237,18 @@ export default function Dashboard() {
   const [totalData, setTotalData] = useState<number[]>([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData();
+    useFetchDashboardData(1);
   const { data: consumeData, isLoading: consumeDataLoading } =
     useFetchDashboardConsume();
 
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
+        // console.log(fetchedData);
+        // console.log(fetchedData?.Title?.split(","));
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-            localStorage.removeItem('UserID');;
+        localStorage.removeItem("UserID");
         navigate("/");
         toast.error(fetchedData.Message);
       } else {

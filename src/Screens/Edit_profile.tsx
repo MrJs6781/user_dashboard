@@ -29,7 +29,7 @@ export default function EditProfile() {
         setMobileNumber(fetchedData?.Data[0]?.Mobile);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-            localStorage.removeItem('UserID');;
+        localStorage.removeItem("UserID");
         navigate("/");
         toast.error(fetchedData.Message);
       } else {
@@ -82,18 +82,23 @@ export default function EditProfile() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      console.log(data);
+      // console.log(data);
       if (data.Status == "0") {
         toast.success("پروفایل کاربری شما با موفقیت آپدیت شد :)");
-        setIsLoading(false);
+        // setIsLoading(false);
         setTimeout(() => {
-          window.location.reload();
+          Cookies.remove("authToken");
+          localStorage.removeItem("UserID");
+          navigate("/");
         }, 1000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1000);
       } else if (data.Status == "-103") {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
           Cookies.remove("authToken");
-              localStorage.removeItem('UserID');;
+          localStorage.removeItem("UserID");
           navigate("/");
         }, 1000);
       } else {
