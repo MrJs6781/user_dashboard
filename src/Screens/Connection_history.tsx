@@ -221,11 +221,12 @@ export default function ConnectionHistory() {
   const [searchValue, setSearchValue] = useState("");
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [connectionHistoryData, setConnectionHistoryData] = useState([]);
+  const [connectionHistoryTableHeader , setConnectionHistoryTableHeader] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: connectionHistory, isLoading: connectionHistoryLoading } =
-    useConnectionHistory();
+    useConnectionHistory(1);
 
   useEffect(() => {
     if (fetchedData) {
@@ -244,6 +245,13 @@ export default function ConnectionHistory() {
   useEffect(() => {
     if (connectionHistory) {
       if (connectionHistory.Status == 0) {
+        let arr: any = [];
+        connectionHistory?.Title.split(",")?.map((renewData: string) => {
+          if (renewData.length > 0) {
+            arr.push(renewData);
+          }
+        });
+        setConnectionHistoryTableHeader(arr);
         setConnectionHistoryData(connectionHistory?.Data);
       } else {
         toast.error(connectionHistory.Message);
@@ -457,7 +465,7 @@ export default function ConnectionHistory() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <ConnectionHistoryTable data={connectionHistoryData} />
+          <ConnectionHistoryTable data={connectionHistoryData} headerData={connectionHistoryTableHeader} />
         </div>
       </div>
     </div>

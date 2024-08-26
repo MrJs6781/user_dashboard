@@ -9,28 +9,29 @@ import {
 } from "@/components/ui/table";
 import { HistoryData } from "@/types/ConnectionHistory";
 
-const tableName = [
-  "شروع",
-  "مدت",
-  "پایان",
-  "سرور",
-  "آی پی مشتری",
-  "آپلود",
-  "دانلود",
-  "حجم مانده",
-  "آخرین آپدیت",
-  "آخرین عملیات",
-];
+// const tableName = [
+//   "شروع",
+//   "مدت",
+//   "پایان",
+//   "سرور",
+//   "آی پی مشتری",
+//   "آپلود",
+//   "دانلود",
+//   "حجم مانده",
+//   "آخرین آپدیت",
+//   "آخرین عملیات",
+// ];
 
-const ConnectionHistoryTable: React.FC<{ data: HistoryData[] }> = ({
-  data,
-}) => {
+const ConnectionHistoryTable: React.FC<{
+  data: HistoryData[];
+  headerData: string[];
+}> = ({ data, headerData }) => {
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
         <TableHeader>
           <TableRow>
-            {tableName.map((header, index) => (
+            {headerData?.map((header, index) => (
               <TableHead
                 key={index}
                 className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"

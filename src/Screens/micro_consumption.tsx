@@ -225,13 +225,14 @@ export default function MicroConsumption() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: consumeFetch, isLoading: consumeFetchLoading } =
-    useConsumeFetch();
+    useConsumeFetch(1);
 
   const [consumeFetchData, setConsumeFetchData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [date, setDate] = useState<DateRange | undefined>();
   const [justActiveState, setJustActiveState] = useState(true);
   const [isShowLoading, setIsShowLoading] = useState(false);
+  const [consumeTableHeader , setConsumeTableHeader] = useState([]);
 
   useEffect(() => {
     if (fetchedData) {
@@ -250,6 +251,13 @@ export default function MicroConsumption() {
   useEffect(() => {
     if (consumeFetch) {
       if (consumeFetch.Status == 0) {
+        let arr: any = [];
+        consumeFetch?.Title.split(",")?.map((renewData: string) => {
+          if (renewData.length > 0) {
+            arr.push(renewData);
+          }
+        });
+        setConsumeTableHeader(arr);
         setConsumeFetchData(consumeFetch?.Data);
       } else {
         toast.error(consumeFetch.Message);
@@ -488,7 +496,7 @@ export default function MicroConsumption() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <ConsumeTable data={consumeFetchData} />
+          <ConsumeTable data={consumeFetchData} headerData={consumeTableHeader} />
         </div>
       </div>
     </div>
