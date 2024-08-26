@@ -19,8 +19,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const dashboardBoxes = [
   {
@@ -233,7 +237,9 @@ export default function CardexFinancial() {
     []
   );
   const [cardexFinancialType, setCardexFinancialType] = useState("");
-  const [cardexFinancialTableHeader , setCardexFinancialTableHeader] = useState([]);
+  const [cardexFinancialTableHeader, setCardexFinancialTableHeader] = useState(
+    []
+  );
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -245,7 +251,7 @@ export default function CardexFinancial() {
       if (fetchedData.Status == 0) {
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-            localStorage.removeItem('UserID');;
+        localStorage.removeItem("UserID");
         navigate("/");
         toast.error(fetchedData.Message);
       } else {
@@ -333,6 +339,7 @@ export default function CardexFinancial() {
     >
       <Header />
       <Swiper
+        modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
           1000: {
@@ -352,7 +359,9 @@ export default function CardexFinancial() {
             spaceBetween: 15,
           },
         }}
-        className="w-full mt-20 px-6"
+        navigation
+        pagination={{ clickable: true }}
+        className="w-full mt-12 px-6 bg-transparent h-[160px]"
       >
         {dashboardBoxes?.map((item, index) => (
           <SwiperSlide
@@ -500,7 +509,10 @@ export default function CardexFinancial() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <CardexFinancialTable data={cardexTrafficFinancialData} headerData={cardexFinancialTableHeader} />
+          <CardexFinancialTable
+            data={cardexTrafficFinancialData}
+            headerData={cardexFinancialTableHeader}
+          />
         </div>
       </div>
     </div>

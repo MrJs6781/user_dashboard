@@ -136,6 +136,38 @@
   direction: rtl;
 }
 
+.swiper-button-prev {
+  width: 35px;
+  height: 35px;
+  background-color: #007aff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  z-index: 1000;
+}
+
+.swiper-button-prev::after {
+  font-size: 20px;
+  color: white;
+}
+
+.swiper-button-next {
+  width: 35px;
+  height: 35px;
+  background-color: #007aff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  z-index: 1000;
+}
+
+.swiper-button-next::after {
+  font-size: 20px;
+  color: white;
+}
+
 .fade_in_animation {
   opacity: 0;
   animation: fade-in 500ms forwards;

@@ -15,8 +15,12 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const dashboardBoxes = [
   {
@@ -344,6 +348,7 @@ export default function CardexTraffic() {
     >
       <Header />
       <Swiper
+        modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
           1000: {
@@ -363,7 +368,9 @@ export default function CardexTraffic() {
             spaceBetween: 15,
           },
         }}
-        className="w-full mt-20 px-6"
+        navigation
+        pagination={{ clickable: true }}
+        className="w-full mt-12 px-6 bg-transparent h-[160px]"
       >
         {dashboardBoxes?.map((item, index) => (
           <SwiperSlide

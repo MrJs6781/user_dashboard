@@ -17,8 +17,12 @@ import { DateRange } from "react-day-picker";
 import { useMutation } from "@tanstack/react-query";
 import { UserRenewQuery } from "@/types/Renew";
 import dayjs from "dayjs";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const dashboardBoxes = [
   {
@@ -385,6 +389,7 @@ export default function Products_continuation() {
     >
       <Header />
       <Swiper
+        modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
           1000: {
@@ -404,7 +409,9 @@ export default function Products_continuation() {
             spaceBetween: 15,
           },
         }}
-        className="w-full mt-20 px-6"
+        navigation
+        pagination={{ clickable: true }}
+        className="w-full mt-12 px-6 bg-transparent h-[160px]"
       >
         {dashboardBoxes?.map((item, index) => (
           <SwiperSlide
