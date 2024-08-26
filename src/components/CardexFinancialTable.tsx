@@ -83,7 +83,7 @@ const CardexFinancialTable: React.FC<{
                           </p>
                         </button>
                       </DialogTrigger>
-                      <DialogContent style={{ direction: "rtl" }}>
+                      <DialogContent  >
                         <Table className="table-fixed w-full mt-6">
                           <TableHeader>
                             <TableRow>

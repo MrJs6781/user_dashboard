@@ -82,7 +82,7 @@ export default function Login() {
         </h5>
         <form
           action=""
-          style={{ direction: "rtl" }}
+           
           className="w-full max-w-[380px] flex flex-col items-start gap-4 mt-4"
         >
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">

@@ -240,9 +240,9 @@ export default function Dashboard() {
   const [totalData, setTotalData] = useState<number[]>([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(1);
+    useFetchDashboardData();
   const { data: consumeData, isLoading: consumeDataLoading } =
-    useFetchDashboardConsume();
+    useFetchDashboardConsume(1);
 
   useEffect(() => {
     if (fetchedData) {
@@ -261,17 +261,18 @@ export default function Dashboard() {
   }, [fetchedData]);
 
   useEffect(() => {
+    // console.log(consumeData);
     const parsedLabels = consumeData?.Data?.map(
       (item: DataItem) => item.TimeStamp
     );
     const parsedDownloadData = consumeData?.Data?.map((item: DataItem) =>
-      convertToKB(item.Download)
+      convertToMB(item.Download)
     );
     const parsedUploadData = consumeData?.Data?.map((item: DataItem) =>
-      convertToKB(item.Upload)
+      convertToMB(item.Upload)
     );
     const parsedConsumeData = consumeData?.Data?.map((item: DataItem) =>
-      convertToKB(item.Consume)
+      convertToMB(item.Consume)
     );
 
     setLabels(parsedLabels);
@@ -280,17 +281,20 @@ export default function Dashboard() {
     setTotalData(parsedConsumeData);
   }, [consumeData]);
 
-  const convertToKB = (value: string): number => {
+  const convertToMB = (value: string): number => {
     const valueInLowerCase = value.toLowerCase(); // برای یکسان‌سازی حروف بزرگ و کوچک
 
-    if (valueInLowerCase.includes("KB")) {
+    if (valueInLowerCase.includes("kb")) {
       return parseFloat(value);
-    } else if (valueInLowerCase.includes("b")) {
-      return parseFloat(value) / 1024;
-    } else if (valueInLowerCase.includes("MB")) {
+    } 
+    else if (valueInLowerCase.includes("mb")) {
       return parseFloat(value) * 1024;
-    } else if (valueInLowerCase.includes("GB")) {
+    } 
+    else if (valueInLowerCase.includes("gb")) {
       return parseFloat(value) * 1024 * 1024;
+    } 
+    else if (valueInLowerCase.includes("b")) {
+      return parseFloat(value) / 1024;
     } else {
       return 0;
     }
@@ -303,7 +307,7 @@ export default function Dashboard() {
   return (
     <div
       className="w-full h-screen overflow-auto flex flex-col items-start"
-      style={{ direction: "rtl" }}
+       
     >
       <Header />
       <Swiper

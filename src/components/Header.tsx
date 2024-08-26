@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { AiOutlineDashboard } from "react-icons/ai";
 import { FaChartLine } from "react-icons/fa6";
@@ -14,6 +14,7 @@ import ProfileUser from "./ProfileUser";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
+import { IoLanguage } from "react-icons/io5";
 
 import {
   Sheet,
@@ -110,11 +111,55 @@ export default function Header() {
 
   const logOutHandler = () => {
     Cookies.remove("authToken");
-    localStorage.removeItem('UserID');
+    localStorage.removeItem("UserID");
     navigate("/");
     setTimeout(() => {
       window.location.reload();
     }, 500);
+  };
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language")) {
+      const getLang = window.localStorage.getItem("ssss_language")!;
+      if (getLang == "en") {
+        const getHTML = window.document.getElementById("root_parent");
+        getHTML?.style.setProperty("direction", "ltr");
+        getHTML?.setAttribute("lang", "en");
+      } else {
+        const getHTML = window.document.getElementById("root_parent");
+        getHTML?.style.setProperty("direction", "rtl");
+        getHTML?.setAttribute("lang", "fa");
+      }
+    } else {
+      const getHTML = window.document.getElementById("root_parent");
+      getHTML?.style.setProperty("direction", "rtl");
+      getHTML?.setAttribute("lang", "fa");
+    }
+  }, []);
+
+  const toggleLanguage = () => {
+    if (window.localStorage.getItem("ssss_language")) {
+      const getLang = window.localStorage.getItem("ssss_language")!;
+      if (getLang == "en") {
+        window.localStorage.setItem("ssss_language", "fa");
+        window.localStorage.setItem("ssss_language_id", "1");
+        const getHTML = window.document.getElementById("root_parent");
+        getHTML?.style.setProperty("direction", "rtl");
+        getHTML?.setAttribute("lang", "fa");
+      } else {
+        window.localStorage.setItem("ssss_language", "en");
+        window.localStorage.setItem("ssss_language_id", "0");
+        const getHTML = window.document.getElementById("root_parent");
+        getHTML?.style.setProperty("direction", "ltr");
+        getHTML?.setAttribute("lang", "en");
+      }
+    } else {
+      window.localStorage.setItem("ssss_language", "en");
+      window.localStorage.setItem("ssss_language_id", "0");
+      const getHTML = window.document.getElementById("root_parent");
+      getHTML?.style.setProperty("direction", "ltr");
+      getHTML?.setAttribute("lang", "en");
+    }
   };
 
   return (
@@ -127,7 +172,7 @@ export default function Header() {
         borderBottomRightRadius: "12px",
       }}
     >
-      <span className="w-[50px] flex lg:hidden items-center justify-start">
+      <span className="w-[50px] flex lg_2:hidden items-center justify-start">
         <Sheet>
           <SheetTrigger>
             <svg
@@ -147,7 +192,7 @@ export default function Header() {
               <line x1="3" x2="21" y1="18" y2="18" />
             </svg>
           </SheetTrigger>
-          <SheetContent style={{ direction: "rtl" }}>
+          <SheetContent>
             <SheetHeader>
               <ul className="w-full flex flex-col items-start gap-6 mt-8">
                 {headerListData.map((item: headerListType) => {
@@ -184,7 +229,7 @@ export default function Header() {
           </SheetContent>
         </Sheet>
       </span>
-      <ul className="w-fit h-full hidden lg:flex items-center justify-start gap-6 list-none">
+      <ul className="w-fit h-full hidden lg_2:flex items-center justify-start gap-6 list-none">
         {headerListData.map((item: headerListType) => {
           if (item.link) {
             return (
@@ -223,6 +268,10 @@ export default function Header() {
         })}
       </ul>
       <span className="flex items-center gap-4">
+        <IoLanguage
+          className="cursor-pointer text-[20px]"
+          onClick={toggleLanguage}
+        />
         <BiMessageSquareDetail className="cursor-pointer text-[20px]" />
         <ModeToggle />
         <ProfileUser />

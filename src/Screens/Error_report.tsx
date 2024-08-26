@@ -320,7 +320,7 @@ export default function ErrorReport() {
   return (
     <div
       className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
-      style={{ direction: "rtl" }}
+       
     >
       <Header />
       <Swiper

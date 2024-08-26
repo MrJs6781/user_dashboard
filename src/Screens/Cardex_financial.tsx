@@ -335,7 +335,7 @@ export default function CardexFinancial() {
   return (
     <div
       className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
-      style={{ direction: "rtl" }}
+       
     >
       <Header />
       <Swiper
@@ -460,11 +460,11 @@ export default function CardexFinancial() {
           >
             <SelectTrigger
               className="w-[180px] font-vazirM"
-              style={{ direction: "rtl" }}
+               
             >
               <SelectValue placeholder="نوع تراکنش" />
             </SelectTrigger>
-            <SelectContent style={{ direction: "rtl" }}>
+            <SelectContent  >
               <SelectItem className="font-vazirM" value="W">
                 کیف پول
               </SelectItem>

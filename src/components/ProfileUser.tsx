@@ -65,7 +65,7 @@ export default function ProfileUser() {
           <DropdownMenuItem
             key={item.id}
             className="w-full flex items-center justify-between px-2 cursor-pointer"
-            style={{ direction: "rtl" }}
+             
           >
             <Link
               to={item.link}

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
-export const useFetchDashboardConsume = () => {
+export const useFetchDashboardConsume = (languageId? : number) => {
   const fetchData = async () => {
     // گرفتن توکن از کوکی
     const getToken = Cookies.get("authToken"); // تابع getCookie را خودتان پیاده‌سازی کنید
@@ -17,6 +17,7 @@ export const useFetchDashboardConsume = () => {
       {
         method: "POST",
         headers: myHeaders,
+        body : JSON.stringify({languageId}),
         redirect: "follow",
       }
     );

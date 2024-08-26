@@ -9,9 +9,11 @@ const PaginationComponent: React.FC<{
 }> = ({ paginationData, perPage, setPerPage, setCurrentItems }) => {
   const [activePage, setActivePage] = useState(1);
   const [length, setLength] = useState<any>([]);
+  const [totalPageData , setTotalPageData] : any = useState();
 
   useEffect(() => {
     const totalPages = Math.ceil(paginationData.length / perPage);
+    setTotalPageData(totalPages);
 
     const indexOfLastItem = activePage * perPage;
     const indexOfFirstItem = indexOfLastItem - perPage;
@@ -26,7 +28,7 @@ const PaginationComponent: React.FC<{
       arr.push(index);
     }
     setLength(arr);
-  }, [paginationData , perPage]);
+  }, [paginationData, perPage , activePage]);
 
   const changePageHandler = (item: number) => {
     setActivePage(item);
@@ -40,10 +42,22 @@ const PaginationComponent: React.FC<{
     setCurrentItems(currentItems);
   };
 
+  const goToLastPageHandler = () => {
+    if (activePage > 1) {
+      setActivePage((prev) => prev - 1);
+    }
+  };
+
+  const goToNextPageHandler = () => {
+    if (activePage < totalPageData) {
+      setActivePage((prev) => prev + 1);
+    }
+  };
+
   return (
     <section
       className="w-full flex items-center justify-center mt-4 gap-4 flex-wrap"
-      style={{ direction: "rtl" }}
+       
     >
       <div className="flex items-center justify-center gap-4">
         <p className="font-vazirM">نمایش تعداد در صفحه</p>
@@ -102,6 +116,7 @@ const PaginationComponent: React.FC<{
         <button
           className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
+          onClick={goToLastPageHandler}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -142,6 +157,7 @@ const PaginationComponent: React.FC<{
         <button
           className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
+          onClick={goToNextPageHandler}
         >
           بعدی
           <svg

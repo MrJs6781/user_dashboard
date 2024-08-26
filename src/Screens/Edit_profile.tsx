@@ -119,7 +119,7 @@ export default function EditProfile() {
   return (
     <div
       className="w-full h-screen overflow-auto flex items-center justify-center"
-      style={{ direction: "rtl" }}
+       
     >
       <Header />
       <div
@@ -128,7 +128,7 @@ export default function EditProfile() {
       >
         <form
           action=""
-          style={{ direction: "rtl" }}
+           
           className="w-full max-w-[380px] flex flex-col items-start gap-4 mt-4"
         >
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
@@ -161,7 +161,7 @@ export default function EditProfile() {
               onChange={mobileNumberChangeHandler}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
               maxLength={11}
-              style={{ direction: "rtl" }}
+               
             />
             <FaPhoneAlt className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
           </span>

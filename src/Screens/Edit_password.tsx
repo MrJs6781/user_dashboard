@@ -114,7 +114,7 @@ export default function EditPassword() {
   return (
     <div
       className="w-full h-screen overflow-auto flex items-center justify-center"
-      style={{ direction: "rtl" }}
+       
     >
       <Header />
       <div
@@ -123,7 +123,7 @@ export default function EditPassword() {
       >
         <form
           action=""
-          style={{ direction: "rtl" }}
+           
           className="w-full max-w-[380px] flex flex-col items-start gap-4 mt-4"
         >
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
