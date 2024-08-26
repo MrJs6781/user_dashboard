@@ -64,7 +64,7 @@ const PaginationComponent: React.FC<{
         <select
           name="row_per_page"
           id="row_per_page"
-          className="w-[100px] h-[35px] font-semibold border-2 rounded-md outline-none cursor-pointer"
+          className="w-[100px] h-[35px] font-semibold border-2 rounded-md outline-none cursor-pointer dark:text-black"
           value={perPage}
           onChange={(e) => setPerPage(e.target.value)}
         >
@@ -114,7 +114,7 @@ const PaginationComponent: React.FC<{
       </div>
       <div className="flex items-center gap-4">
         <button
-          className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none dark:bg-white"
           type="button"
           onClick={goToLastPageHandler}
         >
@@ -142,7 +142,7 @@ const PaginationComponent: React.FC<{
                 "relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none",
                 activePage == item
                   ? "relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full bg-gray-900 hover:bg-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                  : ""
+                  : "dark:bg-white"
               )}
               type="button"
               key={item}
@@ -155,7 +155,7 @@ const PaginationComponent: React.FC<{
           ))}
         </div>
         <button
-          className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none dark:bg-white"
           type="button"
           onClick={goToNextPageHandler}
         >

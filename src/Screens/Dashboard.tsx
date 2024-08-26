@@ -15,6 +15,8 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+import { useTranslation } from 'react-i18next';
+
 const dashboardBoxes = [
   {
     id: 1,
@@ -38,7 +40,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "#a3e635",
-    title: "تعداد روزهای باقیمانده",
+    title: "NumberOfDaysLeft",
   },
   {
     id: 2,
@@ -61,7 +63,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "مقدار حجم باقیمانده",
+    title: "AmountOfRemainingVolume",
   },
   {
     id: 3,
@@ -84,7 +86,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "موجودی کیف پول",
+    title: "WalletBalance",
   },
   // {
   //   id: 4,
@@ -129,7 +131,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "تاریخ ساخت",
+    title: "dateOfManufacture",
   },
   {
     id: 6,
@@ -150,7 +152,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "زمان اولین اتصال",
+    title: "FirstConnectionTime",
   },
   {
     id: 7,
@@ -172,7 +174,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "تاریخ انقضا",
+    title: "expirationDate",
   },
   {
     id: 8,
@@ -196,7 +198,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "تعداد آنلاین با این کاربری",
+    title: "OnlineNumberWithThisUser",
   },
   {
     id: 9,
@@ -221,7 +223,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "کاربر حجمی",
+    title: "VolumeUser",
   },
 ];
 
@@ -233,6 +235,7 @@ interface DataItem {
 }
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [labels, setLabels] = useState<string[]>([]);
   const [downloadData, setDownloadData] = useState<number[]>([]);
@@ -362,7 +365,7 @@ export default function Dashboard() {
               {item.icon}
               <span className="flex flex-col items-start gap-1">
                 <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                  {item.title} :{" "}
+                  {t(item.title)} :{" "}
                 </p>
                 {item.id == 1 && (
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">

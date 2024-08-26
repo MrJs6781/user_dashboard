@@ -24,6 +24,9 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
+import i18n from "./../../i18n";
+import { useTranslation } from "react-i18next";
+
 type headerListType = {
   id: number;
   icon: React.ReactNode;
@@ -38,7 +41,7 @@ const headerListData = [
       <AiOutlineDashboard className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/dashboard",
-    title: "داشبورد",
+    title: "Dashboard",
   },
   {
     id: 2,
@@ -46,7 +49,7 @@ const headerListData = [
       <FaChartLine className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/products_continuation",
-    title: "تمدید",
+    title: "Renew",
   },
   {
     id: 3,
@@ -54,7 +57,7 @@ const headerListData = [
       <BiSolidSave className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/trafic",
-    title: "ترافیک",
+    title: "Traffic",
   },
   {
     id: 4,
@@ -62,7 +65,7 @@ const headerListData = [
       <TbMobiledata className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/micro_consumption",
-    title: "ریزمصرف",
+    title: "MicroConsumption",
   },
   {
     id: 5,
@@ -70,7 +73,7 @@ const headerListData = [
       <LiaRandomSolid className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/connection_history",
-    title: "سابقه اتصال",
+    title: "ConnectionHistory",
   },
   {
     id: 6,
@@ -78,7 +81,7 @@ const headerListData = [
       <FaEdit className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/error_report",
-    title: "گزارش خطا",
+    title: "ErrorReports",
   },
   {
     id: 7,
@@ -86,7 +89,7 @@ const headerListData = [
       <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/cardex_traffic",
-    title: "کاردکس ترافیک",
+    title: "CardexTraffic",
   },
   {
     id: 8,
@@ -94,18 +97,19 @@ const headerListData = [
       <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
     link: "/cardex_financial",
-    title: "کاردکس مالی",
+    title: "CardexFinancial",
   },
   {
     id: 9,
     icon: (
       <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
     ),
-    title: "خروج",
+    title: "Exit",
   },
 ];
 
 export default function Header() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -118,6 +122,10 @@ export default function Header() {
     }, 500);
   };
 
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
       const getLang = window.localStorage.getItem("ssss_language")!;
@@ -125,15 +133,18 @@ export default function Header() {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "ltr");
         getHTML?.setAttribute("lang", "en");
+        changeLanguage("en");
       } else {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "rtl");
         getHTML?.setAttribute("lang", "fa");
+        changeLanguage("fa");
       }
     } else {
       const getHTML = window.document.getElementById("root_parent");
       getHTML?.style.setProperty("direction", "rtl");
       getHTML?.setAttribute("lang", "fa");
+      changeLanguage("fa");
     }
   }, []);
 
@@ -146,12 +157,14 @@ export default function Header() {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "rtl");
         getHTML?.setAttribute("lang", "fa");
+        changeLanguage("fa");
       } else {
         window.localStorage.setItem("ssss_language", "en");
         window.localStorage.setItem("ssss_language_id", "0");
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "ltr");
         getHTML?.setAttribute("lang", "en");
+        changeLanguage("en");
       }
     } else {
       window.localStorage.setItem("ssss_language", "en");
@@ -159,6 +172,7 @@ export default function Header() {
       const getHTML = window.document.getElementById("root_parent");
       getHTML?.style.setProperty("direction", "ltr");
       getHTML?.setAttribute("lang", "en");
+      changeLanguage("en");
     }
   };
 
@@ -247,7 +261,7 @@ export default function Header() {
                       : ""
                   )}
                 >
-                  {item.title}
+                  {t(item.title)}
                 </p>
               </Link>
             );
@@ -260,7 +274,7 @@ export default function Header() {
               >
                 {item.icon}
                 <p className="text-[14px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                  {item.title}
+                  {t(item.title)}
                 </p>
               </li>
             );
