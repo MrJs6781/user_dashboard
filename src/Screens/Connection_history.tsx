@@ -17,6 +17,7 @@ import "swiper/css";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const dashboardBoxes = [
   {
@@ -226,6 +227,8 @@ export default function ConnectionHistory() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [connectionHistoryData, setConnectionHistoryData] = useState([]);
   const [connectionHistoryTableHeader , setConnectionHistoryTableHeader] = useState([]);
+  const [perPage , setPerPage] = useState(10);
+  const [currentItems , setCurrentItems] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -471,8 +474,9 @@ export default function ConnectionHistory() {
             جستجو کنید
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <ConnectionHistoryTable data={connectionHistoryData} headerData={connectionHistoryTableHeader} />
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
+          <ConnectionHistoryTable data={currentItems} headerData={connectionHistoryTableHeader} />
+          <PaginationComponent paginationData={connectionHistoryData} perPage={perPage} setCurrentItems={setCurrentItems} setPerPage={setPerPage} />
         </div>
       </div>
     </div>

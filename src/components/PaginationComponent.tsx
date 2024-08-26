@@ -1,9 +1,103 @@
-export default function PaginationComponent() {
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+
+const PaginationComponent: React.FC<{
+  paginationData: any[];
+  perPage: number;
+  setPerPage: any;
+  setCurrentItems: any;
+}> = ({ paginationData, perPage, setPerPage, setCurrentItems }) => {
+  const [activePage, setActivePage] = useState(1);
+  const [length, setLength] = useState<any>([]);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(paginationData.length / perPage);
+
+    const indexOfLastItem = activePage * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const currentItems = paginationData.slice(
+      indexOfFirstItem,
+      indexOfLastItem
+    );
+    setCurrentItems(currentItems);
+
+    let arr = [];
+    for (let index = 1; index <= totalPages; index++) {
+      arr.push(index);
+    }
+    setLength(arr);
+  }, [paginationData , perPage]);
+
+  const changePageHandler = (item: number) => {
+    setActivePage(item);
+
+    const indexOfLastItem = item * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const currentItems = paginationData.slice(
+      indexOfFirstItem,
+      indexOfLastItem
+    );
+    setCurrentItems(currentItems);
+  };
+
   return (
     <section
-      className="w-full flex items-center justify-center mt-4"
+      className="w-full flex items-center justify-center mt-4 gap-4 flex-wrap"
       style={{ direction: "rtl" }}
     >
+      <div className="flex items-center justify-center gap-4">
+        <p className="font-vazirM">نمایش تعداد در صفحه</p>
+        <select
+          name="row_per_page"
+          id="row_per_page"
+          className="w-[100px] h-[35px] font-semibold border-2 rounded-md outline-none cursor-pointer"
+          value={perPage}
+          onChange={(e) => setPerPage(e.target.value)}
+        >
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="5"
+          >
+            5
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="10"
+          >
+            10
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="20"
+          >
+            20
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="30"
+          >
+            30
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="40"
+          >
+            40
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="50"
+          >
+            50
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="100"
+          >
+            100
+          </option>
+        </select>
+      </div>
       <div className="flex items-center gap-4">
         <button
           className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -13,60 +107,37 @@ export default function PaginationComponent() {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="2"
+            strokeWidth="2"
             stroke="currentColor"
             aria-hidden="true"
             className="w-4 h-4"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
             ></path>
           </svg>
           قبلی
         </button>
         <div className="flex items-center gap-2">
-          <button
-            className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-          >
-            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-              1
-            </span>
-          </button>
-          <button
-            className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-          >
-            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-              2
-            </span>
-          </button>
-          <button
-            className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full bg-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-          >
-            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-              3
-            </span>
-          </button>
-          <button
-            className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-          >
-            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-              4
-            </span>
-          </button>
-          <button
-            className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-          >
-            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-              5
-            </span>
-          </button>
+          {length?.map((item: number) => (
+            <button
+              className={cn(
+                "relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none",
+                activePage == item
+                  ? "relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full bg-gray-900 hover:bg-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  : ""
+              )}
+              type="button"
+              key={item}
+              onClick={() => changePageHandler(item)}
+            >
+              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                {item}
+              </span>
+            </button>
+          ))}
         </div>
         <button
           className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -77,14 +148,14 @@ export default function PaginationComponent() {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="2"
+            strokeWidth="2"
             stroke="currentColor"
             aria-hidden="true"
             className="w-4 h-4"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
             ></path>
           </svg>
@@ -92,4 +163,6 @@ export default function PaginationComponent() {
       </div>
     </section>
   );
-}
+};
+
+export default PaginationComponent;
