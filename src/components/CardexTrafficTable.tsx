@@ -9,17 +9,18 @@ import {
 } from "@/components/ui/table";
 import { CardexTraffic } from "@/types/Cardex";
 
-const tableName = ["ترافیک", "آپلود", "دانلود", "مصرف", "زمان", "توضیحات"];
+// const tableName = ["ترافیک", "آپلود", "دانلود", "مصرف", "زمان", "توضیحات"];
 
-const CardexTrafficTable: React.FC<{ data: CardexTraffic[] }> = ({
-  data,
-}) => {
+const CardexTrafficTable: React.FC<{
+  data: CardexTraffic[];
+  headerData: string[];
+}> = ({ data, headerData }) => {
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
         <TableHeader>
           <TableRow>
-            {tableName.map((header, index) => (
+            {headerData?.map((header, index) => (
               <TableHead
                 key={index}
                 className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"

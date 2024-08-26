@@ -233,11 +233,12 @@ export default function CardexFinancial() {
     []
   );
   const [cardexFinancialType, setCardexFinancialType] = useState("");
+  const [cardexFinancialTableHeader , setCardexFinancialTableHeader] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: cardexFinancial, isLoading: cardexFinancialLoading } =
-    useCardexFinancial();
+    useCardexFinancial(1);
 
   useEffect(() => {
     if (fetchedData) {
@@ -256,6 +257,13 @@ export default function CardexFinancial() {
   useEffect(() => {
     if (cardexFinancial) {
       if (cardexFinancial.Status == 0) {
+        let arr: any = [];
+        cardexFinancial?.Title.split(",")?.map((renewData: string) => {
+          if (renewData.length > 0) {
+            arr.push(renewData);
+          }
+        });
+        setCardexFinancialTableHeader(arr);
         setCardexTrafficFinancialData(cardexFinancial?.Data);
       } else {
         toast.error(cardexFinancial.Message);
@@ -492,7 +500,7 @@ export default function CardexFinancial() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <CardexFinancialTable data={cardexTrafficFinancialData} />
+          <CardexFinancialTable data={cardexTrafficFinancialData} headerData={cardexFinancialTableHeader} />
         </div>
       </div>
     </div>

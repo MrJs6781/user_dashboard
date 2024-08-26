@@ -221,11 +221,12 @@ export default function ErrorReport() {
   const [searchValue, setSearchValue] = useState("");
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [errorReportsTableData, setErrorReportsTableData] = useState([]);
+  const [errorReportsTableHeader , setErrorReportsTableHeader] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: errorReports, isLoading: errorReportsLoading } =
-    useFetchErrorReports();
+    useFetchErrorReports(1);
 
   useEffect(() => {
     if (fetchedData) {
@@ -244,6 +245,13 @@ export default function ErrorReport() {
   useEffect(() => {
     if (errorReports) {
       if (errorReports.Status == 0) {
+        let arr: any = [];
+        errorReports?.Title.split(",")?.map((renewData: string) => {
+          if (renewData.length > 0) {
+            arr.push(renewData);
+          }
+        });
+        setErrorReportsTableHeader(arr);
         setErrorReportsTableData(errorReports?.Data);
       } else {
         toast.error(errorReports.Message);
@@ -457,7 +465,7 @@ export default function ErrorReport() {
           </Button>
         </div>
         <div className="w-full flex flex-col items-start justify-center overflow-x-scroll min-w-[800px]">
-          <ErrorReportsTable data={errorReportsTableData} />
+          <ErrorReportsTable data={errorReportsTableData} headerData={errorReportsTableHeader} />
           {/* <PaginationComponent /> */}
         </div>
       </div>

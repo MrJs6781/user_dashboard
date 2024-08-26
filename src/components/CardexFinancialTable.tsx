@@ -11,29 +11,30 @@ import { CardexFinancial, CardexUser } from "@/types/Cardex";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-const tableName = [
-  "زمان",
-  "محصول",
-  "تعداد",
-  "قیمت واحد",
-  "جمع کل",
-  "نوع تراکنش",
-  "شخص",
-  "کاربران",
-  "توضیحات",
-];
+// const tableName = [
+//   "زمان",
+//   "محصول",
+//   "تعداد",
+//   "قیمت واحد",
+//   "جمع کل",
+//   "نوع تراکنش",
+//   "شخص",
+//   "کاربران",
+//   "توضیحات",
+// ];
 
 const tableNameChild = ["تایپ", "کاربران"];
 
-const CardexFinancialTable: React.FC<{ data: CardexFinancial[] }> = ({
-  data,
-}) => {
+const CardexFinancialTable: React.FC<{
+  data: CardexFinancial[];
+  headerData: string[];
+}> = ({ data, headerData }) => {
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
         <TableHeader>
           <TableRow>
-            {tableName.map((header, index) => (
+            {headerData.map((header, index) => (
               <TableHead
                 key={index}
                 className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"

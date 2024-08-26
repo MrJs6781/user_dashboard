@@ -227,11 +227,12 @@ export default function CardexTraffic() {
   const [justActiveState, setJustActiveState] = useState(true);
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [cardexTrafficFetchData, setCardexTrafficFetchData] = useState([]);
+  const [cardexTrafficTableHeader , setCardexTrafficTableHeader] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: cardexTraffic, isLoading: cardexTrafficLoading } =
-    useCardexTraffic();
+    useCardexTraffic(1);
 
   useEffect(() => {
     if (fetchedData) {
@@ -250,6 +251,13 @@ export default function CardexTraffic() {
   useEffect(() => {
     if (cardexTraffic) {
       if (cardexTraffic.Status == 0) {
+        let arr: any = [];
+        cardexTraffic?.Title.split(",")?.map((renewData: string) => {
+          if (renewData.length > 0) {
+            arr.push(renewData);
+          }
+        });
+        setCardexTrafficTableHeader(arr);
         setCardexTrafficFetchData(cardexTraffic?.Data);
       } else {
         toast.error(cardexTraffic.Message);
@@ -497,7 +505,7 @@ export default function CardexTraffic() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <CardexTrafficTable data={cardexTrafficFetchData} />
+          <CardexTrafficTable data={cardexTrafficFetchData} headerData={cardexTrafficTableHeader} />
         </div>
       </div>
     </div>
