@@ -4,6 +4,7 @@ export interface UserProducts {
   PageNo?: string;
   RowPerPage?: string;
   SortIndex?: string;
+  languageId?: number;
 }
 
 // product.ts

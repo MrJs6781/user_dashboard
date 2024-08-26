@@ -8,9 +8,10 @@ import { useNavigate } from "react-router-dom";
 interface RenewCartProps {
   data: UserProductResponse;
   index: number;
+  headerData: { name: string; title: string }[];
 }
 
-export default function RenewCart({ data, index }: RenewCartProps) {
+export default function RenewCart({ data, index, headerData }: RenewCartProps) {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -52,7 +53,7 @@ export default function RenewCart({ data, index }: RenewCartProps) {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
           Cookies.remove("authToken");
-              localStorage.removeItem('UserID');;
+          localStorage.removeItem("UserID");
           navigate("/");
         }, 1000);
       } else {
@@ -78,7 +79,7 @@ export default function RenewCart({ data, index }: RenewCartProps) {
         alt="Image"
         className="w-full h-full max-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
       />
-      <span className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
+      {/* <span className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
         <span className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
           نام محصول :{" "}
           <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
@@ -111,7 +112,20 @@ export default function RenewCart({ data, index }: RenewCartProps) {
           </h5>{" "}
           تومان
         </span>
-      </span>
+      </span> */}
+      <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
+        {headerData?.map(({ name, title }, i) => (
+          <li
+            key={i}
+            className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
+          >
+            {title} :{" "}
+            <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+              {(data as any)[name]}
+            </h5>
+          </li>
+        ))}
+      </ul>
       <button
         className="w-[95%] mx-auto mb-4 rounded-[12px] h-[50px] flex items-center justify-center outline-none cursor-pointer border-none bg-[#a855f7] dark:bg-[#1e293b]"
         onClick={handleSubmit}

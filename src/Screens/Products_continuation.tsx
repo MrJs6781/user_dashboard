@@ -233,16 +233,18 @@ export default function Products_continuation() {
   const { isLoading: fetchedDataLoading, data: fetchedData } =
     useFetchDashboardData();
   const { isLoading: userProductsLoading, data: userProducts } =
-    useFetchUserProducts({});
-  const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew();
+    useFetchUserProducts({ languageId: 1 });
+  const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew(1);
   const [isShowLoading, setIsShowLoading] = useState(false);
+  let [renewTableHeader, setRenewTableHeader]: any = useState([]);
+  let [userProductsHeader, setUserProductsHeader]: any = useState([]);
 
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-            localStorage.removeItem('UserID');;
+        localStorage.removeItem("UserID");
         navigate("/");
         toast.error(fetchedData.Message);
       } else {
@@ -254,10 +256,21 @@ export default function Products_continuation() {
   useEffect(() => {
     if (userProducts) {
       if (userProducts.Status == 0) {
+        let arr: any = [];
+        userProducts?.Title.split(",")?.map((renewData: string, i: number) => {
+          if (renewData.length > 0) {
+            const object = {
+              name: userProducts?.Name.split(",")[i],
+              title: renewData,
+            };
+            arr.push(object);
+          }
+        });
+        setUserProductsHeader(arr);
         setUserProductsData(userProducts.Data);
       } else if (userProducts.Status == "-103") {
         Cookies.remove("authToken");
-            localStorage.removeItem('UserID');;
+        localStorage.removeItem("UserID");
         navigate("/");
         toast.error(userProducts.Message);
       } else {
@@ -269,6 +282,13 @@ export default function Products_continuation() {
   useEffect(() => {
     if (userRenew) {
       if (userRenew.Status == 0) {
+        let arr: any = [];
+        userRenew?.Title.split(",")?.map((renewData: string) => {
+          if (renewData.length > 0) {
+            arr.push(renewData);
+          }
+        });
+        setRenewTableHeader(arr);
         setUserRenewDataTable(userRenew.Data);
       }
     }
@@ -335,7 +355,7 @@ export default function Products_continuation() {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
           Cookies.remove("authToken");
-              localStorage.removeItem('UserID');;
+          localStorage.removeItem("UserID");
           navigate("/");
         }, 1000);
       } else {
@@ -530,7 +550,12 @@ export default function Products_continuation() {
             </div>
             <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
               {userProductsData?.map((item: UserProductResponse, i: number) => (
-                <RenewCart key={i} data={item} index={i + 1} />
+                <RenewCart
+                  key={i}
+                  data={item}
+                  index={i + 1}
+                  headerData={userProductsHeader}
+                />
               ))}
             </ul>
           </>
@@ -571,7 +596,10 @@ export default function Products_continuation() {
               </Button>
             </div>
             <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-              <RenewTable data={userRenewDataTable} />
+              <RenewTable
+                data={userRenewDataTable}
+                headerData={renewTableHeader}
+              />
             </div>
           </>
         )}

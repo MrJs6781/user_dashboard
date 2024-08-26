@@ -9,25 +9,25 @@ import {
 } from "@/components/ui/table";
 import { RenewData } from "@/types/Renew";
 
-const tableName = [
-  "زمان",
-  "گروه",
-  "محدودیت کاربری",
-  "نوع انقضا",
-  "دوره انقضا",
-  "طول انقضا",
-  "محدودیت سرعت",
-  "حجم",
-  "حجمی",
-];
+// const tableName = [
+//   "زمان",
+//   "گروه",
+//   "محدودیت کاربری",
+//   "نوع انقضا",
+//   "دوره انقضا",
+//   "طول انقضا",
+//   "محدودیت سرعت",
+//   "حجم",
+//   "حجمی",
+// ];
 
-const RenewTable: React.FC<{ data: RenewData[] }> = ({ data }) => {
+const RenewTable: React.FC<{ data: RenewData[] , headerData : string[] }> = ({ data , headerData }) => {
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
         <TableHeader>
           <TableRow>
-            {tableName.map((header, index) => (
+            {headerData?.map((header, index) => (
               <TableHead
                 key={index}
                 className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"

@@ -8,6 +8,7 @@ export const useFetchUserProducts = ({
   Query,
   RowPerPage,
   SortIndex,
+  languageId
 }: UserProducts) => {
   const fetchData = async () => {
     // گرفتن توکن از کوکی
@@ -25,6 +26,7 @@ export const useFetchUserProducts = ({
       Query,
       RowPerPage,
       SortIndex,
+      languageId
     };
 
     const response = await fetch(
