@@ -22,6 +22,8 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+import { useTranslation } from "react-i18next";
+
 const dashboardBoxes = [
   {
     id: 1,
@@ -44,7 +46,8 @@ const dashboardBoxes = [
         <path d="M11 6h6a2 2 0 0 1 2 2v10" />
       </svg>
     ),
-    title: "تعداد روزهای باقیمانده",
+    bg: "#a3e635",
+    title: "NumberOfDaysLeft",
   },
   {
     id: 2,
@@ -66,7 +69,8 @@ const dashboardBoxes = [
         <line x1="12" x2="12" y1="15" y2="3" />
       </svg>
     ),
-    title: "مقدار حجم باقیمانده",
+    bg: "",
+    title: "AmountOfRemainingVolume",
   },
   {
     id: 3,
@@ -88,7 +92,8 @@ const dashboardBoxes = [
         <path d="M3 11h3c.8 0 1.6.3 2.1.9l1.1.9c1.6 1.6 4.1 1.6 5.7 0l1.1-.9c.5-.5 1.3-.9 2.1-.9H21" />
       </svg>
     ),
-    title: "موجودی کیف پول",
+    bg: "",
+    title: "WalletBalance",
   },
   // {
   //   id: 4,
@@ -132,7 +137,8 @@ const dashboardBoxes = [
         <path d="M3 10h18" />
       </svg>
     ),
-    title: "تاریخ ساخت",
+    bg: "",
+    title: "dateOfManufacture",
   },
   {
     id: 6,
@@ -152,7 +158,8 @@ const dashboardBoxes = [
         <path d="M20 6 9 17l-5-5" />
       </svg>
     ),
-    title: "زمان اولین اتصال",
+    bg: "",
+    title: "FirstConnectionTime",
   },
   {
     id: 7,
@@ -173,7 +180,8 @@ const dashboardBoxes = [
         <path d="m4.9 4.9 14.2 14.2" />
       </svg>
     ),
-    title: "تاریخ انقضا",
+    bg: "",
+    title: "expirationDate",
   },
   {
     id: 8,
@@ -196,7 +204,8 @@ const dashboardBoxes = [
         <path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
-    title: "تعداد آنلاین با این کاربری",
+    bg: "",
+    title: "OnlineNumberWithThisUser",
   },
   {
     id: 9,
@@ -220,11 +229,13 @@ const dashboardBoxes = [
         <circle cx="7" cy="18" r="2" />
       </svg>
     ),
-    title: "کاربر حجمی",
+    bg: "",
+    title: "VolumeUser",
   },
 ];
 
 export default function MicroConsumption() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -236,14 +247,14 @@ export default function MicroConsumption() {
   const [date, setDate] = useState<DateRange | undefined>();
   const [justActiveState, setJustActiveState] = useState(true);
   const [isShowLoading, setIsShowLoading] = useState(false);
-  const [consumeTableHeader , setConsumeTableHeader] = useState([]);
+  const [consumeTableHeader, setConsumeTableHeader] = useState([]);
 
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
-            localStorage.removeItem('UserID');;
+        localStorage.removeItem("UserID");
         navigate("/");
         toast.error(fetchedData.Message);
       } else {
@@ -333,10 +344,7 @@ export default function MicroConsumption() {
   }
 
   return (
-    <div
-      className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
-       
-    >
+    <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
       <Header />
       <Swiper
         modules={[Navigation, Pagination]}
@@ -390,7 +398,7 @@ export default function MicroConsumption() {
               {item.icon}
               <span className="flex flex-col items-start gap-1">
                 <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                  {item.title} :{" "}
+                  {t(item.title)} :{" "}
                 </p>
                 {item.id == 1 && (
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
@@ -466,13 +474,13 @@ export default function MicroConsumption() {
               htmlFor="terms1"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              نمایش فقط فعال
+              {t("DisplayOnlyActive")}
             </label>
           </span>
           <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
             <input
               type="text"
-              placeholder="دنبال چی میگردی..."
+              placeholder={t("whatAreYouLookingFor")}
               value={searchValue}
               onChange={(e) => changeSearchHandler(e)}
               className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
@@ -499,11 +507,14 @@ export default function MicroConsumption() {
             onClick={searchProductsList}
             size="lg"
           >
-            جستجو کنید
+            {t("Search")}
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <ConsumeTable data={consumeFetchData} headerData={consumeTableHeader} />
+          <ConsumeTable
+            data={consumeFetchData}
+            headerData={consumeTableHeader}
+          />
         </div>
       </div>
     </div>

@@ -15,6 +15,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
+import { useTranslation } from "react-i18next";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -29,16 +31,18 @@ ChartJS.register(
 
 interface ComboChartProps {
   labels: string[];
-  data: { download: number[]; upload: number[] , total : number[] };
+  data: { download: number[]; upload: number[]; total: number[] };
 }
 
 const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
+  const { t } = useTranslation();
+
   const chartData = {
     labels,
     datasets: [
       {
         type: "bar" as const,
-        label: "مجموع",
+        label: t("Total"),
         data: data.total,
         backgroundColor: "rgba(50, 80, 180, 0.2)",
         borderColor: "rgba(50, 80, 180, 1)",
@@ -46,7 +50,7 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
       },
       {
         type: "line" as const,
-        label: "دانلود",
+        label: t("Download"),
         data: data.download,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
@@ -54,7 +58,7 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
       },
       {
         type: "line" as const,
-        label: "آپلود",
+        label: t("Upload"),
         data: data.upload,
         borderColor: "rgba(255, 99, 132, 1)",
         backgroundColor: "rgba(255, 99, 132, 0.2)",
@@ -78,7 +82,7 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
       },
       title: {
         display: true,
-        text: "نمودار میزان مصرفی شما",
+        text: t("YourConsumptionChart"),
         font: {
           size: 16,
           family: "vazir_b, sans-serif", // Apply font family
@@ -116,11 +120,11 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
 
   const convertToFarsi = (value: number): string => {
     if (value >= 1024 * 1024) {
-      return `${(value / (1024 * 1024)).toFixed(2)} گیگابایت`;
+      return `${(value / (1024 * 1024)).toFixed(2)} ${t("GB")}`;
     } else if (value >= 1024) {
-      return `${(value / 1024).toFixed(2)} مگابایت`;
+      return `${(value / 1024).toFixed(2)} ${t("MB")}`;
     } else {
-      return `${value.toFixed(2)} کیلوبایت`;
+      return `${value.toFixed(2)} ${t("KB")}`;
     }
   };
 

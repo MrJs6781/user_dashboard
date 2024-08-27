@@ -11,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useTranslation } from "react-i18next";
 
 // اضافه کردن پلاگین jalaliday به dayjs
 dayjs.extend(jalaliday);
@@ -33,6 +34,8 @@ export function DatePickerWithRange({
   date,
   setDate,
 }: DatePickerWithRangeProps) {
+  const { t } = useTranslation();
+
   return (
     <div className={cn("grid gap-2")}>
       <Popover>
@@ -56,7 +59,7 @@ export function DatePickerWithRange({
                 formatDateToJalali(date.from)
               )
             ) : (
-              <span>تاریخ را انتخاب کنید</span>
+              <span>{t("SelectDate")}</span>
             )}
           </Button>
         </PopoverTrigger>

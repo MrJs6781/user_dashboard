@@ -15,7 +15,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const dashboardBoxes = [
   {
@@ -289,14 +289,11 @@ export default function Dashboard() {
 
     if (valueInLowerCase.includes("kb")) {
       return parseFloat(value);
-    } 
-    else if (valueInLowerCase.includes("mb")) {
+    } else if (valueInLowerCase.includes("mb")) {
       return parseFloat(value) * 1024;
-    } 
-    else if (valueInLowerCase.includes("gb")) {
+    } else if (valueInLowerCase.includes("gb")) {
       return parseFloat(value) * 1024 * 1024;
-    } 
-    else if (valueInLowerCase.includes("b")) {
+    } else if (valueInLowerCase.includes("b")) {
       return parseFloat(value) / 1024;
     } else {
       return 0;
@@ -308,10 +305,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div
-      className="w-full h-screen overflow-auto flex flex-col items-start"
-       
-    >
+    <div className="w-full h-screen overflow-auto flex flex-col items-start">
       <Header />
       <Swiper
         modules={[Navigation, Pagination]}

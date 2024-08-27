@@ -21,5 +21,21 @@
   "YourConsumptionChart": "YourConsumptionChart",
   "Upload": "Upload",
   "Download": "Download",
-  "Total": "Total"
+  "Total": "Total",
+  "login" : "login",
+  "Username" : "Username",
+  "Password" : "Password",
+  "RenewService" : "RenewService",
+  "LastRenewList" : "LastRenewList",
+  "whatAreYouLookingFor" : "whatAreYouLookingFor",
+  "SelectDate" : "SelectDate",
+  "Search" : "Search",
+  "DisplayOnlyActive" : "DisplayOnlyActive",
+  "GB" : "GB",
+  "MB" : "MB",
+  "KB" : "KB",
+  "TransactionType" : "TransactionType",
+  "Wallet" : "Wallet",
+  "Buy" : "Buy",
+  "Sell" : "Sell"
 }

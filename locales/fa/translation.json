@@ -21,5 +21,21 @@
   "YourConsumptionChart": "نمودار میزان مصرفی شما",
   "Upload": "آپلود",
   "Download": "دانلود",
-  "Total": "مجموع"
+  "Total": "مجموع",
+  "login": "ورود",
+  "Username": "نام کاربری",
+  "Password": "کلمه عبور",
+  "RenewService": "تمدید / خرید سرویس",
+  "LastRenewList": "لیست تمدید های قبلی",
+  "whatAreYouLookingFor": "دنبال چی میگردی...",
+  "SelectDate": "انتخاب تاریخ",
+  "Search": "جستجو کنید",
+  "DisplayOnlyActive": "نمایش فقط فعال",
+  "GB": "گیگابایت",
+  "MB": "مگابایت",
+  "KB": "کیلوبایت",
+  "TransactionType": "نوع تراکنش",
+  "Wallet": "کیف پول",
+  "Buy": "خرید",
+  "Sell": "فروش"
 }
