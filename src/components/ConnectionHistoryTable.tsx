@@ -8,24 +8,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { HistoryData } from "@/types/ConnectionHistory";
-
-// const tableName = [
-//   "شروع",
-//   "مدت",
-//   "پایان",
-//   "سرور",
-//   "آی پی مشتری",
-//   "آپلود",
-//   "دانلود",
-//   "حجم مانده",
-//   "آخرین آپدیت",
-//   "آخرین عملیات",
-// ];
+import { useTranslation } from "react-i18next";
 
 const ConnectionHistoryTable: React.FC<{
   data: HistoryData[];
   headerData: string[];
-}> = ({ data, headerData }) => {
+  headerDataName: string[];
+}> = ({ data, headerData, headerDataName }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
@@ -44,36 +35,22 @@ const ConnectionHistoryTable: React.FC<{
         <TableBody>
           {data?.map((item, index) => (
             <TableRow key={index}>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.StartTime ? item.StartTime : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Duration ? item.Duration : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.StopTime ? item.StopTime : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.RasTitle ? item.RasTitle : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.NasIP ? item.NasIP : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.CurrentUpload ? item.CurrentUpload : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.CurrentDownload ? item.CurrentDownload : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.TrafficRemained ? item.TrafficRemained : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.LastUpdate ? item.LastUpdate : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.LastAction ? item.LastAction : "_"}
-              </TableCell>
+              {headerDataName?.length > 0 &&
+                headerDataName?.map((headerDataName, index) => (
+                  <TableCell
+                    className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]"
+                    key={index + 10000}
+                  >
+                    {(item as any)[headerDataName] == "true"
+                      ? t("is")
+                      : (item as any)[headerDataName] == "false"
+                      ? t("isNot")
+                      : (item as any)[headerDataName] &&
+                        (item as any)[headerDataName].length > 0
+                      ? (item as any)[headerDataName]
+                      : "_"}
+                  </TableCell>
+                ))}
             </TableRow>
           ))}
         </TableBody>

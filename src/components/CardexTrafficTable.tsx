@@ -8,13 +8,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { CardexTraffic } from "@/types/Cardex";
-
-// const tableName = ["ترافیک", "آپلود", "دانلود", "مصرف", "زمان", "توضیحات"];
+import { useTranslation } from "react-i18next";
 
 const CardexTrafficTable: React.FC<{
   data: CardexTraffic[];
   headerData: string[];
-}> = ({ data, headerData }) => {
+  headerDataName: string[];
+}> = ({ data, headerData, headerDataName }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
@@ -33,24 +35,22 @@ const CardexTrafficTable: React.FC<{
         <TableBody>
           {data?.map((item, index) => (
             <TableRow key={index}>
-              <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Traffic ? item.Traffic : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Upload ? item.Upload : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Download ? item.Download : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Consume ? item.Consume : "_"}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Date}
-              </TableCell>
-              <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                {item.Description ? item.Description : "_"}
-              </TableCell>
+              {headerDataName?.length > 0 &&
+                headerDataName?.map((headerDataName, index) => (
+                  <TableCell
+                    className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]"
+                    key={index + 10000}
+                  >
+                    {(item as any)[headerDataName] == "true"
+                      ? t("is")
+                      : (item as any)[headerDataName] == "false"
+                      ? t("isNot")
+                      : (item as any)[headerDataName] &&
+                        (item as any)[headerDataName].length > 0
+                      ? (item as any)[headerDataName]
+                      : "_"}
+                  </TableCell>
+                ))}
             </TableRow>
           ))}
         </TableBody>

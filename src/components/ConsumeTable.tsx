@@ -17,10 +17,6 @@ const ConsumeTable: React.FC<{
 }> = ({ data, headerData, headerDataName }) => {
   const { t } = useTranslation();
 
-  // useEffect(() => {
-  //   console.log(headerDataName);
-  // }, []);
-
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">

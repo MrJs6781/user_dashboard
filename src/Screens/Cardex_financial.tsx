@@ -243,13 +243,15 @@ export default function CardexFinancial() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
-  // const [date, setDate] = useState<DateRange | undefined>();
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [cardexTrafficFinancialData, setCardexTrafficFinancialData] = useState(
     []
   );
   const [cardexFinancialType, setCardexFinancialType] = useState("");
   const [cardexFinancialTableHeader, setCardexFinancialTableHeader] = useState(
+    []
+  );
+  const [cardexFinancialTableHeaderName, setCardexFinancialTableHeaderName] = useState(
     []
   );
 
@@ -279,12 +281,16 @@ export default function CardexFinancial() {
     if (cardexFinancial) {
       if (cardexFinancial.Status == 0) {
         let arr: any = [];
-        cardexFinancial?.Title.split(",")?.map((renewData: string) => {
-          if (renewData.length > 0) {
-            arr.push(renewData);
+        let arr2: any = [];
+
+        cardexFinancial?.Title.split(",")?.map((data: string, index: number) => {
+          if (data.length > 0) {
+            arr2.push(cardexFinancial?.Name.split(",")[index]);
+            arr.push(data);
           }
         });
         setCardexFinancialTableHeader(arr);
+        setCardexFinancialTableHeaderName(arr2);
         setCardexTrafficFinancialData(cardexFinancial?.Data);
       } else {
         toast.error(cardexFinancial.Message);
@@ -542,6 +548,7 @@ export default function CardexFinancial() {
           <CardexFinancialTable
             data={currentItems}
             headerData={cardexFinancialTableHeader}
+            headerDataName={cardexFinancialTableHeaderName}
           />
           <PaginationComponent
             paginationData={cardexTrafficFinancialData}

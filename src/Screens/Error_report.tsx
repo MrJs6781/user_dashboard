@@ -238,6 +238,7 @@ export default function ErrorReport() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [errorReportsTableData, setErrorReportsTableData] = useState([]);
   const [errorReportsTableHeader, setErrorReportsTableHeader] = useState([]);
+  const [errorReportsTableHeaderName, setErrorReportsTableHeaderName] = useState([]);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -265,12 +266,16 @@ export default function ErrorReport() {
     if (errorReports) {
       if (errorReports.Status == 0) {
         let arr: any = [];
-        errorReports?.Title.split(",")?.map((renewData: string) => {
-          if (renewData.length > 0) {
-            arr.push(renewData);
+        let arr2: any = [];
+
+        errorReports?.Title.split(",")?.map((data: string, index: number) => {
+          if (data.length > 0) {
+            arr2.push(errorReports?.Name.split(",")[index]);
+            arr.push(data);
           }
         });
         setErrorReportsTableHeader(arr);
+        setErrorReportsTableHeaderName(arr2);
         setErrorReportsTableData(errorReports?.Data);
       } else {
         toast.error(errorReports.Message);
@@ -495,6 +500,7 @@ export default function ErrorReport() {
           <ErrorReportsTable
             data={currentItems}
             headerData={errorReportsTableHeader}
+            headerDataName={errorReportsTableHeaderName}
           />
           {errorReportsTableData.length > 0 && (
             <PaginationComponent

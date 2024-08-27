@@ -244,6 +244,7 @@ export default function CardexTraffic() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [cardexTrafficFetchData, setCardexTrafficFetchData] = useState([]);
   const [cardexTrafficTableHeader, setCardexTrafficTableHeader] = useState([]);
+  const [cardexTrafficTableHeaderName, setCardexTrafficTableHeaderName] = useState([]);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -271,12 +272,16 @@ export default function CardexTraffic() {
     if (cardexTraffic) {
       if (cardexTraffic.Status == 0) {
         let arr: any = [];
-        cardexTraffic?.Title.split(",")?.map((renewData: string) => {
-          if (renewData.length > 0) {
-            arr.push(renewData);
+        let arr2: any = [];
+
+        cardexTraffic?.Title.split(",")?.map((data: string, index: number) => {
+          if (data.length > 0) {
+            arr2.push(cardexTraffic?.Name.split(",")[index]);
+            arr.push(data);
           }
         });
         setCardexTrafficTableHeader(arr);
+        setCardexTrafficTableHeaderName(arr2);
         setCardexTrafficFetchData(cardexTraffic?.Data);
       } else {
         toast.error(cardexTraffic.Message);
@@ -535,6 +540,7 @@ export default function CardexTraffic() {
           <CardexTrafficTable
             data={currentItems}
             headerData={cardexTrafficTableHeader}
+            headerDataName={cardexTrafficTableHeaderName}
           />
           {cardexTrafficFetchData?.length > 0 && (
             <PaginationComponent

@@ -239,6 +239,8 @@ export default function ConnectionHistory() {
   const [connectionHistoryData, setConnectionHistoryData] = useState([]);
   const [connectionHistoryTableHeader, setConnectionHistoryTableHeader] =
     useState([]);
+  const [connectionHistoryTableHeaderName, setConnectionHistoryTableHeaderName] =
+    useState([]);
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
 
@@ -265,12 +267,16 @@ export default function ConnectionHistory() {
     if (connectionHistory) {
       if (connectionHistory.Status == 0) {
         let arr: any = [];
-        connectionHistory?.Title.split(",")?.map((renewData: string) => {
-          if (renewData.length > 0) {
-            arr.push(renewData);
+        let arr2: any = [];
+
+        connectionHistory?.Title.split(",")?.map((data: string, index: number) => {
+          if (data.length > 0) {
+            arr2.push(connectionHistory?.Name.split(",")[index]);
+            arr.push(data);
           }
         });
         setConnectionHistoryTableHeader(arr);
+        setConnectionHistoryTableHeaderName(arr2);
         setConnectionHistoryData(connectionHistory?.Data);
       } else {
         toast.error(connectionHistory.Message);
@@ -495,6 +501,7 @@ export default function ConnectionHistory() {
           <ConnectionHistoryTable
             data={currentItems}
             headerData={connectionHistoryTableHeader}
+            headerDataName={connectionHistoryTableHeaderName}
           />
           <PaginationComponent
             paginationData={connectionHistoryData}
