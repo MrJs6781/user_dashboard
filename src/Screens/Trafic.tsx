@@ -364,15 +364,23 @@ export default function Trafic() {
         modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
-          1000: {
+          1500: {
+            slidesPerView: 5.5,
+            spaceBetween: 15,
+          },
+          1200: {
             slidesPerView: 4.5,
             spaceBetween: 15,
           },
-          700: {
+          1000: {
+            slidesPerView: 3.8,
+            spaceBetween: 15,
+          },
+          800: {
             slidesPerView: 3,
             spaceBetween: 15,
           },
-          450: {
+          500: {
             slidesPerView: 2,
             spaceBetween: 15,
           },

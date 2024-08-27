@@ -8,20 +8,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { RenewData } from "@/types/Renew";
+import { useTranslation } from "react-i18next";
 
-// const tableName = [
-//   "زمان",
-//   "گروه",
-//   "محدودیت کاربری",
-//   "نوع انقضا",
-//   "دوره انقضا",
-//   "طول انقضا",
-//   "محدودیت سرعت",
-//   "حجم",
-//   "حجمی",
-// ];
+const RenewTable: React.FC<{
+  data: RenewData[];
+  headerData: string[];
+  headerDataName: string[];
+}> = ({ data, headerData, headerDataName }) => {
+  const { t } = useTranslation();
 
-const RenewTable: React.FC<{ data: RenewData[] , headerData : string[] }> = ({ data , headerData }) => {
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
@@ -40,33 +35,20 @@ const RenewTable: React.FC<{ data: RenewData[] , headerData : string[] }> = ({ d
         <TableBody>
           {data?.map((item, index) => (
             <TableRow key={index}>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.DateTime}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.GroupTitle}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.LimitOnlineUser}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.ExpireType}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.ExpirePeriod}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.ExpireLength}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.RateLimit}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.Traffic}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.IsTrafficBase ? "Yes" : "No"}
-              </TableCell>
+              {headerDataName?.map((headerDataName, index) => (
+                <TableCell
+                  className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]"
+                  key={index + 10000}
+                >
+                  {(item as any)[headerDataName] == "true"
+                    ? t("is")
+                    : (item as any)[headerDataName] == "false"
+                    ? t("isNot")
+                    : (item as any)[headerDataName].length > 0
+                    ? (item as any)[headerDataName]
+                    : "_"}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>

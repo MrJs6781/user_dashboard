@@ -261,6 +261,7 @@ export default function Products_continuation() {
   );
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [renewTableHeader, setRenewTableHeader]: any = useState([]);
+  const [renewTableHeaderName, setRenewTableHeaderName]: any = useState([]);
   const [userProductsHeader, setUserProductsHeader]: any = useState([]);
 
   useEffect(() => {
@@ -308,12 +309,16 @@ export default function Products_continuation() {
     if (userRenew) {
       if (userRenew.Status == 0) {
         let arr: any = [];
-        userRenew?.Title.split(",")?.map((renewData: string) => {
+        let arr2: any = [];
+
+        userRenew?.Title.split(",")?.map((renewData: string, index: number) => {
           if (renewData.length > 0) {
+            arr2.push(userRenew?.Name.split(",")[index]);
             arr.push(renewData);
           }
         });
         setRenewTableHeader(arr);
+        setRenewTableHeaderName(arr2);
         setUserRenewDataTable(userRenew.Data);
       }
     }
@@ -458,15 +463,23 @@ export default function Products_continuation() {
         modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
-          1000: {
+          1500: {
+            slidesPerView: 5.5,
+            spaceBetween: 15,
+          },
+          1200: {
             slidesPerView: 4.5,
             spaceBetween: 15,
           },
-          700: {
+          1000: {
+            slidesPerView: 3.8,
+            spaceBetween: 15,
+          },
+          800: {
             slidesPerView: 3,
             spaceBetween: 15,
           },
-          450: {
+          500: {
             slidesPerView: 2,
             spaceBetween: 15,
           },
@@ -569,7 +582,7 @@ export default function Products_continuation() {
         ))}
       </Swiper>
       <div className="w-full h-auto mt-8 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-        <div className="w-full flex items-center justify-center gap-8">
+        <div className="w-full flex items-start sm:items-center justify-center gap-8 flex-col sm:flex-row">
           <h5
             className={cn(
               "font-vazirB text-[15px] cursor-pointer",
@@ -595,7 +608,7 @@ export default function Products_continuation() {
         </div>
         {isActiveService == "Data" ? (
           <>
-            <div className="w-full flex items-center justify-start gap-4">
+            <div className="w-full flex items-center justify-start gap-4 flex-wrap">
               <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
                 <input
                   type="text"
@@ -621,7 +634,7 @@ export default function Products_continuation() {
                 </svg>
               </span>
               <Button
-                className="bg-[#a855f7] dark:bg-[#1e293b] md:text-white text-[17px]"
+                className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
                 size="lg"
                 onClick={searchProductsData}
               >
@@ -668,7 +681,7 @@ export default function Products_continuation() {
               </span>
               <DatePickerWithRange date={date} setDate={setDate} />
               <Button
-                className="bg-[#a855f7] dark:bg-[#1e293b] md:text-white text-[17px]"
+                className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
                 size="lg"
                 onClick={searchProductsList}
               >
@@ -676,7 +689,11 @@ export default function Products_continuation() {
               </Button>
             </div>
             <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-              <RenewTable data={currentItems} headerData={renewTableHeader} />
+              <RenewTable
+                data={currentItems}
+                headerData={renewTableHeader}
+                headerDataName={renewTableHeaderName}
+              />
               {userRenewDataTable?.length > 0 && (
                 <PaginationComponent
                   paginationData={userRenewDataTable}

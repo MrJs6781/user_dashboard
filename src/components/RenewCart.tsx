@@ -18,7 +18,6 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
 
   useEffect(() => {
     const find = headerData?.findIndex((item) => item.name == "ImageUrl");
-    // console.log(first)
     setFindImageUrlIndex(find);
   }, []);
 
@@ -75,7 +74,7 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
 
   return (
     <div
-      className="w-full max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation"
+      className="w-full sm:max-w-[280px] md:max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation"
       style={
         {
           "--i": index + 1, // تعیین مقدار --i برای هر آیتم
@@ -93,7 +92,6 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
       />
       <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
         {headerData?.map(({ name, title }, i) => {
-          // console.log(name);
           if (name != "ImageUrl") {
             return (
               <li
