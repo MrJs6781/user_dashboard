@@ -40,5 +40,8 @@
   "Sell" : "Sell",
   "Day" : "Day",
   "is" : "Yes",
-  "isNot" : "No"
+  "isNot" : "No",
+  "DisplayTheNumberOnThePage" : "DisplayTheNumberOnThePage",
+  "Prev" : "Prev",
+  "Next" : "Next"
 }

@@ -19,6 +19,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const dashboardBoxes = [
   {
@@ -237,6 +238,9 @@ export default function ErrorReport() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [errorReportsTableData, setErrorReportsTableData] = useState([]);
   const [errorReportsTableHeader, setErrorReportsTableHeader] = useState([]);
+
+  const [perPage, setPerPage] = useState(10);
+  const [currentItems, setCurrentItems] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -481,10 +485,17 @@ export default function ErrorReport() {
         </div>
         <div className="w-full flex flex-col items-start justify-center overflow-x-scroll min-w-[800px]">
           <ErrorReportsTable
-            data={errorReportsTableData}
+            data={currentItems}
             headerData={errorReportsTableHeader}
           />
-          {/* <PaginationComponent /> */}
+          {errorReportsTableData.length > 0 && (
+            <PaginationComponent
+              paginationData={errorReportsTableData}
+              perPage={perPage}
+              setCurrentItems={setCurrentItems}
+              setPerPage={setPerPage}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const PaginationComponent: React.FC<{
   paginationData: any[];
@@ -7,9 +8,10 @@ const PaginationComponent: React.FC<{
   setPerPage: any;
   setCurrentItems: any;
 }> = ({ paginationData, perPage, setPerPage, setCurrentItems }) => {
+  const { t } = useTranslation();
   const [activePage, setActivePage] = useState(1);
   const [length, setLength] = useState<any>([]);
-  const [totalPageData , setTotalPageData] : any = useState();
+  const [totalPageData, setTotalPageData]: any = useState();
 
   useEffect(() => {
     const totalPages = Math.ceil(paginationData.length / perPage);
@@ -28,7 +30,7 @@ const PaginationComponent: React.FC<{
       arr.push(index);
     }
     setLength(arr);
-  }, [paginationData, perPage , activePage]);
+  }, [paginationData, perPage, activePage]);
 
   const changePageHandler = (item: number) => {
     setActivePage(item);
@@ -55,12 +57,9 @@ const PaginationComponent: React.FC<{
   };
 
   return (
-    <section
-      className="w-full flex items-center justify-center mt-4 gap-4 flex-wrap"
-       
-    >
+    <section className="w-full flex items-center justify-center mt-4 gap-4 flex-wrap">
       <div className="flex items-center justify-center gap-4">
-        <p className="font-vazirM">نمایش تعداد در صفحه</p>
+        <p className="font-vazirM">{t("DisplayTheNumberOnThePage")}</p>
         <select
           name="row_per_page"
           id="row_per_page"
@@ -118,7 +117,7 @@ const PaginationComponent: React.FC<{
           type="button"
           onClick={goToLastPageHandler}
         >
-          <svg
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -132,8 +131,8 @@ const PaginationComponent: React.FC<{
               strokeLinejoin="round"
               d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
             ></path>
-          </svg>
-          قبلی
+          </svg> */}
+          {t("Prev")}
         </button>
         <div className="flex items-center gap-2">
           {length?.map((item: number) => (
@@ -159,8 +158,8 @@ const PaginationComponent: React.FC<{
           type="button"
           onClick={goToNextPageHandler}
         >
-          بعدی
-          <svg
+          {t("Next")}
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -174,7 +173,7 @@ const PaginationComponent: React.FC<{
               strokeLinejoin="round"
               d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
             ></path>
-          </svg>
+          </svg> */}
         </button>
       </div>
     </section>

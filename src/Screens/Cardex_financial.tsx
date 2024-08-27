@@ -27,6 +27,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const dashboardBoxes = [
   {
@@ -251,6 +252,9 @@ export default function CardexFinancial() {
   const [cardexFinancialTableHeader, setCardexFinancialTableHeader] = useState(
     []
   );
+
+  const [perPage, setPerPage] = useState(10);
+  const [currentItems, setCurrentItems] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -513,10 +517,16 @@ export default function CardexFinancial() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
           <CardexFinancialTable
-            data={cardexTrafficFinancialData}
+            data={currentItems}
             headerData={cardexFinancialTableHeader}
+          />
+          <PaginationComponent
+            paginationData={cardexTrafficFinancialData}
+            perPage={perPage}
+            setCurrentItems={setCurrentItems}
+            setPerPage={setPerPage}
           />
         </div>
       </div>

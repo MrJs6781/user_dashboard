@@ -23,6 +23,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const dashboardBoxes = [
   {
@@ -243,6 +244,9 @@ export default function CardexTraffic() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [cardexTrafficFetchData, setCardexTrafficFetchData] = useState([]);
   const [cardexTrafficTableHeader, setCardexTrafficTableHeader] = useState([]);
+
+  const [perPage, setPerPage] = useState(10);
+  const [currentItems, setCurrentItems] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -519,10 +523,16 @@ export default function CardexTraffic() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
           <CardexTrafficTable
-            data={cardexTrafficFetchData}
+            data={currentItems}
             headerData={cardexTrafficTableHeader}
+          />
+          <PaginationComponent
+            paginationData={cardexTrafficFetchData}
+            perPage={perPage}
+            setCurrentItems={setCurrentItems}
+            setPerPage={setPerPage}
           />
         </div>
       </div>

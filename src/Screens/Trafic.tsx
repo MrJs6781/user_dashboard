@@ -23,6 +23,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const dashboardBoxes = [
   {
@@ -242,7 +243,10 @@ export default function Trafic() {
   const [date, setDate] = useState<DateRange | undefined>();
   const [justActiveState, setJustActiveState] = useState(true);
   const [isShowLoading, setIsShowLoading] = useState(false);
-  const [trafficTableHeader , setTrafficTableHeader] = useState([]);
+  const [trafficTableHeader, setTrafficTableHeader] = useState([]);
+
+  const [perPage, setPerPage] = useState(10);
+  const [currentItems, setCurrentItems] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -344,10 +348,7 @@ export default function Trafic() {
   }
 
   return (
-    <div
-      className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
-       
-    >
+    <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
       <Header />
       <Swiper
         modules={[Navigation, Pagination]}
@@ -513,8 +514,14 @@ export default function Trafic() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
-          <TrafficTable data={trafficDataTable} headerData={trafficTableHeader} />
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
+          <TrafficTable data={currentItems} headerData={trafficTableHeader} />
+          <PaginationComponent
+            paginationData={trafficDataTable}
+            perPage={perPage}
+            setCurrentItems={setCurrentItems}
+            setPerPage={setPerPage}
+          />
         </div>
       </div>
     </div>

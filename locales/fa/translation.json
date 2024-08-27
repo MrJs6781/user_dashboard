@@ -40,5 +40,8 @@
   "Sell": "فروش",
   "Day": "روز",
   "is": "میباشد",
-  "isNot": "نمیباشد"
+  "isNot": "نمیباشد",
+  "DisplayTheNumberOnThePage": "نمایش تعداد در صفحه",
+  "Prev": "قبلی",
+  "Next": "بعدی"
 }

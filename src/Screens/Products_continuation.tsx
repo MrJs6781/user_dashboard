@@ -25,6 +25,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const dashboardBoxes = [
   {
@@ -245,12 +246,18 @@ export default function Products_continuation() {
   const [date, setDate] = useState<DateRange | undefined>();
   const [userRenewDataTable, setUserRenewDataTable] = useState([]);
 
+  const [perPage, setPerPage] = useState(10);
+  const [currentItems, setCurrentItems] = useState([]);
+
   const { isLoading: fetchedDataLoading, data: fetchedData } =
     useFetchDashboardData();
   const { isLoading: userProductsLoading, data: userProducts } =
-    useFetchUserProducts({ languageId: +window.localStorage.getItem("ssss_language_id")! });
-  const { isLoading: userRenewLoading, data: userRenew } =
-    useFetchRenew(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchUserProducts({
+      languageId: +window.localStorage.getItem("ssss_language_id")!,
+    });
+  const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew(
+    +window.localStorage.getItem("ssss_language_id")!
+  );
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [renewTableHeader, setRenewTableHeader]: any = useState([]);
   const [userProductsHeader, setUserProductsHeader]: any = useState([]);
@@ -612,10 +619,16 @@ export default function Products_continuation() {
                 {t("Search")}
               </Button>
             </div>
-            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
               <RenewTable
-                data={userRenewDataTable}
+                data={currentItems}
                 headerData={renewTableHeader}
+              />
+              <PaginationComponent
+                paginationData={userRenewDataTable}
+                perPage={perPage}
+                setCurrentItems={setCurrentItems}
+                setPerPage={setPerPage}
               />
             </div>
           </>

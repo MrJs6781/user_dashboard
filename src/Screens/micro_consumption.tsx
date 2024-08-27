@@ -23,6 +23,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const dashboardBoxes = [
   {
@@ -248,6 +249,9 @@ export default function MicroConsumption() {
   const [justActiveState, setJustActiveState] = useState(true);
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [consumeTableHeader, setConsumeTableHeader] = useState([]);
+
+  const [perPage, setPerPage] = useState(10);
+  const [currentItems, setCurrentItems] = useState([]);
 
   useEffect(() => {
     if (fetchedData) {
@@ -510,10 +514,16 @@ export default function MicroConsumption() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px]">
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
           <ConsumeTable
-            data={consumeFetchData}
+            data={currentItems}
             headerData={consumeTableHeader}
+          />
+          <PaginationComponent
+            paginationData={consumeFetchData}
+            perPage={perPage}
+            setCurrentItems={setCurrentItems}
+            setPerPage={setPerPage}
           />
         </div>
       </div>
