@@ -64,32 +64,41 @@ const CardexFinancialTable: React.FC<{
                           <Table className="table-fixed w-full mt-6">
                             <TableHeader>
                               <TableRow>
-                                {tableNameChild?.map((header, index) => (
-                                  <TableHead
-                                    key={index}
-                                    className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
-                                  >
-                                    {header}
-                                  </TableHead>
-                                ))}
+                                {tableNameChild &&
+                                  tableNameChild?.map((header, index) => (
+                                    <TableHead
+                                      key={index}
+                                      className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
+                                    >
+                                      {header}
+                                    </TableHead>
+                                  ))}
                               </TableRow>
                             </TableHeader>
-                            <TableBody>
-                              {(item as any)[headerDataName]?.map(
-                                (item: CardexUser, index: number) => {
-                                  return (
-                                    <TableRow key={index}>
-                                      <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                                        {item.Typ ? item.Typ : "_"}
-                                      </TableCell>
-                                      <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
-                                        {item.UserName ? item.UserName : "_"}
-                                      </TableCell>
-                                    </TableRow>
-                                  );
-                                }
-                              )}
-                            </TableBody>
+                            {item?.Users && item?.Users?.length > 0 && (
+                              <TableBody>
+                                {item?.Users &&
+                                  JSON.parse(item?.Users as any)?.map(
+                                    (
+                                      itemData: CardexUser,
+                                      indexData: number
+                                    ) => {
+                                      return (
+                                        <TableRow key={indexData}>
+                                          <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
+                                            {itemData.Typ ? itemData.Typ : "_"}
+                                          </TableCell>
+                                          <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
+                                            {itemData.UserName
+                                              ? itemData.UserName
+                                              : "_"}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    }
+                                  )}
+                              </TableBody>
+                            )}
                           </Table>
                         </DialogContent>
                       </Dialog>

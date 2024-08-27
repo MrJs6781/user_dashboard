@@ -544,7 +544,7 @@ export default function CardexFinancial() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
+        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1500px] flex-col">
           <CardexFinancialTable
             data={currentItems}
             headerData={cardexFinancialTableHeader}
