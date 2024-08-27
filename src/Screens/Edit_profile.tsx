@@ -6,12 +6,14 @@ import { EditProfileUser } from "@/types/Profile";
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaPhoneAlt, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function EditProfile() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [username, setUserName] = useState("");
   const [email, setUserEmail] = useState("");
@@ -134,7 +136,7 @@ export default function EditProfile() {
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type="text"
-              placeholder="نام کاربری : "
+              placeholder={t("Username")}
               value={username}
               onChange={(e) => setUserName(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
@@ -145,7 +147,7 @@ export default function EditProfile() {
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type="email"
-              placeholder="آدرس ایمیل : "
+              placeholder={t("EmailAddress")}
               value={email}
               onChange={(e) => setUserEmail(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
@@ -153,10 +155,10 @@ export default function EditProfile() {
             />
             <MdEmail className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
           </span>
-          <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
+          <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between gap-3">
             <input
               type="tel"
-              placeholder="شماره موبایل : "
+              placeholder={t("PhoneNumber")}
               value={mobileNumber}
               onChange={mobileNumberChangeHandler}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
@@ -172,7 +174,7 @@ export default function EditProfile() {
           disabled={isLoading == true ? true : false}
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
-            ذخیره تغییرات
+            {t("SaveChange")}
           </p>
         </button>
       </div>

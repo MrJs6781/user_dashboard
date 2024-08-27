@@ -29,7 +29,7 @@ import { useTranslation } from "react-i18next";
 
 type headerListType = {
   id: number;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   title: string;
   link?: string;
 };
@@ -37,73 +37,73 @@ type headerListType = {
 const headerListData = [
   {
     id: 1,
-    icon: (
-      <AiOutlineDashboard className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <AiOutlineDashboard className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     link: "/dashboard",
     title: "Dashboard",
   },
   {
     id: 2,
-    icon: (
-      <FaChartLine className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <FaChartLine className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     link: "/products_continuation",
     title: "Renew",
   },
   {
     id: 3,
-    icon: (
-      <BiSolidSave className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <BiSolidSave className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     link: "/trafic",
     title: "Traffic",
   },
   {
     id: 4,
-    icon: (
-      <TbMobiledata className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <TbMobiledata className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     link: "/micro_consumption",
     title: "MicroConsumption",
   },
   {
     id: 5,
-    icon: (
-      <LiaRandomSolid className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <LiaRandomSolid className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     link: "/connection_history",
     title: "ConnectionHistory",
   },
   {
     id: 6,
-    icon: (
-      <FaEdit className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <FaEdit className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     link: "/error_report",
     title: "ErrorReports",
   },
   {
     id: 7,
-    icon: (
-      <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     link: "/cardex_traffic",
     title: "CardexTraffic",
   },
   {
     id: 8,
-    icon: (
-      <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     link: "/cardex_financial",
     title: "CardexFinancial",
   },
   {
     id: 9,
-    icon: (
-      <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    ),
+    // icon: (
+    //   <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
+    // ),
     title: "Exit",
   },
 ];
@@ -266,7 +266,7 @@ export default function Header() {
                   className={cn(
                     "text-[14px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
                     pathname == item.link
-                      ? "text-[15px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] border-b-4 border-black dark:border-white"
+                      ? "text-[15px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] px-2 py-1 border-b-2 border-purple-600 dark:border-white"
                       : ""
                   )}
                 >

@@ -9,8 +9,10 @@ import { IoEye, IoEyeOffSharp } from "react-icons/io5";
 import { useMutation } from "@tanstack/react-query";
 import { EditPasswordUser } from "@/types/Profile";
 import LottiePlayer from "@/components/Loading";
+import { useTranslation } from "react-i18next";
 
 export default function EditPassword() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -129,7 +131,7 @@ export default function EditPassword() {
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type={isShowPassword ? "text" : "password"}
-              placeholder="کلمه عبور : "
+              placeholder={t("Password")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
@@ -152,7 +154,7 @@ export default function EditPassword() {
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type={isShowNewPassword ? "text" : "password"}
-              placeholder="کلمه عبور جدید : "
+              placeholder={t("RepeatPassword")}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
@@ -179,7 +181,7 @@ export default function EditPassword() {
           disabled={isLoading ? true : false}
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
-            ذخیره تغییرات
+          {t("SaveChange")}
           </p>
         </button>
       </div>

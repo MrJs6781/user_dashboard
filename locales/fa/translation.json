@@ -43,5 +43,9 @@
   "isNot": "نمیباشد",
   "DisplayTheNumberOnThePage": "نمایش تعداد در صفحه",
   "Prev": "قبلی",
-  "Next": "بعدی"
+  "Next": "بعدی",
+  "SaveChange": "ذخیره تغییرات",
+  "PhoneNumber": "شماره موبایل",
+  "EmailAddress": "آدرس ایمیل",
+  "RepeatPassword" : "تکرار کلمه عبور"
 }

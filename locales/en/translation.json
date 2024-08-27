@@ -43,5 +43,9 @@
   "isNot" : "No",
   "DisplayTheNumberOnThePage" : "DisplayTheNumberOnThePage",
   "Prev" : "Prev",
-  "Next" : "Next"
+  "Next" : "Next",
+  "SaveChange" : "SaveChange",
+  "PhoneNumber" : "PhoneNumber",
+  "EmailAddress" : "EmailAddress",
+  "RepeatPassword" : "RepeatPassword"
 }
