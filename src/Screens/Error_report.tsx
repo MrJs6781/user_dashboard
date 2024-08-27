@@ -387,7 +387,7 @@ export default function ErrorReport() {
                 </p>
                 {item.id == 1 && (
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                    {fetchedData?.Data[0]?.RemainedTime} روز
+                    {fetchedData?.Data[0]?.RemainedTime} {t("Day")}
                   </small>
                 )}
                 {item.id == 2 && (
@@ -397,7 +397,7 @@ export default function ErrorReport() {
                 )}
                 {item.id == 3 && (
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                    {fetchedData?.Data[0]?.WalletRemained} تومان
+                    {fetchedData?.Data[0]?.WalletRemained}
                   </small>
                 )}
                 {/* {item.id == 4 && (
@@ -416,28 +416,28 @@ export default function ErrorReport() {
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.FirstLogin
                       ? fetchedData?.Data[0]?.FirstLogin
-                      : "مشخص نیست"}
+                      : "_"}
                   </small>
                 )}
                 {item.id == 7 && (
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.ExpirationTime
                       ? fetchedData?.Data[0]?.ExpirationTime
-                      : "ندارد"}
+                      : "_"}
                   </small>
                 )}
                 {item.id == 8 && (
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.OnlineCount
                       ? fetchedData?.Data[0]?.OnlineCount
-                      : "ندارد"}
+                      : "_"}
                   </small>
                 )}
                 {item.id == 9 && (
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.IsTrafficBase == true
-                      ? "میباشد"
-                      : "نمیباشد"}
+                      ? t("is")
+                      : t("isNot")}
                   </small>
                 )}
               </span>

@@ -37,5 +37,8 @@
   "TransactionType" : "TransactionType",
   "Wallet" : "Wallet",
   "Buy" : "Buy",
-  "Sell" : "Sell"
+  "Sell" : "Sell",
+  "Day" : "Day",
+  "is" : "Yes",
+  "isNot" : "No"
 }
