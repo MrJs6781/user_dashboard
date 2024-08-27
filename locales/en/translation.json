@@ -47,5 +47,7 @@
   "SaveChange" : "SaveChange",
   "PhoneNumber" : "PhoneNumber",
   "EmailAddress" : "EmailAddress",
-  "RepeatPassword" : "RepeatPassword"
+  "RepeatPassword" : "RepeatPassword",
+  "CurrentPassword" : "CurrentPassword",
+  "All" : "All"
 }

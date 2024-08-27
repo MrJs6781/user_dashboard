@@ -528,12 +528,14 @@ export default function CardexTraffic() {
             data={currentItems}
             headerData={cardexTrafficTableHeader}
           />
-          <PaginationComponent
-            paginationData={cardexTrafficFetchData}
-            perPage={perPage}
-            setCurrentItems={setCurrentItems}
-            setPerPage={setPerPage}
-          />
+          {cardexTrafficFetchData?.length > 0 && (
+            <PaginationComponent
+              paginationData={cardexTrafficFetchData}
+              perPage={perPage}
+              setCurrentItems={setCurrentItems}
+              setPerPage={setPerPage}
+            />
+          )}
         </div>
       </div>
     </div>

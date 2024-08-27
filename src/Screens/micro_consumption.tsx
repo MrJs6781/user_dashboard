@@ -290,21 +290,31 @@ export default function MicroConsumption() {
 
   const searchProductsList = () => {
     setIsShowLoading(true);
-    const getFromDate = dayjs(date?.from)
-      .calendar("jalali")
-      .format("YYYY/MM/DD");
-    const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
-    mutation.mutate({
-      // UserConsumeID: "",
-      FromDate: getFromDate,
-      ToDate: getToDate,
-      Query: searchValue,
-      JustActive: justActiveState,
-      Operand: "%",
-      PageNo: 0,
-      RowPerPage: 0,
-      SortIndex: 0,
-    });
+    if (date != undefined) {
+      const getFromDate = dayjs(date?.from)
+        .calendar("jalali")
+        .format("YYYY/MM/DD");
+      const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
+      mutation.mutate({
+        FromDate: getFromDate,
+        ToDate: getToDate,
+        Query: searchValue,
+        JustActive: justActiveState,
+        Operand: "%",
+        PageNo: 0,
+        RowPerPage: 0,
+        SortIndex: 0,
+      });
+    } else {
+      mutation.mutate({
+        Query: searchValue,
+        JustActive: justActiveState,
+        Operand: "%",
+        PageNo: 0,
+        RowPerPage: 0,
+        SortIndex: 0,
+      });
+    }
   };
 
   const mutation = useMutation({
@@ -515,16 +525,15 @@ export default function MicroConsumption() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          <ConsumeTable
-            data={currentItems}
-            headerData={consumeTableHeader}
-          />
-          <PaginationComponent
-            paginationData={consumeFetchData}
-            perPage={perPage}
-            setCurrentItems={setCurrentItems}
-            setPerPage={setPerPage}
-          />
+          <ConsumeTable data={currentItems} headerData={consumeTableHeader} />
+          {consumeFetchData.length > 0 && (
+            <PaginationComponent
+              paginationData={consumeFetchData}
+              perPage={perPage}
+              setCurrentItems={setCurrentItems}
+              setPerPage={setPerPage}
+            />
+          )}
         </div>
       </div>
     </div>

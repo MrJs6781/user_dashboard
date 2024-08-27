@@ -47,5 +47,7 @@
   "SaveChange": "ذخیره تغییرات",
   "PhoneNumber": "شماره موبایل",
   "EmailAddress": "آدرس ایمیل",
-  "RepeatPassword" : "تکرار کلمه عبور"
+  "CurrentPassword": "کلمه عبور فعلی",
+  "RepeatPassword": "کلمه عبور جدید",
+  "All": "همه"
 }

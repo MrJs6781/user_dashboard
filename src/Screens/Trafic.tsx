@@ -290,21 +290,31 @@ export default function Trafic() {
 
   const searchProductsList = () => {
     setIsShowLoading(true);
-    const getFromDate = dayjs(date?.from)
-      .calendar("jalali")
-      .format("YYYY/MM/DD");
-    const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
-    mutation.mutate({
-      // UserTrafficID: "",
-      FromDate: getFromDate,
-      ToDate: getToDate,
-      Query: searchValue,
-      JustActive: justActiveState,
-      Operand: "%",
-      PageNo: "0",
-      RowPerPage: "0",
-      SortIndex: 0,
-    });
+    if (date != undefined) {
+      const getFromDate = dayjs(date?.from)
+        .calendar("jalali")
+        .format("YYYY/MM/DD");
+      const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
+      mutation.mutate({
+        FromDate: getFromDate,
+        ToDate: getToDate,
+        Query: searchValue,
+        JustActive: justActiveState,
+        Operand: "%",
+        PageNo: "0",
+        RowPerPage: "0",
+        SortIndex: 1,
+      });
+    } else {
+      mutation.mutate({
+        Query: searchValue,
+        JustActive: justActiveState,
+        Operand: "%",
+        PageNo: "0",
+        RowPerPage: "0",
+        SortIndex: 1,
+      });
+    }
   };
 
   const mutation = useMutation({
@@ -516,12 +526,14 @@ export default function Trafic() {
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
           <TrafficTable data={currentItems} headerData={trafficTableHeader} />
-          <PaginationComponent
-            paginationData={trafficDataTable}
-            perPage={perPage}
-            setCurrentItems={setCurrentItems}
-            setPerPage={setPerPage}
-          />
+          {trafficDataTable?.length > 0 && (
+            <PaginationComponent
+              paginationData={trafficDataTable}
+              perPage={perPage}
+              setCurrentItems={setCurrentItems}
+              setPerPage={setPerPage}
+            />
+          )}
         </div>
       </div>
     </div>

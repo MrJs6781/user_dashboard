@@ -241,6 +241,7 @@ export default function Products_continuation() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [userProductsData, setUserProductsData] = useState([]);
+  const [searchProduct, setSearchProduct] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [isActiveService, setIsActiveService] = useState("Data");
   const [date, setDate] = useState<DateRange | undefined>();
@@ -320,25 +321,18 @@ export default function Products_continuation() {
 
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    // if (e.target.value.length == 0) {
-    //   setUserProductsData(userProducts.Data);
-    // } else {
-    //   const filterData = userProductsData.filter((item: UserProductResponse) =>
-    //     item.Title.includes(searchValue)
-    //   );
-    //   setUserProductsData(filterData);
-    // }
+  };
+
+  const changeSearchProductHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchProduct(e.target.value);
   };
 
   const searchProductsList = () => {
-    // console.log(date);
     setIsShowLoading(true);
     const getFromDate = dayjs(date?.from)
       .calendar("jalali")
       .format("YYYY/MM/DD");
     const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
-    // console.log(getFromDate);
-    // console.log(getToDate);
     mutation.mutate({
       FromDate: getFromDate,
       ToDate: getToDate,
@@ -375,6 +369,61 @@ export default function Products_continuation() {
       // console.log(data);
       if (data.Status == "0") {
         setUserRenewDataTable(data?.Data);
+      } else if (data.Status == "-103") {
+        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        setTimeout(() => {
+          Cookies.remove("authToken");
+          localStorage.removeItem("UserID");
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error(data.Message);
+      }
+      setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsShowLoading(false);
+    },
+  });
+
+  const searchProductsData = () => {
+    setIsShowLoading(true);
+    productMutation.mutate({
+      Query: searchProduct,
+      Operand: "%",
+      PageNo: "0",
+      RowPerPage: "0",
+      SortIndex: 1,
+    });
+  };
+
+  const productMutation = useMutation({
+    mutationKey: ["productFilterWithQuery"],
+    mutationFn: async (MutateData: UserRenewQuery) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        "http://test.cloudius.co/Product/Fetch?Type=User",
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      if (data.Status == "0") {
+        // console.log(data?.Data);
+        setUserProductsData(data?.Data);
+        // setUserRenewDataTable(data?.Data);
       } else if (data.Status == "-103") {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
@@ -546,13 +595,13 @@ export default function Products_continuation() {
         </div>
         {isActiveService == "Data" ? (
           <>
-            <div className="w-full flex items-center justify-start">
+            <div className="w-full flex items-center justify-start gap-4">
               <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
                 <input
                   type="text"
                   placeholder={t("whatAreYouLookingFor")}
-                  value={searchValue}
-                  onChange={(e) => changeSearchHandler(e)}
+                  value={searchProduct}
+                  onChange={(e) => changeSearchProductHandler(e)}
                   className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
                 />
                 <svg
@@ -571,6 +620,13 @@ export default function Products_continuation() {
                   <path d="m21 21-4.3-4.3" />
                 </svg>
               </span>
+              <Button
+                className="bg-[#a855f7] dark:bg-[#1e293b] md:text-white text-[17px]"
+                size="lg"
+                onClick={searchProductsData}
+              >
+                {t("Search")}
+              </Button>
             </div>
             <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
               {userProductsData?.map((item: UserProductResponse, i: number) => (
@@ -620,16 +676,15 @@ export default function Products_continuation() {
               </Button>
             </div>
             <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-              <RenewTable
-                data={currentItems}
-                headerData={renewTableHeader}
-              />
-              <PaginationComponent
-                paginationData={userRenewDataTable}
-                perPage={perPage}
-                setCurrentItems={setCurrentItems}
-                setPerPage={setPerPage}
-              />
+              <RenewTable data={currentItems} headerData={renewTableHeader} />
+              {userRenewDataTable?.length > 0 && (
+                <PaginationComponent
+                  paginationData={userRenewDataTable}
+                  perPage={perPage}
+                  setCurrentItems={setCurrentItems}
+                  setPerPage={setPerPage}
+                />
+              )}
             </div>
           </>
         )}

@@ -298,14 +298,24 @@ export default function CardexFinancial() {
 
   const searchProductsList = () => {
     setIsShowLoading(true);
-    mutation.mutate({
-      Type: cardexFinancialType,
-      Query: searchValue,
-      Operand: "%",
-      PageNo: 0,
-      RowPerPage: 0,
-      SortIndex: 1,
-    });
+    if (cardexFinancialType.length == 0 || cardexFinancialType == "All") {
+      mutation.mutate({
+        Query: searchValue,
+        Operand: "%",
+        PageNo: 0,
+        RowPerPage: 0,
+        SortIndex: 1,
+      });
+    } else {
+      mutation.mutate({
+        Type: cardexFinancialType,
+        Query: searchValue,
+        Operand: "%",
+        PageNo: 0,
+        RowPerPage: 0,
+        SortIndex: 1,
+      });
+    }
   };
 
   const mutation = useMutation({
@@ -474,6 +484,9 @@ export default function CardexFinancial() {
               <SelectValue placeholder={t("TransactionType")} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem className="font-vazirM" value="All">
+                {t("All")}
+              </SelectItem>
               <SelectItem className="font-vazirM" value="W">
                 {t("Wallet")}
               </SelectItem>

@@ -1,13 +1,5 @@
 import React, { useEffect } from "react";
 
-import { AiOutlineDashboard } from "react-icons/ai";
-import { FaChartLine } from "react-icons/fa6";
-import { BiSolidSave } from "react-icons/bi";
-import { TbMobiledata } from "react-icons/tb";
-import { LiaRandomSolid } from "react-icons/lia";
-import { FaEdit } from "react-icons/fa";
-import { FaChartBar } from "react-icons/fa";
-import { FaPowerOff } from "react-icons/fa";
 import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
@@ -228,7 +220,7 @@ export default function Header() {
                       >
                         {item.icon}
                         <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                          {item.title}
+                          {t(item.title)}
                         </p>
                       </Link>
                     );
@@ -241,7 +233,7 @@ export default function Header() {
                       >
                         {item.icon}
                         <p className="text-[13px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                          {item.title}
+                          {t(item.title)}
                         </p>
                       </li>
                     );
