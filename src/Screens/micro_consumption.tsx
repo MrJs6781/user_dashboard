@@ -240,7 +240,7 @@ export default function MicroConsumption() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: consumeFetch, isLoading: consumeFetchLoading } =
-    useConsumeFetch(1);
+    useConsumeFetch(+window.localStorage.getItem("ssss_language_id")!);
 
   const [consumeFetchData, setConsumeFetchData] = useState([]);
   const [searchValue, setSearchValue] = useState("");

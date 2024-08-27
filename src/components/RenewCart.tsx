@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface RenewCartProps {
   data: UserProductResponse;
@@ -13,6 +14,13 @@ interface RenewCartProps {
 
 export default function RenewCart({ data, index, headerData }: RenewCartProps) {
   const navigate = useNavigate();
+  const [findImageUrlIndex, setFindImageUrlIndex] = useState(0);
+
+  useEffect(() => {
+    const find = headerData?.findIndex((item) => item.name == "ImageUrl");
+    // console.log(first)
+    setFindImageUrlIndex(find);
+  }, []);
 
   const handleSubmit = () => {
     mutation.mutate({
@@ -75,56 +83,31 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
       }
     >
       <img
-        src={data.ImageUrl ? data.ImageUrl : "/public/product_image.jpg"}
+        src={
+          (data as any)[findImageUrlIndex]
+            ? (data as any)[findImageUrlIndex]
+            : "/public/product_image.jpg"
+        }
         alt="Image"
         className="w-full h-full max-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
       />
-      {/* <span className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
-        <span className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-          نام محصول :{" "}
-          <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-            {data.Title}
-          </h5>
-        </span>
-        <span className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-          دسته :{" "}
-          <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-            {data.CategoryTitle}
-          </h5>
-        </span>
-        <span className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-          گروه :{" "}
-          <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-            {data.GroupTitle}
-          </h5>
-        </span>
-        <span className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-          قیمت خرید :{" "}
-          <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-            {data.Fi}
-          </h5>{" "}
-          تومان
-        </span>
-        <span className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-          قیمت تمدید :{" "}
-          <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-            {data.RenewFi}
-          </h5>{" "}
-          تومان
-        </span>
-      </span> */}
       <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
-        {headerData?.map(({ name, title }, i) => (
-          <li
-            key={i}
-            className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
-          >
-            {title} :{" "}
-            <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-              {(data as any)[name]}
-            </h5>
-          </li>
-        ))}
+        {headerData?.map(({ name, title }, i) => {
+          // console.log(name);
+          if (name != "ImageUrl") {
+            return (
+              <li
+                key={i}
+                className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
+              >
+                {title} :{" "}
+                <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  {(data as any)[name]}
+                </h5>
+              </li>
+            );
+          }
+        })}
       </ul>
       <button
         className="w-[95%] mx-auto mb-4 rounded-[12px] h-[50px] flex items-center justify-center outline-none cursor-pointer border-none bg-[#a855f7] dark:bg-[#1e293b]"

@@ -247,7 +247,7 @@ export default function CardexTraffic() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: cardexTraffic, isLoading: cardexTrafficLoading } =
-    useCardexTraffic(1);
+    useCardexTraffic(+window.localStorage.getItem("ssss_language_id")!);
 
   useEffect(() => {
     if (fetchedData) {

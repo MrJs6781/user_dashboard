@@ -255,7 +255,7 @@ export default function CardexFinancial() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: cardexFinancial, isLoading: cardexFinancialLoading } =
-    useCardexFinancial(1);
+    useCardexFinancial(+window.localStorage.getItem("ssss_language_id")!);
 
   useEffect(() => {
     if (fetchedData) {

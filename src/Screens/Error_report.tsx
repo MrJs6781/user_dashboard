@@ -241,7 +241,7 @@ export default function ErrorReport() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: errorReports, isLoading: errorReportsLoading } =
-    useFetchErrorReports(1);
+    useFetchErrorReports(+window.localStorage.getItem("ssss_language_id")!);
 
   useEffect(() => {
     if (fetchedData) {

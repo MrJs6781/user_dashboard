@@ -248,8 +248,9 @@ export default function Products_continuation() {
   const { isLoading: fetchedDataLoading, data: fetchedData } =
     useFetchDashboardData();
   const { isLoading: userProductsLoading, data: userProducts } =
-    useFetchUserProducts({ languageId: 1 });
-  const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew(1);
+    useFetchUserProducts({ languageId: +window.localStorage.getItem("ssss_language_id")! });
+  const { isLoading: userRenewLoading, data: userRenew } =
+    useFetchRenew(+window.localStorage.getItem("ssss_language_id")!);
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [renewTableHeader, setRenewTableHeader]: any = useState([]);
   const [userProductsHeader, setUserProductsHeader]: any = useState([]);
@@ -271,6 +272,7 @@ export default function Products_continuation() {
   useEffect(() => {
     if (userProducts) {
       if (userProducts.Status == 0) {
+        // console.log(userProducts)
         let arr: any = [];
         userProducts?.Title.split(",")?.map((renewData: string, i: number) => {
           if (renewData.length > 0) {
@@ -394,10 +396,7 @@ export default function Products_continuation() {
   }
 
   return (
-    <div
-      className="w-full h-auto overflow-auto flex flex-col items-start mb-12"
-       
-    >
+    <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
       <Header />
       <Swiper
         modules={[Navigation, Pagination]}
@@ -451,7 +450,7 @@ export default function Products_continuation() {
               {item.icon}
               <span className="flex flex-col items-start gap-1">
                 <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                {t(item.title)} :{" "}
+                  {t(item.title)} :{" "}
                 </p>
                 {item.id == 1 && (
                   <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">

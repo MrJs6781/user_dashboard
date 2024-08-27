@@ -158,6 +158,9 @@ export default function Header() {
         getHTML?.style.setProperty("direction", "rtl");
         getHTML?.setAttribute("lang", "fa");
         changeLanguage("fa");
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       } else {
         window.localStorage.setItem("ssss_language", "en");
         window.localStorage.setItem("ssss_language_id", "0");
@@ -165,6 +168,9 @@ export default function Header() {
         getHTML?.style.setProperty("direction", "ltr");
         getHTML?.setAttribute("lang", "en");
         changeLanguage("en");
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       }
     } else {
       window.localStorage.setItem("ssss_language", "en");
@@ -173,6 +179,9 @@ export default function Header() {
       getHTML?.style.setProperty("direction", "ltr");
       getHTML?.setAttribute("lang", "en");
       changeLanguage("en");
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   };
 

@@ -245,7 +245,7 @@ export default function ConnectionHistory() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: connectionHistory, isLoading: connectionHistoryLoading } =
-    useConnectionHistory(1);
+    useConnectionHistory(+window.localStorage.getItem("ssss_language_id")!);
 
   useEffect(() => {
     if (fetchedData) {

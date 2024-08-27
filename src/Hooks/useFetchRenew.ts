@@ -6,8 +6,6 @@ export const useFetchRenew = (languageId?: number) => {
     // گرفتن توکن از کوکی
     const getToken = Cookies.get("authToken"); // تابع getCookie را خودتان پیاده‌سازی کنید
 
-    // console.log(token);
-
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${getToken}`);

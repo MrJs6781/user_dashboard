@@ -247,7 +247,7 @@ export default function Trafic() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: trafficData, isLoading: trafficDataLoading } =
-    useFetchTrafficData(1);
+    useFetchTrafficData(+window.localStorage.getItem("ssss_language_id")!);
 
   useEffect(() => {
     if (fetchedData) {
