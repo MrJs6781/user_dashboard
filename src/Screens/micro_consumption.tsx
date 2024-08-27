@@ -249,6 +249,7 @@ export default function MicroConsumption() {
   const [justActiveState, setJustActiveState] = useState(true);
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [consumeTableHeader, setConsumeTableHeader] = useState([]);
+  const [consumeTableHeaderName, setConsumeTableHeaderName] = useState([]);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -271,12 +272,16 @@ export default function MicroConsumption() {
     if (consumeFetch) {
       if (consumeFetch.Status == 0) {
         let arr: any = [];
-        consumeFetch?.Title.split(",")?.map((renewData: string) => {
-          if (renewData.length > 0) {
-            arr.push(renewData);
+        let arr2: any = [];
+
+        consumeFetch?.Title.split(",")?.map((data: string, index: number) => {
+          if (data.length > 0) {
+            arr2.push(consumeFetch?.Name.split(",")[index]);
+            arr.push(data);
           }
         });
         setConsumeTableHeader(arr);
+        setConsumeTableHeaderName(arr2);
         setConsumeFetchData(consumeFetch?.Data);
       } else {
         toast.error(consumeFetch.Message);
@@ -533,7 +538,7 @@ export default function MicroConsumption() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          <ConsumeTable data={currentItems} headerData={consumeTableHeader} />
+          <ConsumeTable data={currentItems} headerData={consumeTableHeader} headerDataName={consumeTableHeaderName} />
           {consumeFetchData.length > 0 && (
             <PaginationComponent
               paginationData={consumeFetchData}

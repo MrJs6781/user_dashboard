@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -8,10 +8,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ConsumeData } from "@/types/Consume";
+import { useTranslation } from "react-i18next";
 
-// const tableName = ["آپلود", "دانلود", "زمان", "سرور"];
+const ConsumeTable: React.FC<{
+  data: ConsumeData[];
+  headerData: string[];
+  headerDataName: string[];
+}> = ({ data, headerData, headerDataName }) => {
+  const { t } = useTranslation();
 
-const ConsumeTable: React.FC<{ data: ConsumeData[] , headerData : string[] }> = ({ data , headerData }) => {
+  // useEffect(() => {
+  //   console.log(headerDataName);
+  // }, []);
+
   return (
     <div className="overflow-x-auto w-full">
       <Table className="table-fixed w-full">
@@ -30,18 +39,20 @@ const ConsumeTable: React.FC<{ data: ConsumeData[] , headerData : string[] }> = 
         <TableBody>
           {data?.map((item, index) => (
             <TableRow key={index}>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.Upload ? item.Upload : "_"}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.Download ? item.Download : "_"}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.TimeStamp ? item.TimeStamp : "_"}
-              </TableCell>
-              <TableCell className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                {item.RasTitle ? item.RasTitle : "_"}
-              </TableCell>
+              {headerDataName?.length > 0 && headerDataName?.map((headerDataName, index) => (
+                <TableCell
+                  className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]"
+                  key={index + 10000}
+                >
+                  {(item as any)[headerDataName] == "true"
+                    ? t("is")
+                    : (item as any)[headerDataName] == "false"
+                    ? t("isNot")
+                    : (item as any)[headerDataName] && (item as any)[headerDataName].length > 0
+                    ? (item as any)[headerDataName]
+                    : "_"}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>

@@ -244,6 +244,7 @@ export default function Trafic() {
   const [justActiveState, setJustActiveState] = useState(true);
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [trafficTableHeader, setTrafficTableHeader] = useState([]);
+  const [trafficTableHeaderName, setTrafficTableHeaderName] = useState([]);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -271,12 +272,16 @@ export default function Trafic() {
     if (trafficData) {
       if (trafficData.Status == 0) {
         let arr: any = [];
-        trafficData?.Title.split(",")?.map((renewData: string) => {
-          if (renewData.length > 0) {
-            arr.push(renewData);
+        let arr2: any = [];
+
+        trafficData?.Title.split(",")?.map((data: string, index: number) => {
+          if (data.length > 0) {
+            arr2.push(trafficData?.Name.split(",")[index]);
+            arr.push(data);
           }
         });
         setTrafficTableHeader(arr);
+        setTrafficTableHeaderName(arr2);
         setTrafficDataTable(trafficData.Data);
       } else {
         toast.error(trafficData.Message);
@@ -533,7 +538,7 @@ export default function Trafic() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          <TrafficTable data={currentItems} headerData={trafficTableHeader} />
+          <TrafficTable data={currentItems} headerData={trafficTableHeader} headerDataName={trafficTableHeaderName} />
           {trafficDataTable?.length > 0 && (
             <PaginationComponent
               paginationData={trafficDataTable}
