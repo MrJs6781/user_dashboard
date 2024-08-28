@@ -49,5 +49,6 @@
   "EmailAddress" : "EmailAddress",
   "RepeatPassword" : "RepeatPassword",
   "CurrentPassword" : "CurrentPassword",
-  "All" : "All"
+  "All" : "All",
+  "SelectLanguage" : "Click to change language"
 }

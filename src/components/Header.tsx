@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
@@ -6,7 +6,6 @@ import ProfileUser from "./ProfileUser";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
-import { IoLanguage } from "react-icons/io5";
 
 import {
   Sheet,
@@ -16,7 +15,6 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-import i18n from "./../../i18n";
 import { useTranslation } from "react-i18next";
 
 type headerListType = {
@@ -112,69 +110,6 @@ export default function Header() {
     setTimeout(() => {
       window.location.reload();
     }, 500);
-  };
-
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
-
-  useEffect(() => {
-    if (window.localStorage.getItem("ssss_language")) {
-      const getLang = window.localStorage.getItem("ssss_language")!;
-      if (getLang == "en") {
-        const getHTML = window.document.getElementById("root_parent");
-        getHTML?.style.setProperty("direction", "ltr");
-        getHTML?.setAttribute("lang", "en");
-        changeLanguage("en");
-      } else {
-        const getHTML = window.document.getElementById("root_parent");
-        getHTML?.style.setProperty("direction", "rtl");
-        getHTML?.setAttribute("lang", "fa");
-        changeLanguage("fa");
-      }
-    } else {
-      const getHTML = window.document.getElementById("root_parent");
-      getHTML?.style.setProperty("direction", "rtl");
-      getHTML?.setAttribute("lang", "fa");
-      changeLanguage("fa");
-    }
-  }, []);
-
-  const toggleLanguage = () => {
-    if (window.localStorage.getItem("ssss_language")) {
-      const getLang = window.localStorage.getItem("ssss_language")!;
-      if (getLang == "en") {
-        window.localStorage.setItem("ssss_language", "fa");
-        window.localStorage.setItem("ssss_language_id", "1");
-        const getHTML = window.document.getElementById("root_parent");
-        getHTML?.style.setProperty("direction", "rtl");
-        getHTML?.setAttribute("lang", "fa");
-        changeLanguage("fa");
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      } else {
-        window.localStorage.setItem("ssss_language", "en");
-        window.localStorage.setItem("ssss_language_id", "0");
-        const getHTML = window.document.getElementById("root_parent");
-        getHTML?.style.setProperty("direction", "ltr");
-        getHTML?.setAttribute("lang", "en");
-        changeLanguage("en");
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      }
-    } else {
-      window.localStorage.setItem("ssss_language", "en");
-      window.localStorage.setItem("ssss_language_id", "0");
-      const getHTML = window.document.getElementById("root_parent");
-      getHTML?.style.setProperty("direction", "ltr");
-      getHTML?.setAttribute("lang", "en");
-      changeLanguage("en");
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    }
   };
 
   return (
@@ -288,10 +223,6 @@ export default function Header() {
         })}
       </ul>
       <span className="flex items-center gap-4">
-        <IoLanguage
-          className="cursor-pointer text-[20px]"
-          onClick={toggleLanguage}
-        />
         <BiMessageSquareDetail className="cursor-pointer text-[20px]" />
         <ModeToggle />
         <ProfileUser />

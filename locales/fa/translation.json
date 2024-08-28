@@ -49,5 +49,6 @@
   "EmailAddress": "آدرس ایمیل",
   "CurrentPassword": "کلمه عبور فعلی",
   "RepeatPassword": "کلمه عبور جدید",
-  "All": "همه"
+  "All": "همه",
+  "SelectLanguage" : "برای تغییر زبان کلیک کنید"
 }
