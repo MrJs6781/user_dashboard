@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { ModeToggle } from "./mode-toggle";
-import { BiMessageSquareDetail } from "react-icons/bi";
+// import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 
 import { useTranslation } from "react-i18next";
 import i18n from "./../../i18n";
-import { ShowNotification } from "./ShowNotification";
+// import { ShowNotification } from "./ShowNotification";
 
 type headerListType = {
   id: number;
@@ -104,7 +104,7 @@ export default function Header() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [isShowNotification, setIsShowNotification] = useState(false);
+  // const [isShowNotification, setIsShowNotification] = useState(false);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {

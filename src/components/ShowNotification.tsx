@@ -14,11 +14,11 @@ import { useFetchNotificationData } from "@/Hooks/useNotificationsFetch";
 import { useEffect } from "react";
 import LottiePlayer from "./Loading";
 
-interface notificaitonType {
-  ID: number;
-  Title: string;
-  Text: string;
-}
+// interface notificaitonType {
+//   ID: number;
+//   Title: string;
+//   Text: string;
+// }
 
 type CardProps = React.ComponentProps<typeof Card>;
 
