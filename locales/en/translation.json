@@ -50,5 +50,7 @@
   "RepeatPassword" : "RepeatPassword",
   "CurrentPassword" : "CurrentPassword",
   "All" : "All",
-  "SelectLanguage" : "Click to change language"
+  "SelectLanguage" : "Click to change language",
+  "Notifications" : "Notifications",
+  "MarkAllAsRead" : "Mark all as read"
 }

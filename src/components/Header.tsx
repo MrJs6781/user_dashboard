@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 
 import { useTranslation } from "react-i18next";
 import i18n from "./../../i18n";
+import { ShowNotification } from "./ShowNotification";
 
 type headerListType = {
   id: number;
@@ -103,6 +104,7 @@ export default function Header() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [isShowNotification, setIsShowNotification] = useState(false);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
@@ -250,7 +252,13 @@ export default function Header() {
         })}
       </ul>
       <span className="flex items-center gap-4">
-        <BiMessageSquareDetail className="cursor-pointer text-[20px]" />
+        <span className="relative">
+          <BiMessageSquareDetail
+            className="cursor-pointer text-[20px]"
+            onClick={() => setIsShowNotification(!isShowNotification)}
+          />
+          {isShowNotification && <ShowNotification className="absolute top-10 left-0" />}
+        </span>
         <ModeToggle />
         <ProfileUser />
       </span>

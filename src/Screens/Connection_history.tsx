@@ -239,8 +239,10 @@ export default function ConnectionHistory() {
   const [connectionHistoryData, setConnectionHistoryData] = useState([]);
   const [connectionHistoryTableHeader, setConnectionHistoryTableHeader] =
     useState([]);
-  const [connectionHistoryTableHeaderName, setConnectionHistoryTableHeaderName] =
-    useState([]);
+  const [
+    connectionHistoryTableHeaderName,
+    setConnectionHistoryTableHeaderName,
+  ] = useState([]);
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
 
@@ -269,12 +271,14 @@ export default function ConnectionHistory() {
         let arr: any = [];
         let arr2: any = [];
 
-        connectionHistory?.Title.split(",")?.map((data: string, index: number) => {
-          if (data.length > 0) {
-            arr2.push(connectionHistory?.Name.split(",")[index]);
-            arr.push(data);
+        connectionHistory?.Title.split(",")?.map(
+          (data: string, index: number) => {
+            if (data.length > 0) {
+              arr2.push(connectionHistory?.Name.split(",")[index]);
+              arr.push(data);
+            }
           }
-        });
+        );
         setConnectionHistoryTableHeader(arr);
         setConnectionHistoryTableHeaderName(arr2);
         setConnectionHistoryData(connectionHistory?.Data);
@@ -333,10 +337,6 @@ export default function ConnectionHistory() {
       setIsShowLoading(false);
     },
   });
-
-  if (fetchedDataLoading || connectionHistoryLoading || isShowLoading) {
-    return <LottiePlayer />;
-  }
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -498,17 +498,23 @@ export default function ConnectionHistory() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          <ConnectionHistoryTable
-            data={currentItems}
-            headerData={connectionHistoryTableHeader}
-            headerDataName={connectionHistoryTableHeaderName}
-          />
-          <PaginationComponent
-            paginationData={connectionHistoryData}
-            perPage={perPage}
-            setCurrentItems={setCurrentItems}
-            setPerPage={setPerPage}
-          />
+          {fetchedDataLoading || connectionHistoryLoading || isShowLoading ? (
+            <LottiePlayer />
+          ) : (
+            <>
+              <ConnectionHistoryTable
+                data={currentItems}
+                headerData={connectionHistoryTableHeader}
+                headerDataName={connectionHistoryTableHeaderName}
+              />
+              <PaginationComponent
+                paginationData={connectionHistoryData}
+                perPage={perPage}
+                setCurrentItems={setCurrentItems}
+                setPerPage={setPerPage}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

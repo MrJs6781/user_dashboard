@@ -358,10 +358,6 @@ export default function MicroConsumption() {
     },
   });
 
-  if (fetchedDataLoading || consumeFetchLoading || isShowLoading) {
-    return <LottiePlayer />;
-  }
-
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
       <Header />
@@ -538,14 +534,24 @@ export default function MicroConsumption() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          <ConsumeTable data={currentItems} headerData={consumeTableHeader} headerDataName={consumeTableHeaderName} />
-          {consumeFetchData.length > 0 && (
-            <PaginationComponent
-              paginationData={consumeFetchData}
-              perPage={perPage}
-              setCurrentItems={setCurrentItems}
-              setPerPage={setPerPage}
-            />
+          {fetchedDataLoading || consumeFetchLoading || isShowLoading ? (
+            <LottiePlayer />
+          ) : (
+            <>
+              <ConsumeTable
+                data={currentItems}
+                headerData={consumeTableHeader}
+                headerDataName={consumeTableHeaderName}
+              />
+              {consumeFetchData.length > 0 && (
+                <PaginationComponent
+                  paginationData={consumeFetchData}
+                  perPage={perPage}
+                  setCurrentItems={setCurrentItems}
+                  setPerPage={setPerPage}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

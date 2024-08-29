@@ -244,7 +244,8 @@ export default function CardexTraffic() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [cardexTrafficFetchData, setCardexTrafficFetchData] = useState([]);
   const [cardexTrafficTableHeader, setCardexTrafficTableHeader] = useState([]);
-  const [cardexTrafficTableHeaderName, setCardexTrafficTableHeaderName] = useState([]);
+  const [cardexTrafficTableHeaderName, setCardexTrafficTableHeaderName] =
+    useState([]);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -356,10 +357,6 @@ export default function CardexTraffic() {
       setIsShowLoading(false);
     },
   });
-
-  if (fetchedDataLoading || cardexTrafficLoading || isShowLoading) {
-    return <LottiePlayer />;
-  }
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -537,18 +534,24 @@ export default function CardexTraffic() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          <CardexTrafficTable
-            data={currentItems}
-            headerData={cardexTrafficTableHeader}
-            headerDataName={cardexTrafficTableHeaderName}
-          />
-          {cardexTrafficFetchData?.length > 0 && (
-            <PaginationComponent
-              paginationData={cardexTrafficFetchData}
-              perPage={perPage}
-              setCurrentItems={setCurrentItems}
-              setPerPage={setPerPage}
-            />
+          {fetchedDataLoading || cardexTrafficLoading || isShowLoading ? (
+            <LottiePlayer />
+          ) : (
+            <>
+              <CardexTrafficTable
+                data={currentItems}
+                headerData={cardexTrafficTableHeader}
+                headerDataName={cardexTrafficTableHeaderName}
+              />
+              {cardexTrafficFetchData?.length > 0 && (
+                <PaginationComponent
+                  paginationData={cardexTrafficFetchData}
+                  perPage={perPage}
+                  setCurrentItems={setCurrentItems}
+                  setPerPage={setPerPage}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

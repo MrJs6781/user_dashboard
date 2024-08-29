@@ -251,9 +251,8 @@ export default function CardexFinancial() {
   const [cardexFinancialTableHeader, setCardexFinancialTableHeader] = useState(
     []
   );
-  const [cardexFinancialTableHeaderName, setCardexFinancialTableHeaderName] = useState(
-    []
-  );
+  const [cardexFinancialTableHeaderName, setCardexFinancialTableHeaderName] =
+    useState([]);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -283,12 +282,14 @@ export default function CardexFinancial() {
         let arr: any = [];
         let arr2: any = [];
 
-        cardexFinancial?.Title.split(",")?.map((data: string, index: number) => {
-          if (data.length > 0) {
-            arr2.push(cardexFinancial?.Name.split(",")[index]);
-            arr.push(data);
+        cardexFinancial?.Title.split(",")?.map(
+          (data: string, index: number) => {
+            if (data.length > 0) {
+              arr2.push(cardexFinancial?.Name.split(",")[index]);
+              arr.push(data);
+            }
           }
-        });
+        );
         setCardexFinancialTableHeader(arr);
         setCardexFinancialTableHeaderName(arr2);
         setCardexTrafficFinancialData(cardexFinancial?.Data);
@@ -358,10 +359,6 @@ export default function CardexFinancial() {
       setIsShowLoading(false);
     },
   });
-
-  if (fetchedDataLoading || cardexFinancialLoading || isShowLoading) {
-    return <LottiePlayer />;
-  }
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -545,17 +542,23 @@ export default function CardexFinancial() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1500px] flex-col">
-          <CardexFinancialTable
-            data={currentItems}
-            headerData={cardexFinancialTableHeader}
-            headerDataName={cardexFinancialTableHeaderName}
-          />
-          <PaginationComponent
-            paginationData={cardexTrafficFinancialData}
-            perPage={perPage}
-            setCurrentItems={setCurrentItems}
-            setPerPage={setPerPage}
-          />
+          {fetchedDataLoading || cardexFinancialLoading || isShowLoading ? (
+            <LottiePlayer />
+          ) : (
+            <>
+              <CardexFinancialTable
+                data={currentItems}
+                headerData={cardexFinancialTableHeader}
+                headerDataName={cardexFinancialTableHeaderName}
+              />
+              <PaginationComponent
+                paginationData={cardexTrafficFinancialData}
+                perPage={perPage}
+                setCurrentItems={setCurrentItems}
+                setPerPage={setPerPage}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

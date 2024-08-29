@@ -238,7 +238,8 @@ export default function ErrorReport() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [errorReportsTableData, setErrorReportsTableData] = useState([]);
   const [errorReportsTableHeader, setErrorReportsTableHeader] = useState([]);
-  const [errorReportsTableHeaderName, setErrorReportsTableHeaderName] = useState([]);
+  const [errorReportsTableHeaderName, setErrorReportsTableHeaderName] =
+    useState([]);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -332,10 +333,6 @@ export default function ErrorReport() {
       setIsShowLoading(false);
     },
   });
-
-  if (fetchedDataLoading || errorReportsLoading || isShowLoading) {
-    return <LottiePlayer />;
-  }
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -497,18 +494,24 @@ export default function ErrorReport() {
           </Button>
         </div>
         <div className="w-full flex flex-col items-start justify-center overflow-x-scroll min-w-[800px]">
-          <ErrorReportsTable
-            data={currentItems}
-            headerData={errorReportsTableHeader}
-            headerDataName={errorReportsTableHeaderName}
-          />
-          {errorReportsTableData.length > 0 && (
-            <PaginationComponent
-              paginationData={errorReportsTableData}
-              perPage={perPage}
-              setCurrentItems={setCurrentItems}
-              setPerPage={setPerPage}
-            />
+          {fetchedDataLoading || errorReportsLoading || isShowLoading ? (
+            <LottiePlayer />
+          ) : (
+            <>
+              <ErrorReportsTable
+                data={currentItems}
+                headerData={errorReportsTableHeader}
+                headerDataName={errorReportsTableHeaderName}
+              />
+              {errorReportsTableData.length > 0 && (
+                <PaginationComponent
+                  paginationData={errorReportsTableData}
+                  perPage={perPage}
+                  setCurrentItems={setCurrentItems}
+                  setPerPage={setPerPage}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

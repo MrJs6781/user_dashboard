@@ -358,10 +358,6 @@ export default function Trafic() {
     },
   });
 
-  if (fetchedDataLoading || trafficDataLoading || isShowLoading) {
-    return <LottiePlayer />;
-  }
-
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
       <Header />
@@ -538,14 +534,24 @@ export default function Trafic() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          <TrafficTable data={currentItems} headerData={trafficTableHeader} headerDataName={trafficTableHeaderName} />
-          {trafficDataTable?.length > 0 && (
-            <PaginationComponent
-              paginationData={trafficDataTable}
-              perPage={perPage}
-              setCurrentItems={setCurrentItems}
-              setPerPage={setPerPage}
-            />
+          {fetchedDataLoading || trafficDataLoading || isShowLoading ? (
+            <LottiePlayer />
+          ) : (
+            <>
+              <TrafficTable
+                data={currentItems}
+                headerData={trafficTableHeader}
+                headerDataName={trafficTableHeaderName}
+              />
+              {trafficDataTable?.length > 0 && (
+                <PaginationComponent
+                  paginationData={trafficDataTable}
+                  perPage={perPage}
+                  setCurrentItems={setCurrentItems}
+                  setPerPage={setPerPage}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

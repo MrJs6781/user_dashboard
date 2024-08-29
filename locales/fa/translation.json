@@ -50,5 +50,7 @@
   "CurrentPassword": "کلمه عبور فعلی",
   "RepeatPassword": "کلمه عبور جدید",
   "All": "همه",
-  "SelectLanguage" : "برای تغییر زبان کلیک کنید"
+  "SelectLanguage": "برای تغییر زبان کلیک کنید",
+  "Notifications": "پیغام ها",
+  "MarkAllAsRead": "خواندن همه"
 }
