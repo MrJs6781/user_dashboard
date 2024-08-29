@@ -253,6 +253,7 @@ export default function CardexFinancial() {
   );
   const [cardexFinancialTableHeaderName, setCardexFinancialTableHeaderName] =
     useState([]);
+  const [TotalDataCount, setTotalDataCount] = useState(0);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -279,6 +280,7 @@ export default function CardexFinancial() {
   useEffect(() => {
     if (cardexFinancial) {
       if (cardexFinancial.Status == 0) {
+        setTotalDataCount(cardexFinancial?.TotalDataCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -556,6 +558,7 @@ export default function CardexFinancial() {
                 perPage={perPage}
                 setCurrentItems={setCurrentItems}
                 setPerPage={setPerPage}
+                TotalDataCount={TotalDataCount}
               />
             </>
           )}

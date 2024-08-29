@@ -245,6 +245,7 @@ export default function Trafic() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [trafficTableHeader, setTrafficTableHeader] = useState([]);
   const [trafficTableHeaderName, setTrafficTableHeaderName] = useState([]);
+  const [TotalDataCount, setTotalDataCount] = useState(0);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -271,6 +272,7 @@ export default function Trafic() {
   useEffect(() => {
     if (trafficData) {
       if (trafficData.Status == 0) {
+        setTotalDataCount(trafficData?.TotalDataCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -365,28 +367,32 @@ export default function Trafic() {
         modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
-          1500: {
+          1800: {
+            slidesPerView: 8,
+            spaceBetween: 15,
+          },
+          1600: {
+            slidesPerView: 7,
+            spaceBetween: 15,
+          },
+          1300: {
             slidesPerView: 5.5,
             spaceBetween: 15,
           },
-          1200: {
-            slidesPerView: 4.5,
+          1100: {
+            slidesPerView: 4.8,
             spaceBetween: 15,
           },
-          1000: {
+          850: {
             slidesPerView: 3.8,
             spaceBetween: 15,
           },
-          800: {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-          500: {
-            slidesPerView: 2,
+          565: {
+            slidesPerView: 2.8,
             spaceBetween: 15,
           },
           0: {
-            slidesPerView: 1.4,
+            slidesPerView: 1.8,
             spaceBetween: 15,
           },
         }}
@@ -397,7 +403,6 @@ export default function Trafic() {
         {dashboardBoxes?.map((item, index) => (
           <SwiperSlide
             style={{
-              width: "100px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -549,6 +554,7 @@ export default function Trafic() {
                   perPage={perPage}
                   setCurrentItems={setCurrentItems}
                   setPerPage={setPerPage}
+                  TotalDataCount={TotalDataCount}
                 />
               )}
             </>

@@ -252,13 +252,13 @@ export default function Header() {
         })}
       </ul>
       <span className="flex items-center gap-4">
-        <span className="relative">
+        {/* <span className="relative">
           <BiMessageSquareDetail
             className="cursor-pointer text-[20px]"
             onClick={() => setIsShowNotification(!isShowNotification)}
           />
           {isShowNotification && <ShowNotification className="absolute top-10 left-0" />}
-        </span>
+        </span> */}
         <ModeToggle />
         <ProfileUser />
       </span>

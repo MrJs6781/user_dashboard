@@ -240,6 +240,7 @@ export default function ErrorReport() {
   const [errorReportsTableHeader, setErrorReportsTableHeader] = useState([]);
   const [errorReportsTableHeaderName, setErrorReportsTableHeaderName] =
     useState([]);
+  const [TotalDataCount, setTotalDataCount] = useState(0);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -266,6 +267,7 @@ export default function ErrorReport() {
   useEffect(() => {
     if (errorReports) {
       if (errorReports.Status == 0) {
+        setTotalDataCount(errorReports?.TotalDataCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -509,6 +511,7 @@ export default function ErrorReport() {
                   perPage={perPage}
                   setCurrentItems={setCurrentItems}
                   setPerPage={setPerPage}
+                  TotalDataCount={TotalDataCount}
                 />
               )}
             </>

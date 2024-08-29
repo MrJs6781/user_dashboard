@@ -310,28 +310,32 @@ export default function Dashboard() {
               modules={[Navigation, Pagination]}
               spaceBetween={10}
               breakpoints={{
-                1500: {
+                1800: {
+                  slidesPerView: 8,
+                  spaceBetween: 15,
+                },
+                1600: {
+                  slidesPerView: 7,
+                  spaceBetween: 15,
+                },
+                1300: {
                   slidesPerView: 5.5,
                   spaceBetween: 15,
                 },
-                1200: {
-                  slidesPerView: 4.5,
+                1100: {
+                  slidesPerView: 4.8,
                   spaceBetween: 15,
                 },
-                1000: {
+                850: {
                   slidesPerView: 3.8,
                   spaceBetween: 15,
                 },
-                800: {
-                  slidesPerView: 3,
-                  spaceBetween: 15,
-                },
-                500: {
-                  slidesPerView: 2,
+                565: {
+                  slidesPerView: 2.8,
                   spaceBetween: 15,
                 },
                 0: {
-                  slidesPerView: 1.4,
+                  slidesPerView: 1.8,
                   spaceBetween: 15,
                 },
               }}
@@ -342,7 +346,6 @@ export default function Dashboard() {
               {dashboardBoxes?.map((item, index) => (
                 <SwiperSlide
                   style={{
-                    width: "100px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -383,6 +386,11 @@ export default function Dashboard() {
                           {fetchedData?.Data[0]?.WalletRemained}
                         </small>
                       )}
+                      {/* {item.id == 4 && (
+                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  {fetchedData?.Data[0]?.RemainedTime}
+                </small>
+              )} */}
                       {item.id == 5 && (
                         <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                           {fetchedData?.Data[0]?.CreationTime
@@ -450,28 +458,32 @@ export default function Dashboard() {
         modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
-          1500: {
+          1800: {
+            slidesPerView: 8,
+            spaceBetween: 15,
+          },
+          1600: {
+            slidesPerView: 7,
+            spaceBetween: 15,
+          },
+          1300: {
             slidesPerView: 5.5,
             spaceBetween: 15,
           },
-          1200: {
-            slidesPerView: 4.5,
+          1100: {
+            slidesPerView: 4.8,
             spaceBetween: 15,
           },
-          1000: {
+          850: {
             slidesPerView: 3.8,
             spaceBetween: 15,
           },
-          800: {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-          500: {
-            slidesPerView: 2,
+          565: {
+            slidesPerView: 2.8,
             spaceBetween: 15,
           },
           0: {
-            slidesPerView: 1.4,
+            slidesPerView: 1.8,
             spaceBetween: 15,
           },
         }}
@@ -482,7 +494,6 @@ export default function Dashboard() {
         {dashboardBoxes?.map((item, index) => (
           <SwiperSlide
             style={{
-              width: "100px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

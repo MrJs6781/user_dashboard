@@ -263,6 +263,7 @@ export default function Products_continuation() {
   const [renewTableHeader, setRenewTableHeader]: any = useState([]);
   const [renewTableHeaderName, setRenewTableHeaderName]: any = useState([]);
   const [userProductsHeader, setUserProductsHeader]: any = useState([]);
+  const [TotalDataCount, setTotalDataCount] = useState(0);
 
   useEffect(() => {
     if (fetchedData) {
@@ -308,6 +309,7 @@ export default function Products_continuation() {
   useEffect(() => {
     if (userRenew) {
       if (userRenew.Status == 0) {
+        setTotalDataCount(userRenew?.TotalDataCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -453,7 +455,6 @@ export default function Products_continuation() {
     userRenewLoading ||
     isShowLoading
   ) {
-    // return <LottiePlayer />;
     return (
       <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
         <Header />
@@ -461,28 +462,32 @@ export default function Products_continuation() {
           modules={[Navigation, Pagination]}
           spaceBetween={10}
           breakpoints={{
-            1500: {
+            1800: {
+              slidesPerView: 8,
+              spaceBetween: 15,
+            },
+            1600: {
+              slidesPerView: 7,
+              spaceBetween: 15,
+            },
+            1300: {
               slidesPerView: 5.5,
               spaceBetween: 15,
             },
-            1200: {
-              slidesPerView: 4.5,
+            1100: {
+              slidesPerView: 4.8,
               spaceBetween: 15,
             },
-            1000: {
+            850: {
               slidesPerView: 3.8,
               spaceBetween: 15,
             },
-            800: {
-              slidesPerView: 3,
-              spaceBetween: 15,
-            },
-            500: {
-              slidesPerView: 2,
+            565: {
+              slidesPerView: 2.8,
               spaceBetween: 15,
             },
             0: {
-              slidesPerView: 1.4,
+              slidesPerView: 1.8,
               spaceBetween: 15,
             },
           }}
@@ -493,7 +498,6 @@ export default function Products_continuation() {
           {dashboardBoxes?.map((item, index) => (
             <SwiperSlide
               style={{
-                width: "100px",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -716,6 +720,7 @@ export default function Products_continuation() {
                         perPage={perPage}
                         setCurrentItems={setCurrentItems}
                         setPerPage={setPerPage}
+                        TotalDataCount={TotalDataCount}
                       />
                     )}
                   </>
@@ -735,28 +740,32 @@ export default function Products_continuation() {
         modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
-          1500: {
+          1800: {
+            slidesPerView: 8,
+            spaceBetween: 15,
+          },
+          1600: {
+            slidesPerView: 7,
+            spaceBetween: 15,
+          },
+          1300: {
             slidesPerView: 5.5,
             spaceBetween: 15,
           },
-          1200: {
-            slidesPerView: 4.5,
+          1100: {
+            slidesPerView: 4.8,
             spaceBetween: 15,
           },
-          1000: {
+          850: {
             slidesPerView: 3.8,
             spaceBetween: 15,
           },
-          800: {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-          500: {
-            slidesPerView: 2,
+          565: {
+            slidesPerView: 2.8,
             spaceBetween: 15,
           },
           0: {
-            slidesPerView: 1.4,
+            slidesPerView: 1.8,
             spaceBetween: 15,
           },
         }}
@@ -767,7 +776,6 @@ export default function Products_continuation() {
         {dashboardBoxes?.map((item, index) => (
           <SwiperSlide
             style={{
-              width: "100px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -972,6 +980,7 @@ export default function Products_continuation() {
                   perPage={perPage}
                   setCurrentItems={setCurrentItems}
                   setPerPage={setPerPage}
+                  TotalDataCount={TotalDataCount}
                 />
               )}
             </div>

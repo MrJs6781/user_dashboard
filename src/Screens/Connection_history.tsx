@@ -245,6 +245,7 @@ export default function ConnectionHistory() {
   ] = useState([]);
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
+  const [TotalDataCount, setTotalDataCount] = useState(0);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -268,6 +269,7 @@ export default function ConnectionHistory() {
   useEffect(() => {
     if (connectionHistory) {
       if (connectionHistory.Status == 0) {
+        setTotalDataCount(connectionHistory?.TotalDataCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -512,6 +514,7 @@ export default function ConnectionHistory() {
                 perPage={perPage}
                 setCurrentItems={setCurrentItems}
                 setPerPage={setPerPage}
+                TotalDataCount={TotalDataCount}
               />
             </>
           )}

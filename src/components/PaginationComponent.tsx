@@ -5,9 +5,10 @@ import { useTranslation } from "react-i18next";
 const PaginationComponent: React.FC<{
   paginationData: any[];
   perPage: number;
+  TotalDataCount: number;
   setPerPage: any;
   setCurrentItems: any;
-}> = ({ paginationData, perPage, setPerPage, setCurrentItems }) => {
+}> = ({ paginationData, perPage, setPerPage, setCurrentItems , TotalDataCount }) => {
   const { t } = useTranslation();
   const [activePage, setActivePage] = useState(1);
   const [length, setLength] = useState<any>([]);
@@ -59,6 +60,9 @@ const PaginationComponent: React.FC<{
   return (
     <section className="w-full flex items-center justify-center mt-4 gap-4 flex-wrap">
       <div className="flex items-center justify-center gap-4">
+        <p className="font-vazirM">{t("AllData")} : {TotalDataCount}</p>
+      </div>
+      <div className="flex items-center justify-center gap-4">
         <p className="font-vazirM">{t("DisplayTheNumberOnThePage")}</p>
         <select
           name="row_per_page"
@@ -67,36 +71,6 @@ const PaginationComponent: React.FC<{
           value={perPage}
           onChange={(e) => setPerPage(e.target.value)}
         >
-          <option
-            className="font-semibold cursor-pointer text-[13px]"
-            value="5"
-          >
-            5
-          </option>
-          <option
-            className="font-semibold cursor-pointer text-[13px]"
-            value="10"
-          >
-            10
-          </option>
-          <option
-            className="font-semibold cursor-pointer text-[13px]"
-            value="20"
-          >
-            20
-          </option>
-          <option
-            className="font-semibold cursor-pointer text-[13px]"
-            value="30"
-          >
-            30
-          </option>
-          <option
-            className="font-semibold cursor-pointer text-[13px]"
-            value="40"
-          >
-            40
-          </option>
           <option
             className="font-semibold cursor-pointer text-[13px]"
             value="50"
@@ -108,6 +82,24 @@ const PaginationComponent: React.FC<{
             value="100"
           >
             100
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="200"
+          >
+            200
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="500"
+          >
+            500
+          </option>
+          <option
+            className="font-semibold cursor-pointer text-[13px]"
+            value="1000"
+          >
+            1000
           </option>
         </select>
       </div>

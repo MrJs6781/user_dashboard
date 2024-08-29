@@ -250,6 +250,7 @@ export default function MicroConsumption() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [consumeTableHeader, setConsumeTableHeader] = useState([]);
   const [consumeTableHeaderName, setConsumeTableHeaderName] = useState([]);
+  const [TotalDataCount, setTotalDataCount] = useState(0);
 
   const [perPage, setPerPage] = useState(10);
   const [currentItems, setCurrentItems] = useState([]);
@@ -271,6 +272,7 @@ export default function MicroConsumption() {
   useEffect(() => {
     if (consumeFetch) {
       if (consumeFetch.Status == 0) {
+        setTotalDataCount(consumeFetch?.TotalDataCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -549,6 +551,7 @@ export default function MicroConsumption() {
                   perPage={perPage}
                   setCurrentItems={setCurrentItems}
                   setPerPage={setPerPage}
+                  TotalDataCount={TotalDataCount}
                 />
               )}
             </>

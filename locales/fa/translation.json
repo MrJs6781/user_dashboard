@@ -52,5 +52,6 @@
   "All": "همه",
   "SelectLanguage": "برای تغییر زبان کلیک کنید",
   "Notifications": "پیغام ها",
-  "MarkAllAsRead": "خواندن همه"
+  "MarkAllAsRead": "خواندن همه",
+  "AllData" : "تعداد کل داده ها"
 }
