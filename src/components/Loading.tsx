@@ -10,7 +10,8 @@ interface LottieProps {
 const LottiePlayer: React.FC<LottieProps> = ({ height = 150, width = 150 }) => {
   return (
     <div
-      className="w-full h-screen overflow-hidden flex items-center justify-center fixed top-0 left-0"
+      // className="w-full h-screen overflow-hidden flex items-center justify-center fixed top-0 left-0"
+      className="w-full h-auto overflow-hidden flex items-center justify-center"
       style={{ backdropFilter: "blur(20px)" }}
     >
       <Lottie

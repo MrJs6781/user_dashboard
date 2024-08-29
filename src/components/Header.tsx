@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ModeToggle } from "./mode-toggle";
 import { BiMessageSquareDetail } from "react-icons/bi";
@@ -16,6 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { useTranslation } from "react-i18next";
+import i18n from "./../../i18n";
 
 type headerListType = {
   id: number;
@@ -102,6 +103,32 @@ export default function Header() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language")) {
+      const getLang = window.localStorage.getItem("ssss_language")!;
+      if (getLang == "en") {
+        const getHTML = window.document.getElementById("root_parent");
+        getHTML?.style.setProperty("direction", "ltr");
+        getHTML?.setAttribute("lang", "en");
+        changeLanguage("en");
+      } else {
+        const getHTML = window.document.getElementById("root_parent");
+        getHTML?.style.setProperty("direction", "rtl");
+        getHTML?.setAttribute("lang", "fa");
+        changeLanguage("fa");
+      }
+    } else {
+      const getHTML = window.document.getElementById("root_parent");
+      getHTML?.style.setProperty("direction", "rtl");
+      getHTML?.setAttribute("lang", "fa");
+      changeLanguage("fa");
+    }
+  }, []);
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
 
   const logOutHandler = () => {
     Cookies.remove("authToken");

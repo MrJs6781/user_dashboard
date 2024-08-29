@@ -301,7 +301,146 @@ export default function Dashboard() {
   };
 
   if (fetchedDataLoading || consumeDataLoading) {
-    return <LottiePlayer />;
+    return (
+      <div className="w-full h-screen overflow-auto flex flex-col items-start">
+        <Header />
+        {dashboardBoxes?.length > 0 && totalData?.length > 0 ? (
+          <>
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={10}
+              breakpoints={{
+                1500: {
+                  slidesPerView: 5.5,
+                  spaceBetween: 15,
+                },
+                1200: {
+                  slidesPerView: 4.5,
+                  spaceBetween: 15,
+                },
+                1000: {
+                  slidesPerView: 3.8,
+                  spaceBetween: 15,
+                },
+                800: {
+                  slidesPerView: 3,
+                  spaceBetween: 15,
+                },
+                500: {
+                  slidesPerView: 2,
+                  spaceBetween: 15,
+                },
+                0: {
+                  slidesPerView: 1.4,
+                  spaceBetween: 15,
+                },
+              }}
+              navigation
+              pagination={{ clickable: true }}
+              className="w-full mt-12 px-6 bg-transparent h-[160px]"
+            >
+              {dashboardBoxes?.map((item, index) => (
+                <SwiperSlide
+                  style={{
+                    width: "100px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "8px",
+                    cursor: "grab",
+                  }}
+                  key={item.id}
+                >
+                  <li
+                    key={item.id}
+                    className={cn(
+                      "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3 fade_in_animation"
+                    )}
+                    style={
+                      {
+                        backdropFilter: "blur(20px)",
+                        "--i": index + 1, // تعیین مقدار --i برای هر آیتم
+                      } as React.CSSProperties
+                    } // نوع‌دهی اجباری به عنوان CSSProperties
+                  >
+                    {item.icon}
+                    <span className="flex flex-col items-start gap-1">
+                      <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                        {t(item.title)} :{" "}
+                      </p>
+                      {item.id == 1 && (
+                        <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                          {fetchedData?.Data[0]?.RemainedTime} {t("Day")}
+                        </small>
+                      )}
+                      {item.id == 2 && (
+                        <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                          {fetchedData?.Data[0]?.RemainedTraffic}
+                        </small>
+                      )}
+                      {item.id == 3 && (
+                        <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                          {fetchedData?.Data[0]?.WalletRemained}
+                        </small>
+                      )}
+                      {item.id == 5 && (
+                        <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                          {fetchedData?.Data[0]?.CreationTime
+                            ? fetchedData?.Data[0]?.CreationTime
+                            : ""}
+                        </small>
+                      )}
+                      {item.id == 6 && (
+                        <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                          {fetchedData?.Data[0]?.FirstLogin
+                            ? fetchedData?.Data[0]?.FirstLogin
+                            : "_"}
+                        </small>
+                      )}
+                      {item.id == 7 && (
+                        <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                          {fetchedData?.Data[0]?.ExpirationTime
+                            ? fetchedData?.Data[0]?.ExpirationTime
+                            : "_"}
+                        </small>
+                      )}
+                      {item.id == 8 && (
+                        <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                          {fetchedData?.Data[0]?.OnlineCount
+                            ? fetchedData?.Data[0]?.OnlineCount
+                            : "_"}
+                        </small>
+                      )}
+                      {item.id == 9 && (
+                        <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                          {fetchedData?.Data[0]?.IsTrafficBase == true
+                            ? t("is")
+                            : t("isNot")}
+                        </small>
+                      )}
+                    </span>
+                  </li>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className="mt-6 w-full flex items-center justify-center flex-col gap-4">
+              <ComboChart
+                labels={labels}
+                data={{
+                  download: downloadData,
+                  upload: uploadData,
+                  total: totalData,
+                }}
+              />
+            </div>
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <LottiePlayer />
+          </div>
+        )}
+      </div>
+    );
   }
 
   return (
