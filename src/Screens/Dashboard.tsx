@@ -241,6 +241,7 @@ export default function Dashboard() {
   const [downloadData, setDownloadData] = useState<number[]>([]);
   const [uploadData, setUploadData] = useState<number[]>([]);
   const [totalData, setTotalData] = useState<number[]>([]);
+  // const [sliderList, setSliderList] = useState();
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -252,6 +253,15 @@ export default function Dashboard() {
       if (fetchedData.Status == 0) {
         // console.log(fetchedData);
         // console.log(fetchedData?.Title?.split(","));
+        // let arr : any = [];
+        // fetchedData?.Title?.split(",").map((item: string) => {
+        //   if (item.length > 0) {
+        //     arr.push(item);
+        //     // setSliderList((prev: any) => [...prev, item]);
+        //   }
+        // });
+        // console.log(arr);
+        // setSliderList(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
