@@ -254,10 +254,14 @@ export default function Products_continuation() {
     useFetchDashboardData();
   const { isLoading: userProductsLoading, data: userProducts } =
     useFetchUserProducts({
-      languageId: +window.localStorage.getItem("ssss_language_id")!,
+      languageId: +window.localStorage.getItem("ssss_language_id")!
+        ? +window.localStorage.getItem("ssss_language_id")!
+        : 1,
     });
   const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew(
     +window.localStorage.getItem("ssss_language_id")!
+      ? +window.localStorage.getItem("ssss_language_id")!
+      : 1
   );
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [renewTableHeader, setRenewTableHeader]: any = useState([]);

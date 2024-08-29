@@ -40,6 +40,8 @@ export default function Login() {
         changeLanguage("fa");
       }
     } else {
+      window.localStorage.setItem("ssss_language", "fa");
+      window.localStorage.setItem("ssss_language_id", "1");
       const getHTML = window.document.getElementById("root_parent");
       getHTML?.style.setProperty("direction", "rtl");
       getHTML?.setAttribute("lang", "fa");
