@@ -346,9 +346,9 @@ export default function Trafic() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      // console.log(data);
       if (data.Status == "0") {
         setTrafficDataTable(data?.Data);
+        setTotalDataCount(data?.TotalDataCount);
       } else {
         toast.error(data.Message);
       }
@@ -543,19 +543,25 @@ export default function Trafic() {
             <LottiePlayer />
           ) : (
             <>
-              <TrafficTable
-                data={currentItems}
-                headerData={trafficTableHeader}
-                headerDataName={trafficTableHeaderName}
-              />
-              {trafficDataTable?.length > 0 && (
-                <PaginationComponent
-                  paginationData={trafficDataTable}
-                  perPage={perPage}
-                  setCurrentItems={setCurrentItems}
-                  setPerPage={setPerPage}
-                  TotalDataCount={TotalDataCount}
-                />
+              {trafficDataTable?.length > 0 ? (
+                <>
+                  <TrafficTable
+                    data={currentItems}
+                    headerData={trafficTableHeader}
+                    headerDataName={trafficTableHeaderName}
+                  />
+                  <PaginationComponent
+                    paginationData={trafficDataTable}
+                    perPage={perPage}
+                    setCurrentItems={setCurrentItems}
+                    setPerPage={setPerPage}
+                    TotalDataCount={TotalDataCount}
+                  />
+                </>
+              ) : (
+                <div className="w-full h-[50vh] flex items-center justify-center">
+                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">{t("CantFindData")}</h5>
+                </div>
               )}
             </>
           )}

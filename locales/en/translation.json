@@ -53,5 +53,9 @@
   "SelectLanguage" : "Click to change language",
   "Notifications" : "Notifications",
   "MarkAllAsRead" : "Mark all as read",
-  "AllData" : "All data"
+  "AllData" : "All data",
+  "CantFindData" : "Unfortunately, no data was found",
+  "clickForShowUsers" : "Click to show users",
+  "Users" : "Users",
+  "Type" : "Type"
 }

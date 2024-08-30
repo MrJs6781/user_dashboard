@@ -325,6 +325,7 @@ export default function ErrorReport() {
     onSuccess: (data: any) => {
       if (data.Status == "0") {
         setErrorReportsTableData(data?.Data);
+        setTotalDataCount(data?.TotalDataCount);
       } else {
         toast.error(data.Message);
       }
@@ -500,19 +501,27 @@ export default function ErrorReport() {
             <LottiePlayer />
           ) : (
             <>
-              <ErrorReportsTable
-                data={currentItems}
-                headerData={errorReportsTableHeader}
-                headerDataName={errorReportsTableHeaderName}
-              />
-              {errorReportsTableData.length > 0 && (
-                <PaginationComponent
-                  paginationData={errorReportsTableData}
-                  perPage={perPage}
-                  setCurrentItems={setCurrentItems}
-                  setPerPage={setPerPage}
-                  TotalDataCount={TotalDataCount}
-                />
+              {errorReportsTableData.length > 0 ? (
+                <>
+                  <ErrorReportsTable
+                    data={currentItems}
+                    headerData={errorReportsTableHeader}
+                    headerDataName={errorReportsTableHeaderName}
+                  />
+                  <PaginationComponent
+                    paginationData={errorReportsTableData}
+                    perPage={perPage}
+                    setCurrentItems={setCurrentItems}
+                    setPerPage={setPerPage}
+                    TotalDataCount={TotalDataCount}
+                  />
+                </>
+              ) : (
+                <div className="w-full h-[50vh] flex items-center justify-center">
+                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                    {t("CantFindData")}
+                  </h5>
+                </div>
               )}
             </>
           )}

@@ -286,7 +286,6 @@ export default function Products_continuation() {
   useEffect(() => {
     if (userProducts) {
       if (userProducts.Status == 0) {
-        // console.log(userProducts)
         let arr: any = [];
         userProducts?.Title.split(",")?.map((renewData: string, i: number) => {
           if (renewData.length > 0) {
@@ -377,9 +376,9 @@ export default function Products_continuation() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      // console.log(data);
       if (data.Status == "0") {
         setUserRenewDataTable(data?.Data);
+        setTotalDataCount(data?.TotalDataCount);
       } else if (data.Status == "-103") {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
@@ -432,9 +431,7 @@ export default function Products_continuation() {
     },
     onSuccess: (data: any) => {
       if (data.Status == "0") {
-        // console.log(data?.Data);
         setUserProductsData(data?.Data);
-        // setUserRenewDataTable(data?.Data);
       } else if (data.Status == "-103") {
         toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
         setTimeout(() => {
@@ -452,290 +449,6 @@ export default function Products_continuation() {
       setIsShowLoading(false);
     },
   });
-
-  if (
-    fetchedDataLoading ||
-    userProductsLoading ||
-    userRenewLoading ||
-    isShowLoading
-  ) {
-    return (
-      <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
-        <Header />
-        <Swiper
-          modules={[Navigation, Pagination]}
-          spaceBetween={10}
-          breakpoints={{
-            1800: {
-              slidesPerView: 8,
-              spaceBetween: 15,
-            },
-            1600: {
-              slidesPerView: 7,
-              spaceBetween: 15,
-            },
-            1300: {
-              slidesPerView: 5.5,
-              spaceBetween: 15,
-            },
-            1100: {
-              slidesPerView: 4.8,
-              spaceBetween: 15,
-            },
-            850: {
-              slidesPerView: 3.8,
-              spaceBetween: 15,
-            },
-            565: {
-              slidesPerView: 2.8,
-              spaceBetween: 15,
-            },
-            0: {
-              slidesPerView: 1.8,
-              spaceBetween: 15,
-            },
-          }}
-          navigation
-          pagination={{ clickable: true }}
-          className="w-full mt-12 px-6 bg-transparent h-[160px]"
-        >
-          {dashboardBoxes?.map((item, index) => (
-            <SwiperSlide
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: "8px",
-                cursor: "grab",
-              }}
-              key={item.id}
-            >
-              <li
-                key={item.id}
-                className={cn(
-                  "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3 fade_in_animation"
-                )}
-                style={
-                  {
-                    backdropFilter: "blur(20px)",
-                    "--i": index + 1, // تعیین مقدار --i برای هر آیتم
-                  } as React.CSSProperties
-                } // نوع‌دهی اجباری به عنوان CSSProperties
-              >
-                {item.icon}
-                <span className="flex flex-col items-start gap-1">
-                  <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                    {t(item.title)} :{" "}
-                  </p>
-                  {item.id == 1 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                      {fetchedData?.Data[0]?.RemainedTime} {t("Day")}
-                    </small>
-                  )}
-                  {item.id == 2 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                      {fetchedData?.Data[0]?.RemainedTraffic}
-                    </small>
-                  )}
-                  {item.id == 3 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                      {fetchedData?.Data[0]?.WalletRemained}
-                    </small>
-                  )}
-                  {/* {item.id == 4 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {fetchedData?.Data[0]?.RemainedTime}
-                </small>
-              )} */}
-                  {item.id == 5 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                      {fetchedData?.Data[0]?.CreationTime
-                        ? fetchedData?.Data[0]?.CreationTime
-                        : ""}
-                    </small>
-                  )}
-                  {item.id == 6 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                      {fetchedData?.Data[0]?.FirstLogin
-                        ? fetchedData?.Data[0]?.FirstLogin
-                        : "_"}
-                    </small>
-                  )}
-                  {item.id == 7 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                      {fetchedData?.Data[0]?.ExpirationTime
-                        ? fetchedData?.Data[0]?.ExpirationTime
-                        : "_"}
-                    </small>
-                  )}
-                  {item.id == 8 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                      {fetchedData?.Data[0]?.OnlineCount
-                        ? fetchedData?.Data[0]?.OnlineCount
-                        : "_"}
-                    </small>
-                  )}
-                  {item.id == 9 && (
-                    <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                      {fetchedData?.Data[0]?.IsTrafficBase == true
-                        ? t("is")
-                        : t("isNot")}
-                    </small>
-                  )}
-                </span>
-              </li>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <div className="w-full h-auto mt-8 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-          <div className="w-full flex items-start sm:items-center justify-center gap-8 flex-col sm:flex-row">
-            <h5
-              className={cn(
-                "font-vazirB text-[15px] cursor-pointer",
-                isActiveService == "Chart"
-                  ? "opacity-70"
-                  : "border-2 p-4 dark:border-white border-black"
-              )}
-              onClick={() => setIsActiveService("Data")}
-            >
-              {t("RenewService")}
-            </h5>
-            <h5
-              className={cn(
-                "font-vazirB text-[15px] cursor-pointer",
-                isActiveService == "Data"
-                  ? "opacity-70"
-                  : "border-2 p-4 dark:border-white border-black"
-              )}
-              onClick={() => setIsActiveService("Chart")}
-            >
-              {t("LastRenewList")}
-            </h5>
-          </div>
-          {isActiveService == "Data" ? (
-            <>
-              <div className="w-full flex items-center justify-start gap-4 flex-wrap">
-                <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
-                  <input
-                    type="text"
-                    placeholder={t("whatAreYouLookingFor")}
-                    value={searchProduct}
-                    onChange={(e) => changeSearchProductHandler(e)}
-                    className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
-                  />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-search cursor-pointer"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.3-4.3" />
-                  </svg>
-                </span>
-                <Button
-                  className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
-                  size="lg"
-                  onClick={searchProductsData}
-                >
-                  {t("Search")}
-                </Button>
-              </div>
-              <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
-                {fetchedDataLoading ||
-                userProductsLoading ||
-                userRenewLoading ||
-                isShowLoading ? (
-                  <LottiePlayer />
-                ) : (
-                  <>
-                    {userProductsData?.map(
-                      (item: UserProductResponse, i: number) => (
-                        <RenewCart
-                          key={i}
-                          data={item}
-                          index={i + 1}
-                          headerData={userProductsHeader}
-                        />
-                      )
-                    )}
-                  </>
-                )}
-              </ul>
-            </>
-          ) : (
-            <>
-              <div className="w-full flex items-center justify-start gap-6 flex-wrap">
-                <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
-                  <input
-                    type="text"
-                    placeholder={t("whatAreYouLookingFor")}
-                    value={searchValue}
-                    onChange={(e) => changeSearchHandler(e)}
-                    className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
-                  />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-search cursor-pointer"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.3-4.3" />
-                  </svg>
-                </span>
-                <DatePickerWithRange date={date} setDate={setDate} />
-                <Button
-                  className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
-                  size="lg"
-                  onClick={searchProductsList}
-                >
-                  {t("Search")}
-                </Button>
-              </div>
-              <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-                {fetchedDataLoading ||
-                userProductsLoading ||
-                userRenewLoading ||
-                isShowLoading ? (
-                  <LottiePlayer />
-                ) : (
-                  <>
-                    <RenewTable
-                      data={currentItems}
-                      headerData={renewTableHeader}
-                      headerDataName={renewTableHeaderName}
-                    />
-                    {userRenewDataTable?.length > 0 && (
-                      <PaginationComponent
-                        paginationData={userRenewDataTable}
-                        perPage={perPage}
-                        setCurrentItems={setCurrentItems}
-                        setPerPage={setPerPage}
-                        TotalDataCount={TotalDataCount}
-                      />
-                    )}
-                  </>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -925,16 +638,25 @@ export default function Products_continuation() {
                 {t("Search")}
               </Button>
             </div>
-            <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
-              {userProductsData?.map((item: UserProductResponse, i: number) => (
-                <RenewCart
-                  key={i}
-                  data={item}
-                  index={i + 1}
-                  headerData={userProductsHeader}
-                />
-              ))}
-            </ul>
+            {fetchedDataLoading ||
+            userProductsLoading ||
+            userRenewLoading ||
+            isShowLoading ? (
+              <LottiePlayer />
+            ) : (
+              <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
+                {userProductsData?.map(
+                  (item: UserProductResponse, i: number) => (
+                    <RenewCart
+                      key={i}
+                      data={item}
+                      index={i + 1}
+                      headerData={userProductsHeader}
+                    />
+                  )
+                )}
+              </ul>
+            )}
           </>
         ) : (
           <>
@@ -972,22 +694,37 @@ export default function Products_continuation() {
                 {t("Search")}
               </Button>
             </div>
-            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-              <RenewTable
-                data={currentItems}
-                headerData={renewTableHeader}
-                headerDataName={renewTableHeaderName}
-              />
-              {userRenewDataTable?.length > 0 && (
-                <PaginationComponent
-                  paginationData={userRenewDataTable}
-                  perPage={perPage}
-                  setCurrentItems={setCurrentItems}
-                  setPerPage={setPerPage}
-                  TotalDataCount={TotalDataCount}
-                />
-              )}
-            </div>
+            {fetchedDataLoading ||
+            userProductsLoading ||
+            userRenewLoading ||
+            isShowLoading ? (
+              <LottiePlayer />
+            ) : (
+              <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
+                {userRenewDataTable?.length > 0 ? (
+                  <>
+                    <RenewTable
+                      data={currentItems}
+                      headerData={renewTableHeader}
+                      headerDataName={renewTableHeaderName}
+                    />
+                    <PaginationComponent
+                      paginationData={userRenewDataTable}
+                      perPage={perPage}
+                      setCurrentItems={setCurrentItems}
+                      setPerPage={setPerPage}
+                      TotalDataCount={TotalDataCount}
+                    />
+                  </>
+                ) : (
+                  <div className="w-full h-[50vh] flex items-center justify-center">
+                    <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                      {t("CantFindData")}
+                    </h5>
+                  </div>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>

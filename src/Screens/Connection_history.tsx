@@ -329,6 +329,7 @@ export default function ConnectionHistory() {
     onSuccess: (data: any) => {
       if (data.Status == "0") {
         setConnectionHistoryData(data?.Data);
+        setTotalDataCount(data?.TotalDataCount);
       } else {
         toast.error(data.Message);
       }
@@ -504,18 +505,28 @@ export default function ConnectionHistory() {
             <LottiePlayer />
           ) : (
             <>
-              <ConnectionHistoryTable
-                data={currentItems}
-                headerData={connectionHistoryTableHeader}
-                headerDataName={connectionHistoryTableHeaderName}
-              />
-              <PaginationComponent
-                paginationData={connectionHistoryData}
-                perPage={perPage}
-                setCurrentItems={setCurrentItems}
-                setPerPage={setPerPage}
-                TotalDataCount={TotalDataCount}
-              />
+              {connectionHistoryData?.length > 0 ? (
+                <>
+                  <ConnectionHistoryTable
+                    data={currentItems}
+                    headerData={connectionHistoryTableHeader}
+                    headerDataName={connectionHistoryTableHeaderName}
+                  />
+                  <PaginationComponent
+                    paginationData={connectionHistoryData}
+                    perPage={perPage}
+                    setCurrentItems={setCurrentItems}
+                    setPerPage={setPerPage}
+                    TotalDataCount={TotalDataCount}
+                  />
+                </>
+              ) : (
+                <div className="w-full h-[50vh] flex items-center justify-center">
+                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                    {t("CantFindData")}
+                  </h5>
+                </div>
+              )}
             </>
           )}
         </div>

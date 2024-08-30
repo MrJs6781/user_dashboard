@@ -351,6 +351,7 @@ export default function CardexFinancial() {
     onSuccess: (data: any) => {
       if (data.Status == "0") {
         setCardexTrafficFinancialData(data?.Data);
+        setTotalDataCount(data?.TotalDataCount);
       } else {
         toast.error(data.Message);
       }
@@ -548,18 +549,28 @@ export default function CardexFinancial() {
             <LottiePlayer />
           ) : (
             <>
-              <CardexFinancialTable
-                data={currentItems}
-                headerData={cardexFinancialTableHeader}
-                headerDataName={cardexFinancialTableHeaderName}
-              />
-              <PaginationComponent
-                paginationData={cardexTrafficFinancialData}
-                perPage={perPage}
-                setCurrentItems={setCurrentItems}
-                setPerPage={setPerPage}
-                TotalDataCount={TotalDataCount}
-              />
+              {cardexTrafficFinancialData?.length > 0 ? (
+                <>
+                  <CardexFinancialTable
+                    data={currentItems}
+                    headerData={cardexFinancialTableHeader}
+                    headerDataName={cardexFinancialTableHeaderName}
+                  />
+                  <PaginationComponent
+                    paginationData={cardexTrafficFinancialData}
+                    perPage={perPage}
+                    setCurrentItems={setCurrentItems}
+                    setPerPage={setPerPage}
+                    TotalDataCount={TotalDataCount}
+                  />
+                </>
+              ) : (
+                <div className="w-full h-[50vh] flex items-center justify-center">
+                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                    {t("CantFindData")}
+                  </h5>
+                </div>
+              )}
             </>
           )}
         </div>

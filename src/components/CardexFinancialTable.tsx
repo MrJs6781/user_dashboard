@@ -12,7 +12,7 @@ import { CardexFinancial, CardexUser } from "@/types/Cardex";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useTranslation } from "react-i18next";
 
-const tableNameChild = ["تایپ", "کاربران"];
+const tableNameChild = ["Type", "Users"];
 
 const CardexFinancialTable: React.FC<{
   data: CardexFinancial[];
@@ -56,7 +56,7 @@ const CardexFinancialTable: React.FC<{
                         <DialogTrigger>
                           <button className="border p-4 py-3 rounded-[5px] cursor-pointer outline-none">
                             <p className="text-white text-[14px]">
-                              برای نمایش کاربران کلیک کنید
+                              {t("clickForShowUsers")}
                             </p>
                           </button>
                         </DialogTrigger>
@@ -70,7 +70,7 @@ const CardexFinancialTable: React.FC<{
                                       key={index}
                                       className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
                                     >
-                                      {header}
+                                      {t(header)}
                                     </TableHead>
                                   ))}
                               </TableRow>

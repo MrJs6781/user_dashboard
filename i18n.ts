@@ -9,7 +9,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'fa', // زبان پیش‌فرض
-    debug: true,
+    debug: false,
     interpolation: {
       escapeValue: false, // در صورت نیاز به خاصیت XSS می‌توانید این را true کنید
     },

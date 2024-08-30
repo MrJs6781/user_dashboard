@@ -349,6 +349,7 @@ export default function CardexTraffic() {
     onSuccess: (data: any) => {
       if (data.Status == "0") {
         setCardexTrafficFetchData(data?.Data);
+        setTotalDataCount(data?.TotalDataCount);
       } else {
         toast.error(data.Message);
       }
@@ -540,19 +541,27 @@ export default function CardexTraffic() {
             <LottiePlayer />
           ) : (
             <>
-              <CardexTrafficTable
-                data={currentItems}
-                headerData={cardexTrafficTableHeader}
-                headerDataName={cardexTrafficTableHeaderName}
-              />
-              {cardexTrafficFetchData?.length > 0 && (
-                <PaginationComponent
-                  paginationData={cardexTrafficFetchData}
-                  perPage={perPage}
-                  setCurrentItems={setCurrentItems}
-                  setPerPage={setPerPage}
-                  TotalDataCount={TotalDataCount}
-                />
+              {cardexTrafficFetchData?.length > 0 ? (
+                <>
+                  <CardexTrafficTable
+                    data={currentItems}
+                    headerData={cardexTrafficTableHeader}
+                    headerDataName={cardexTrafficTableHeaderName}
+                  />
+                  <PaginationComponent
+                    paginationData={cardexTrafficFetchData}
+                    perPage={perPage}
+                    setCurrentItems={setCurrentItems}
+                    setPerPage={setPerPage}
+                    TotalDataCount={TotalDataCount}
+                  />
+                </>
+              ) : (
+                <div className="w-full h-[50vh] flex items-center justify-center">
+                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                    {t("CantFindData")}
+                  </h5>
+                </div>
               )}
             </>
           )}

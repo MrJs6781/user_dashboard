@@ -53,5 +53,9 @@
   "SelectLanguage": "برای تغییر زبان کلیک کنید",
   "Notifications": "پیغام ها",
   "MarkAllAsRead": "خواندن همه",
-  "AllData" : "تعداد کل داده ها"
+  "AllData": "تعداد کل داده ها",
+  "CantFindData": "متاسفانه داده ای یافت نشد",
+  "clickForShowUsers": "برای نمایش کاربران کلیک کنید",
+  "Users": "کاربران",
+  "Type": "تایپ"
 }

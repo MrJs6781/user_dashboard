@@ -346,9 +346,9 @@ export default function MicroConsumption() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      // console.log(data);
       if (data.Status == "0") {
         setConsumeFetchData(data?.Data);
+        setTotalDataCount(data?.TotalDataCount);
       } else {
         toast.error(data.Message);
       }
@@ -540,19 +540,27 @@ export default function MicroConsumption() {
             <LottiePlayer />
           ) : (
             <>
-              <ConsumeTable
-                data={currentItems}
-                headerData={consumeTableHeader}
-                headerDataName={consumeTableHeaderName}
-              />
-              {consumeFetchData.length > 0 && (
-                <PaginationComponent
-                  paginationData={consumeFetchData}
-                  perPage={perPage}
-                  setCurrentItems={setCurrentItems}
-                  setPerPage={setPerPage}
-                  TotalDataCount={TotalDataCount}
-                />
+              {consumeFetchData.length > 0 ? (
+                <>
+                  <ConsumeTable
+                    data={currentItems}
+                    headerData={consumeTableHeader}
+                    headerDataName={consumeTableHeaderName}
+                  />
+                  <PaginationComponent
+                    paginationData={consumeFetchData}
+                    perPage={perPage}
+                    setCurrentItems={setCurrentItems}
+                    setPerPage={setPerPage}
+                    TotalDataCount={TotalDataCount}
+                  />
+                </>
+              ) : (
+                <div className="w-full h-[50vh] flex items-center justify-center">
+                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                    {t("CantFindData")}
+                  </h5>
+                </div>
               )}
             </>
           )}
