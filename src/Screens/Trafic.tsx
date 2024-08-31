@@ -368,31 +368,55 @@ export default function Trafic() {
         spaceBetween={10}
         breakpoints={{
           1800: {
-            slidesPerView: 8,
-            spaceBetween: 15,
-          },
-          1600: {
             slidesPerView: 7,
             spaceBetween: 15,
           },
+          1700: {
+            slidesPerView: 6.7,
+            spaceBetween: 15,
+          },
+          1600: {
+            slidesPerView: 6.3,
+            spaceBetween: 15,
+          },
+          1500: {
+            slidesPerView: 5.8,
+            spaceBetween: 15,
+          },
+          1400: {
+            slidesPerView: 5.4,
+            spaceBetween: 15,
+          },
           1300: {
-            slidesPerView: 5.5,
+            slidesPerView: 5,
+            spaceBetween: 15,
+          },
+          1200: {
+            slidesPerView: 4.6,
             spaceBetween: 15,
           },
           1100: {
-            slidesPerView: 4.8,
+            slidesPerView: 4.2,
             spaceBetween: 15,
           },
-          850: {
-            slidesPerView: 3.8,
+          920: {
+            slidesPerView: 3.5,
             spaceBetween: 15,
           },
-          565: {
+          740: {
             slidesPerView: 2.8,
             spaceBetween: 15,
           },
-          0: {
+          565: {
+            slidesPerView: 2.4,
+            spaceBetween: 15,
+          },
+          400: {
             slidesPerView: 1.8,
+            spaceBetween: 15,
+          },
+          0: {
+            slidesPerView: 1.2,
             spaceBetween: 15,
           },
         }}
@@ -560,7 +584,9 @@ export default function Trafic() {
                 </>
               ) : (
                 <div className="w-full h-[50vh] flex items-center justify-center">
-                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">{t("CantFindData")}</h5>
+                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                    {t("CantFindData")}
+                  </h5>
                 </div>
               )}
             </>
