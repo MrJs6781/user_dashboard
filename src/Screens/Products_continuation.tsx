@@ -335,19 +335,29 @@ export default function Products_continuation() {
 
   const searchProductsList = () => {
     setIsShowLoading(true);
-    const getFromDate = dayjs(date?.from)
-      .calendar("jalali")
-      .format("YYYY/MM/DD");
-    const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
-    mutation.mutate({
-      FromDate: getFromDate,
-      ToDate: getToDate,
-      Query: searchValue,
-      Operand: "%",
-      PageNo: "0",
-      RowPerPage: "0",
-      SortIndex: 0,
-    });
+    if (date != undefined) {
+      const getFromDate = dayjs(date?.from)
+        .calendar("jalali")
+        .format("YYYY/MM/DD");
+      const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
+      mutation.mutate({
+        FromDate: getFromDate,
+        ToDate: getToDate,
+        Query: searchValue,
+        Operand: "%",
+        PageNo: "0",
+        RowPerPage: "0",
+        SortIndex: 0,
+      });
+    } else {
+      mutation.mutate({
+        Query: searchValue,
+        Operand: "%",
+        PageNo: "0",
+        RowPerPage: "0",
+        SortIndex: 0,
+      });
+    }
   };
 
   const mutation = useMutation({
