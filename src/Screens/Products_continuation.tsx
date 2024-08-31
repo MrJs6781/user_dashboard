@@ -247,7 +247,7 @@ export default function Products_continuation() {
   const [date, setDate] = useState<DateRange | undefined>();
   const [userRenewDataTable, setUserRenewDataTable] = useState([]);
 
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
 
   const { isLoading: fetchedDataLoading, data: fetchedData } =

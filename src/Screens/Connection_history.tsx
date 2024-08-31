@@ -243,7 +243,7 @@ export default function ConnectionHistory() {
     connectionHistoryTableHeaderName,
     setConnectionHistoryTableHeaderName,
   ] = useState([]);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
   const [TotalDataCount, setTotalDataCount] = useState(0);
 
