@@ -57,5 +57,6 @@
   "CantFindData" : "Unfortunately, no data was found",
   "clickForShowUsers" : "Click to show users",
   "Users" : "Users",
-  "Type" : "Type"
+  "Type" : "Type",
+  "Row" : "Row"
 }
