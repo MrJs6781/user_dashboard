@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface RenewCartProps {
   data: UserProductResponse;
@@ -13,6 +14,7 @@ interface RenewCartProps {
 }
 
 export default function RenewCart({ data, index, headerData }: RenewCartProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [findImageUrlIndex, setFindImageUrlIndex] = useState(0);
 
@@ -111,7 +113,7 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
         className="w-[95%] mx-auto mb-4 rounded-[12px] h-[50px] flex items-center justify-center outline-none cursor-pointer border-none bg-[#a855f7] dark:bg-[#1e293b]"
         onClick={handleSubmit}
       >
-        <p className="text-[15px] font-vazirB text-white">تمدید</p>
+        <p className="text-[15px] font-vazirB text-white">{t("Renew")}</p>
       </button>
     </div>
   );
