@@ -87,7 +87,7 @@ export default function EditPassword() {
     onSuccess: (data: any) => {
       // console.log(data);
       if (data.Status == "0") {
-        toast.success("رمز عبور شما با موفقیت آپدیت شد :)");
+        toast.success(data.Message);
         setIsLoading(false);
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -96,7 +96,7 @@ export default function EditPassword() {
           navigate("/"); 
         }, 1000);
       } else if (data.Status == "-103") {
-        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        toast.info(data.Message);
         setTimeout(() => {
           Cookies.remove("authToken");
           localStorage.removeItem("UserID");

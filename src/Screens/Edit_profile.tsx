@@ -86,7 +86,7 @@ export default function EditProfile() {
     onSuccess: (data: any) => {
       // console.log(data);
       if (data.Status == "0") {
-        toast.success("پروفایل کاربری شما با موفقیت آپدیت شد :)");
+        toast.success(data.Message);
         // setIsLoading(false);
         setTimeout(() => {
           Cookies.remove("authToken");
@@ -97,7 +97,7 @@ export default function EditProfile() {
         //   window.location.reload();
         // }, 1000);
       } else if (data.Status == "-103") {
-        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        toast.info(data.Message);
         setTimeout(() => {
           Cookies.remove("authToken");
           localStorage.removeItem("UserID");

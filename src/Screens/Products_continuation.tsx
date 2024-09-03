@@ -386,7 +386,7 @@ export default function Products_continuation() {
         setUserRenewDataTable(data?.Data);
         setTotalDataCount(data?.TotalDataCount);
       } else if (data.Status == "-103") {
-        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        toast.info(data.Message);
         setTimeout(() => {
           Cookies.remove("authToken");
           localStorage.removeItem("UserID");
@@ -439,7 +439,7 @@ export default function Products_continuation() {
       if (data.Status == "0") {
         setUserProductsData(data?.Data);
       } else if (data.Status == "-103") {
-        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        toast.info(data.Message);
         setTimeout(() => {
           Cookies.remove("authToken");
           localStorage.removeItem("UserID");

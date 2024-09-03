@@ -54,12 +54,12 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
     onSuccess: (data: any) => {
       console.log(data);
       if (data.Status == "0") {
-        toast.success("سرویس مورد نظر شما با موفقیت تمدید شد :)");
+        toast.success(data.Message);
         setTimeout(() => {
           window.location.reload();
         }, 1000);
       } else if (data.Status == "-103") {
-        toast.info("توکن شما منقضی شده است لطفا مجددا وارد شوید");
+        toast.info(data.Message);
         setTimeout(() => {
           Cookies.remove("authToken");
           localStorage.removeItem("UserID");
