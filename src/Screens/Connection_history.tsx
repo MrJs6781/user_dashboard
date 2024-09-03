@@ -392,7 +392,7 @@ export default function ConnectionHistory() {
             slidesPerView: 2.4,
             spaceBetween: 15,
           },
-          400: {
+          425: {
             slidesPerView: 1.8,
             spaceBetween: 15,
           },

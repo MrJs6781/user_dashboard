@@ -1,26 +1,20 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18-alpine
+# 1. استفاده از یک ایمیج پایه نود برای ساخت و توسعه
+FROM node:18 AS build
 
-# Set the working directory
+# 2. تنظیم دایرکتوری کاری در کانتینر
 WORKDIR /app
 
-# Copy package.json and package-lock.json (or yarn.lock)
+# 3. کپی کردن فایل‌های package.json و package-lock.json برای نصب وابستگی‌ها
 COPY package*.json ./
 
-# Install dependencies
+# 4. نصب وابستگی‌ها
 RUN npm install
 
-# Copy the rest of the application code
+# 5. کپی کردن تمامی فایل‌های پروژه به دایرکتوری کاری
 COPY . .
 
-# Build the React app
-RUN npm run build
-
-# Install a simple HTTP server to serve the static files
-RUN npm install -g serve
-
-# Command to run the app
-CMD ["serve", "-s", "build", "-l", "5173"]
-
-# Expose the port the app runs on
+# 6. باز کردن پورت 5173 برای توسعه
 EXPOSE 5173
+
+# 7. اجرای دستور start در حالت توسعه
+CMD ["npm", "run", "dev", "--", "--host"]
