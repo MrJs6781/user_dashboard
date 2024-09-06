@@ -335,7 +335,7 @@ export default function CardexTraffic() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        "http://test.cloudius.co/User/Traffic/Cardex?Type=User",
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Traffic/Cardex?Type=User`,
         {
           method: "POST",
           headers: myHeaders,

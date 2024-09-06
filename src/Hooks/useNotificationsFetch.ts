@@ -11,7 +11,7 @@ export const useFetchNotificationData = (languageId?: number) => {
     myHeaders.append("Authorization", `Bearer ${getToken}`);
 
     const response = await fetch(
-      "http://test.cloudius.co/Notification/Fetch?Type=User",
+      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}Notification/Fetch?Type=User`,
       {
         method: "POST",
         headers: myHeaders,

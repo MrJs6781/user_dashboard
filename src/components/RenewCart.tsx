@@ -40,7 +40,7 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        "http://test.cloudius.co/User/Renew/Add?Type=User",
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Renew/Add?Type=User`,
         {
           method: "POST",
           headers: myHeaders,

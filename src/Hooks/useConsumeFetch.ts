@@ -11,7 +11,7 @@ export const useConsumeFetch = (languageId? : number) => {
     myHeaders.append("Authorization", `Bearer ${getToken}`);
 
     const response = await fetch(
-      "http://test.cloudius.co/User/Consume/Fetch?Type=User",
+      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Consume/Fetch?Type=User`,
       {
         method: "POST",
         headers: myHeaders,

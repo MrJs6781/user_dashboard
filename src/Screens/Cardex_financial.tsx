@@ -337,7 +337,7 @@ export default function CardexFinancial() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        "http://test.cloudius.co/User/Shop/Cardex?Type=User",
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Shop/Cardex?Type=User`,
         {
           method: "POST",
           headers: myHeaders,
@@ -521,7 +521,7 @@ export default function CardexFinancial() {
             value={cardexFinancialType}
             onValueChange={setCardexFinancialType}
           >
-            <SelectTrigger className="w-[180px] font-vazirM">
+            <SelectTrigger className="w-[180px] h-[56px] font-vazirM">
               <SelectValue placeholder={t("TransactionType")} />
             </SelectTrigger>
             <SelectContent>

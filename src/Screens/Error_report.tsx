@@ -311,7 +311,7 @@ export default function ErrorReport() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        "http://test.cloudius.co/User/Log/Fetch?Type=User",
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Log/Fetch?Type=User`,
         {
           method: "POST",
           headers: myHeaders,

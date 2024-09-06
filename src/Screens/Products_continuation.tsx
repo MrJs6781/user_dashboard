@@ -370,7 +370,7 @@ export default function Products_continuation() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        "http://test.cloudius.co/User/Renew/Fetch?Type=User",
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Renew/Fetch?Type=User`,
         {
           method: "POST",
           headers: myHeaders,
@@ -424,7 +424,7 @@ export default function Products_continuation() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        "http://test.cloudius.co/Product/Fetch?Type=User",
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}Product/Fetch?Type=User`,
         {
           method: "POST",
           headers: myHeaders,
@@ -609,7 +609,7 @@ export default function Products_continuation() {
         ))}
       </Swiper>
       <div className="w-full h-auto mt-8 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-        <div className="w-full flex items-start sm:items-center justify-center gap-8 flex-col sm:flex-row">
+        <div className="w-full flex items-center justify-center gap-8 flex-col sm:flex-row">
           <h5
             className={cn(
               "font-vazirB text-[15px] cursor-pointer",

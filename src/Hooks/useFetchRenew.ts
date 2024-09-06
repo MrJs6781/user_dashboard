@@ -11,7 +11,7 @@ export const useFetchRenew = (languageId?: number) => {
     myHeaders.append("Authorization", `Bearer ${getToken}`);
 
     const response = await fetch(
-      "http://test.cloudius.co/User/Renew/Fetch?Type=User",
+      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Renew/Fetch?Type=User`,
       {
         method: "POST",
         headers: myHeaders,

@@ -30,7 +30,7 @@ export const useFetchUserProducts = ({
     };
 
     const response = await fetch(
-      "http://test.cloudius.co/Product/Fetch?Type=User",
+      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}Product/Fetch?Type=User`,
       {
         method: "POST",
         headers: myHeaders,

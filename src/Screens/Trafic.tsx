@@ -334,7 +334,7 @@ export default function Trafic() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        "http://test.cloudius.co/User/Traffic/Fetch?Type=User",
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Traffic/Fetch?Type=User`,
         {
           method: "POST",
           headers: myHeaders,

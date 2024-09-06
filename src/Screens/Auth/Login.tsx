@@ -72,14 +72,12 @@ export default function Login() {
     mutationKey: ["loginKey"],
     mutationFn: async (data: LoginData) => {
       const response = await axios.post(
-        `http://test.cloudius.co/User/Login?Type=User`,
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Login?Type=User`,
         data
       );
-      // console.log(response)
       return response.data;
     },
     onSuccess: (data: LoginResponse) => {
-      // console.log(data)
       if (data.Status == "0") {
         updateLocalStorageValue(`${data.Data[0]?.UserID}`);
         Cookies.set("authToken", data.Data[0]?.Token);
@@ -94,10 +92,6 @@ export default function Login() {
       setIsLoading(false);
     },
   });
-
-  // if (mutation.isLoading) {
-  //   return <Loading />;
-  // }
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);

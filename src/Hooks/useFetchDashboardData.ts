@@ -13,7 +13,7 @@ export const useFetchDashboardData = (languageId? : number) => {
     myHeaders.append("Authorization", `Bearer ${getToken}`);
 
     const response = await fetch(
-      "http://test.cloudius.co/User/Dashboard?Type=User",
+      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Dashboard?Type=User`,
       {
         method: "POST",
         headers: myHeaders,
