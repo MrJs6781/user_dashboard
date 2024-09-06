@@ -1,17 +1,12 @@
-import { Check } from "lucide-react";
-
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { useFetchNotificationData } from "@/Hooks/useNotificationsFetch";
-import { useEffect } from "react";
 import LottiePlayer from "./Loading";
 
 interface notificaitonType {
