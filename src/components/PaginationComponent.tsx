@@ -58,7 +58,7 @@ const PaginationComponent: React.FC<{
   };
 
   return (
-    <section className="w-full flex items-center justify-center mt-4 gap-4 flex-wrap">
+    <section className="w-full flex items-center justify-start mt-4 gap-4 flex-wrap">
       <div className="flex items-center justify-center gap-4">
         <p className="font-vazirM">{t("AllData")} : {TotalDataCount}</p>
       </div>

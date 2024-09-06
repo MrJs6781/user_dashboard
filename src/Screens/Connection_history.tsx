@@ -315,7 +315,9 @@ export default function ConnectionHistory() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/History/Fetch?Type=User`,
+        `${
+          import.meta.env.VITE_WEB_SERVICE_DOMAIN
+        }User/History/Fetch?Type=User`,
         {
           method: "POST",
           headers: myHeaders,
@@ -527,36 +529,42 @@ export default function ConnectionHistory() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          {fetchedDataLoading || connectionHistoryLoading || isShowLoading ? (
-            <LottiePlayer />
-          ) : (
-            <>
-              {connectionHistoryData?.length > 0 ? (
-                <>
-                  <ConnectionHistoryTable
-                    data={currentItems}
-                    headerData={connectionHistoryTableHeader}
-                    headerDataName={connectionHistoryTableHeaderName}
-                  />
-                  <PaginationComponent
-                    paginationData={connectionHistoryData}
-                    perPage={perPage}
-                    setCurrentItems={setCurrentItems}
-                    setPerPage={setPerPage}
-                    TotalDataCount={TotalDataCount}
-                  />
-                </>
-              ) : (
+        {fetchedDataLoading || connectionHistoryLoading || isShowLoading ? (
+          <LottiePlayer />
+        ) : (
+          <>
+            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1500px] flex-col">
+              <>
+                {connectionHistoryData?.length > 0 && (
+                  <>
+                    <ConnectionHistoryTable
+                      data={currentItems}
+                      headerData={connectionHistoryTableHeader}
+                      headerDataName={connectionHistoryTableHeaderName}
+                    />
+                    <PaginationComponent
+                      paginationData={connectionHistoryData}
+                      perPage={perPage}
+                      setCurrentItems={setCurrentItems}
+                      setPerPage={setPerPage}
+                      TotalDataCount={TotalDataCount}
+                    />
+                  </>
+                )}
+              </>
+            </div>
+            {connectionHistoryData?.length == 0 &&
+              fetchedDataLoading == false &&
+              connectionHistoryLoading == false &&
+              isShowLoading == false && (
                 <div className="w-full h-[50vh] flex items-center justify-center">
                   <h5 className="text-[15px] sm:text-[18px] font-vazirM">
                     {t("CantFindData")}
                   </h5>
                 </div>
               )}
-            </>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

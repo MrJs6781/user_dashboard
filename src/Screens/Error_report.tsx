@@ -523,36 +523,42 @@ export default function ErrorReport() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex flex-col items-start justify-center overflow-x-scroll min-w-[800px]">
-          {fetchedDataLoading || errorReportsLoading || isShowLoading ? (
-            <LottiePlayer />
-          ) : (
-            <>
-              {errorReportsTableData.length > 0 ? (
-                <>
-                  <ErrorReportsTable
-                    data={currentItems}
-                    headerData={errorReportsTableHeader}
-                    headerDataName={errorReportsTableHeaderName}
-                  />
-                  <PaginationComponent
-                    paginationData={errorReportsTableData}
-                    perPage={perPage}
-                    setCurrentItems={setCurrentItems}
-                    setPerPage={setPerPage}
-                    TotalDataCount={TotalDataCount}
-                  />
-                </>
-              ) : (
+        {fetchedDataLoading || errorReportsLoading || isShowLoading ? (
+          <LottiePlayer />
+        ) : (
+          <>
+            <div className="w-full flex flex-col items-start justify-center overflow-x-scroll min-w-[800px]">
+              <>
+                {errorReportsTableData.length > 0 && (
+                  <>
+                    <ErrorReportsTable
+                      data={currentItems}
+                      headerData={errorReportsTableHeader}
+                      headerDataName={errorReportsTableHeaderName}
+                    />
+                    <PaginationComponent
+                      paginationData={errorReportsTableData}
+                      perPage={perPage}
+                      setCurrentItems={setCurrentItems}
+                      setPerPage={setPerPage}
+                      TotalDataCount={TotalDataCount}
+                    />
+                  </>
+                )}
+              </>
+            </div>
+            {errorReportsTableData?.length == 0 &&
+              fetchedDataLoading == false &&
+              errorReportsLoading == false &&
+              isShowLoading == false && (
                 <div className="w-full h-[50vh] flex items-center justify-center">
                   <h5 className="text-[15px] sm:text-[18px] font-vazirM">
                     {t("CantFindData")}
                   </h5>
                 </div>
               )}
-            </>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

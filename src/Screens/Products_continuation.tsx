@@ -730,8 +730,8 @@ export default function Products_continuation() {
             isShowLoading ? (
               <LottiePlayer />
             ) : (
-              <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-                {userRenewDataTable?.length > 0 ? (
+              <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1200px] flex-col">
+                {userRenewDataTable?.length > 0 && (
                   <>
                     <RenewTable
                       data={currentItems}
@@ -746,18 +746,23 @@ export default function Products_continuation() {
                       TotalDataCount={TotalDataCount}
                     />
                   </>
-                ) : (
-                  <div className="w-full h-[50vh] flex items-center justify-center">
-                    <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-                      {t("CantFindData")}
-                    </h5>
-                  </div>
                 )}
               </div>
             )}
           </>
         )}
       </div>
+      {userRenewDataTable?.length == 0 &&
+        fetchedDataLoading == false &&
+        userProductsLoading == false &&
+        userRenewLoading == false &&
+        isShowLoading == false && (
+          <div className="w-full h-[50vh] flex items-center justify-center">
+            <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+              {t("CantFindData")}
+            </h5>
+          </div>
+        )}
     </div>
   );
 }

@@ -335,7 +335,9 @@ export default function CardexTraffic() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Traffic/Cardex?Type=User`,
+        `${
+          import.meta.env.VITE_WEB_SERVICE_DOMAIN
+        }User/Traffic/Cardex?Type=User`,
         {
           method: "POST",
           headers: myHeaders,
@@ -563,36 +565,42 @@ export default function CardexTraffic() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-          {fetchedDataLoading || cardexTrafficLoading || isShowLoading ? (
-            <LottiePlayer />
-          ) : (
-            <>
-              {cardexTrafficFetchData?.length > 0 ? (
-                <>
-                  <CardexTrafficTable
-                    data={currentItems}
-                    headerData={cardexTrafficTableHeader}
-                    headerDataName={cardexTrafficTableHeaderName}
-                  />
-                  <PaginationComponent
-                    paginationData={cardexTrafficFetchData}
-                    perPage={perPage}
-                    setCurrentItems={setCurrentItems}
-                    setPerPage={setPerPage}
-                    TotalDataCount={TotalDataCount}
-                  />
-                </>
-              ) : (
+        {fetchedDataLoading || cardexTrafficLoading || isShowLoading ? (
+          <LottiePlayer />
+        ) : (
+          <>
+            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
+              <>
+                {cardexTrafficFetchData?.length > 0 && (
+                  <>
+                    <CardexTrafficTable
+                      data={currentItems}
+                      headerData={cardexTrafficTableHeader}
+                      headerDataName={cardexTrafficTableHeaderName}
+                    />
+                    <PaginationComponent
+                      paginationData={cardexTrafficFetchData}
+                      perPage={perPage}
+                      setCurrentItems={setCurrentItems}
+                      setPerPage={setPerPage}
+                      TotalDataCount={TotalDataCount}
+                    />
+                  </>
+                )}
+              </>
+            </div>
+            {cardexTrafficFetchData?.length == 0 &&
+              fetchedDataLoading == false &&
+              cardexTrafficLoading == false &&
+              isShowLoading == false && (
                 <div className="w-full h-[50vh] flex items-center justify-center">
                   <h5 className="text-[15px] sm:text-[18px] font-vazirM">
                     {t("CantFindData")}
                   </h5>
                 </div>
               )}
-            </>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

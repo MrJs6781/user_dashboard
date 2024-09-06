@@ -571,36 +571,42 @@ export default function CardexFinancial() {
             {t("Search")}
           </Button>
         </div>
-        <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1500px] flex-col">
-          {fetchedDataLoading || cardexFinancialLoading || isShowLoading ? (
-            <LottiePlayer />
-          ) : (
-            <>
-              {cardexTrafficFinancialData?.length > 0 ? (
-                <>
-                  <CardexFinancialTable
-                    data={currentItems}
-                    headerData={cardexFinancialTableHeader}
-                    headerDataName={cardexFinancialTableHeaderName}
-                  />
-                  <PaginationComponent
-                    paginationData={cardexTrafficFinancialData}
-                    perPage={perPage}
-                    setCurrentItems={setCurrentItems}
-                    setPerPage={setPerPage}
-                    TotalDataCount={TotalDataCount}
-                  />
-                </>
-              ) : (
+        {fetchedDataLoading || cardexFinancialLoading || isShowLoading ? (
+          <LottiePlayer />
+        ) : (
+          <>
+            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1500px] flex-col">
+              <>
+                {cardexTrafficFinancialData?.length > 0 && (
+                  <>
+                    <CardexFinancialTable
+                      data={currentItems}
+                      headerData={cardexFinancialTableHeader}
+                      headerDataName={cardexFinancialTableHeaderName}
+                    />
+                    <PaginationComponent
+                      paginationData={cardexTrafficFinancialData}
+                      perPage={perPage}
+                      setCurrentItems={setCurrentItems}
+                      setPerPage={setPerPage}
+                      TotalDataCount={TotalDataCount}
+                    />
+                  </>
+                )}
+              </>
+            </div>
+            {cardexTrafficFinancialData?.length == 0 &&
+              fetchedDataLoading == false &&
+              cardexFinancialLoading == false &&
+              isShowLoading == false && (
                 <div className="w-full h-[50vh] flex items-center justify-center">
                   <h5 className="text-[15px] sm:text-[18px] font-vazirM">
                     {t("CantFindData")}
                   </h5>
                 </div>
               )}
-            </>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
