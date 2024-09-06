@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ModeToggle } from "./mode-toggle";
-// import { BiMessageSquareDetail } from "react-icons/bi";
+import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 
 import { useTranslation } from "react-i18next";
 import i18n from "./../../i18n";
-// import { ShowNotification } from "./ShowNotification";
+import { ShowNotification } from "./ShowNotification";
 
 type headerListType = {
   id: number;
@@ -104,7 +104,8 @@ export default function Header() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  // const [isShowNotification, setIsShowNotification] = useState(false);
+  const [isShowNotification, setIsShowNotification] = useState(false);
+  const [getLanguageId, setLanguageId] = useState("1");
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
@@ -114,17 +115,20 @@ export default function Header() {
         getHTML?.style.setProperty("direction", "ltr");
         getHTML?.setAttribute("lang", "en");
         changeLanguage("en");
+        setLanguageId("0");
       } else {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "rtl");
         getHTML?.setAttribute("lang", "fa");
         changeLanguage("fa");
+        setLanguageId("1");
       }
     } else {
       const getHTML = window.document.getElementById("root_parent");
       getHTML?.style.setProperty("direction", "rtl");
       getHTML?.setAttribute("lang", "fa");
       changeLanguage("fa");
+      setLanguageId("1");
     }
   }, []);
 
@@ -252,13 +256,18 @@ export default function Header() {
         })}
       </ul>
       <span className="flex items-center gap-4">
-        {/* <span className="relative">
+        <span className="relative">
           <BiMessageSquareDetail
             className="cursor-pointer text-[20px]"
             onClick={() => setIsShowNotification(!isShowNotification)}
           />
-          {isShowNotification && <ShowNotification className="absolute top-10 left-0" />}
-        </span> */}
+          {isShowNotification && getLanguageId == "1" && (
+            <ShowNotification className="absolute top-10 left-0" />
+          )}
+          {isShowNotification && getLanguageId == "0" && (
+            <ShowNotification className="absolute top-10 right-0" />
+          )}
+        </span>
         <ModeToggle />
         <ProfileUser />
       </span>

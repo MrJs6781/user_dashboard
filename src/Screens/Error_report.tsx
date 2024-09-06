@@ -397,7 +397,7 @@ export default function ErrorReport() {
             spaceBetween: 15,
           },
         }}
-        navigation
+        // navigation
         pagination={{ clickable: true }}
         className="w-full mt-12 px-6 bg-transparent h-[160px]"
       >

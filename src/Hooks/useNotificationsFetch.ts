@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 export const useFetchNotificationData = (languageId?: number) => {
   const fetchData = async () => {
     // گرفتن توکن از کوکی
-    const getToken = Cookies.get("authToken"); // تابع getCookie را خودتان پیاده‌سازی کنید
+    const getToken = Cookies.get("authToken");
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -19,8 +19,14 @@ export const useFetchNotificationData = (languageId?: number) => {
         redirect: "follow",
       }
     );
-    const data = response.text();
-    return data;
+
+    let data = await response.text();
+
+    // حذف تمامی کاراکترهای اینتر و خط جدید از رشته
+    const cleanedData = data.replace(/(\r\n|\n|\r)/gm, ""); // حذف تمامی اینترها و کاراکترهای خط جدید
+    const jsonData = JSON.parse(cleanedData); // تبدیل رشته به JSON
+
+    return jsonData;
   };
 
   return useQuery({ queryKey: ["getNotificationData"], queryFn: fetchData });

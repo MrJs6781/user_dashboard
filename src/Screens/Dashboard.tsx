@@ -230,8 +230,11 @@ const dashboardBoxes = [
 interface DataItem {
   TimeStamp: string;
   Download: string;
+  DownloadB: number;
   Upload: string;
+  UploadB: number;
   Consume: string;
+  ConsumeB: number;
 }
 
 export default function Dashboard() {
@@ -545,7 +548,7 @@ export default function Dashboard() {
             spaceBetween: 15,
           },
         }}
-        navigation
+        // navigation
         pagination={{ clickable: true }}
         className="w-full mt-12 px-6 bg-transparent h-[160px]"
       >
