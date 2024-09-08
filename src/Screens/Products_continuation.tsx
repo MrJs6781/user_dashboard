@@ -281,6 +281,7 @@ export default function Products_continuation() {
 
   useEffect(() => {
     if (userProducts) {
+      // console.log(userProducts)
       if (userProducts.Status == 0) {
         let arr: any = [];
         userProducts?.Title.split(",")?.map((renewData: string, i: number) => {
@@ -674,18 +675,29 @@ export default function Products_continuation() {
             isShowLoading ? (
               <LottiePlayer />
             ) : (
-              <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
-                {userProductsData?.map(
-                  (item: UserProductResponse, i: number) => (
-                    <RenewCart
-                      key={i}
-                      data={item}
-                      index={i + 1}
-                      headerData={userProductsHeader}
-                    />
-                  )
+              <>
+                {userProductsData && userProductsData.length > 0 ? (
+                  <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
+                    {userProductsData &&
+                      userProductsData?.map(
+                        (item: UserProductResponse, i: number) => (
+                          <RenewCart
+                            key={i}
+                            data={item}
+                            index={i + 1}
+                            headerData={userProductsHeader}
+                          />
+                        )
+                      )}
+                  </ul>
+                ) : (
+                  <div className="w-full h-[40vh] flex items-center justify-center">
+                    <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                      {t("CantFindData")}
+                    </h5>
+                  </div>
                 )}
-              </ul>
+              </>
             )}
           </>
         ) : (
@@ -731,7 +743,7 @@ export default function Products_continuation() {
               <LottiePlayer />
             ) : (
               <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1200px] flex-col">
-                {userRenewDataTable?.length > 0 && (
+                {userRenewDataTable && userRenewDataTable?.length > 0 && (
                   <>
                     <RenewTable
                       data={currentItems}
@@ -752,7 +764,8 @@ export default function Products_continuation() {
           </>
         )}
       </div>
-      {userRenewDataTable?.length == 0 &&
+      {userRenewDataTable &&
+        userRenewDataTable?.length == 0 &&
         fetchedDataLoading == false &&
         userProductsLoading == false &&
         userRenewLoading == false &&

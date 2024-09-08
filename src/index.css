@@ -180,13 +180,20 @@
   animation-delay: calc(0.1s * var(--i));
 }
 
+.truncate {
+  width: 350px;
+  white-space: nowrap; /* اجازه نمی‌دهیم کلمات به خط بعد بروند */
+  overflow: hidden; /* قسمت‌های اضافی متن را پنهان می‌کنیم */
+  text-overflow: ellipsis; /* در انتهای متن علامت "..." را نمایش می‌دهیم */
+}
+
 @keyframes fade-in {
   to {
     opacity: 1;
   }
 }
 
-@media screen and (max-width : 1100px) {
+@media screen and (max-width: 1100px) {
   .swiper-button-prev {
     right: 40% !important;
   }
@@ -195,7 +202,7 @@
   }
 }
 
-@media screen and (max-width : 850px) {
+@media screen and (max-width: 850px) {
   .swiper-button-prev {
     right: 37% !important;
   }
@@ -204,16 +211,19 @@
   }
 }
 
-@media screen and (max-width : 650px) {
+@media screen and (max-width: 650px) {
   .swiper-button-prev {
     right: 33% !important;
   }
   .swiper-button-next {
     left: 33% !important;
   }
+  .truncate {
+    width: 250px;
+  }
 }
 
-@media screen and (max-width : 550px) {
+@media screen and (max-width: 550px) {
   .swiper-button-prev {
     right: 29% !important;
   }
@@ -222,16 +232,19 @@
   }
 }
 
-@media screen and (max-width : 440px) {
+@media screen and (max-width: 440px) {
   .swiper-button-prev {
     right: 25% !important;
   }
   .swiper-button-next {
     left: 25% !important;
   }
+  .truncate {
+    width: 200px;
+  }
 }
 
-@media screen and (max-width : 370px) {
+@media screen and (max-width: 370px) {
   .swiper-button-prev {
     right: 21% !important;
   }

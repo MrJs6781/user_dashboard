@@ -15,15 +15,37 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import { useTranslation } from "react-i18next";
 import i18n from "./../../i18n";
-import { ShowNotification } from "./ShowNotification";
+import { useFetchNotificationData } from "@/Hooks/useNotificationsFetch";
+import LottiePlayer from "./Loading";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 type headerListType = {
   id: number;
   icon?: React.ReactNode;
   title: string;
   link?: string;
+};
+
+interface notificaitonType {
+  ID: number;
+  Title: string;
+  Text: string;
+}
+
+type ReadNotificationType = {
+  NotificationID: string;
 };
 
 const headerListData = [
@@ -104,8 +126,12 @@ export default function Header() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [isShowNotification, setIsShowNotification] = useState(false);
+  const { data: notificationData, isLoading: notificationLoading } =
+    useFetchNotificationData(1);
   const [getLanguageId, setLanguageId] = useState("1");
+  const [showSingleNotification, setShowSingleNotification] =
+    useState<notificaitonType>({ ID: 0, Text: "", Title: "" });
+  const [showAllNotification, setShowAllNotification] = useState([]);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
@@ -132,6 +158,10 @@ export default function Header() {
     }
   }, []);
 
+  useEffect(() => {
+    setShowAllNotification(notificationData?.Data);
+  }, [notificationData]);
+
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
@@ -143,6 +173,61 @@ export default function Header() {
     setTimeout(() => {
       window.location.reload();
     }, 500);
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["ReadNotificaion"],
+    mutationFn: async (MutateData: ReadNotificationType) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}Notification/Read?Type=User`,
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      // console.log(data)
+      if (data.Status == "0") {
+        // setUserRenewDataTable(data?.Data);
+        // setTotalDataCount(data?.TotalDataCount);
+      } else if (data.Status == "-103") {
+        toast.info(data.Message);
+        setTimeout(() => {
+          Cookies.remove("authToken");
+          localStorage.removeItem("UserID");
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error(data.Message);
+      }
+      // setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      // setIsShowLoading(false);
+    },
+  });
+
+  const showNotificationHandler = (notificationInput: notificaitonType) => {
+    mutation.mutate({
+      NotificationID: `${notificationInput.ID}`,
+    });
+    setShowSingleNotification(notificationInput);
+  };
+
+  const changeOpenHandler = () => {
+    setShowSingleNotification({ ID: 0, Text: "", Title: "" });
   };
 
   return (
@@ -257,16 +342,96 @@ export default function Header() {
       </ul>
       <span className="flex items-center gap-4">
         <span className="relative">
-          <BiMessageSquareDetail
-            className="cursor-pointer text-[20px]"
-            onClick={() => setIsShowNotification(!isShowNotification)}
-          />
-          {isShowNotification && getLanguageId == "1" && (
+          <Dialog onOpenChange={changeOpenHandler}>
+            <DialogTrigger>
+              <BiMessageSquareDetail
+                className="cursor-pointer text-[20px]"
+                // onClick={() => setIsShowNotification(!isShowNotification)}
+              />
+            </DialogTrigger>
+            <DialogContent
+              style={
+                getLanguageId == "1"
+                  ? { direction: "rtl" }
+                  : { direction: "ltr" }
+              }
+              className="w-[75%] sm:w-full"
+            >
+              <DialogHeader>
+                <DialogTitle className="w-full flex items-center justify-center">
+                  {t("Notifications")}
+                </DialogTitle>
+                {notificationLoading ? (
+                  <LottiePlayer />
+                ) : (
+                  <DialogDescription>
+                    {showSingleNotification.Title.length > 0 ? (
+                      <div className="mb-4 grid grid-cols-[0px_1fr] items-start pb-4 last:mb-0 last:pb-0 mt-4">
+                        {/* <span className="absolute left-3 top-5 cursor-pointer flex items-center justify-center rounded-[3px]">
+                          <FaAngleLeft className="text-[20px] cursor-pointer" />
+                        </span> */}
+                        <span className="flex h-2 w-2 translate-y-1 rounded-full" />
+                        <div className="space-y-2">
+                          <p className="text-[11px] sm:text-[17px] font-medium leading-none w-fit">
+                            {showSingleNotification?.Title}
+                          </p>
+                          <p
+                            className="text-[11px] sm:text-sm text-muted-foreground w-fit"
+                            style={
+                              getLanguageId == "1"
+                                ? { textAlign: "right" }
+                                : { textAlign: "left" }
+                            }
+                          >
+                            {showSingleNotification?.Text}
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        {showAllNotification?.map(
+                          (notification: notificaitonType, index: number) => (
+                            <div
+                              key={index}
+                              className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0 mt-4"
+                            >
+                              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                              <div
+                                className="space-y-2 cursor-pointer"
+                                onClick={() =>
+                                  showNotificationHandler(notification)
+                                }
+                              >
+                                <p className="text-[11px] sm:text-[17px] font-medium leading-none w-fit">
+                                  {notification.Title}
+                                </p>
+                                <p
+                                  className="text-[11px] sm:text-sm text-muted-foreground w-fit truncate"
+                                  style={
+                                    getLanguageId == "1"
+                                      ? { textAlign: "right" }
+                                      : { textAlign: "left" }
+                                  }
+                                >
+                                  {notification.Text}
+                                </p>
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    )}
+                  </DialogDescription>
+                )}
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+          {/* {isShowNotification && getLanguageId == "1" && (
             <ShowNotification className="absolute top-10 left-0" />
           )}
           {isShowNotification && getLanguageId == "0" && (
             <ShowNotification className="absolute top-10 right-0" />
-          )}
+          )} */}
         </span>
         <ModeToggle />
         <ProfileUser />

@@ -135,7 +135,7 @@ export default function Login() {
   };
 
   return (
-    <div className="h-[48rem] w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
+    <div className="h-[48rem] w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex items-center justify-center">
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
         style={{ backdropFilter: "blur(50px)" }}
@@ -202,6 +202,15 @@ export default function Login() {
             {t("login")}
           </p>
         </button>
+        <span className="w-full flex flex-col items-center justify-center gap-0">
+          <p className="text-[15px] pb-1 cursor-pointer font-vazirM">
+            {t("forgetPassword")}
+          </p>
+          <small className="w-[90px] h-[2px] bg-white"></small>
+        </span>
+        <p className="mt-4 text-center text-[14px] font-vazirB">
+          {t("V")} : 1.01
+        </p>
       </div>
     </div>
   );

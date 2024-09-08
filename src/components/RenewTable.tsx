@@ -28,7 +28,7 @@ const RenewTable: React.FC<{
             >
               {t("Row")}
             </TableHead>
-            {headerData?.map((header, index) => (
+            {headerData && headerData?.map((header, index) => (
               <TableHead
                 key={index + 1}
                 className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
@@ -39,7 +39,7 @@ const RenewTable: React.FC<{
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.map((item, index) => (
+          {data && data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell
                 className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]"
@@ -47,7 +47,7 @@ const RenewTable: React.FC<{
               >
                 {index + 1}
               </TableCell>
-              {headerDataName?.map((headerDataName, index) => (
+              {headerDataName && headerDataName?.map((headerDataName, index) => (
                 <TableCell
                   className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]"
                   key={index + 10000}
@@ -56,7 +56,7 @@ const RenewTable: React.FC<{
                     ? t("is")
                     : (item as any)[headerDataName] == "false"
                     ? t("isNot")
-                    : (item as any)[headerDataName].length > 0
+                    : (item as any)[headerDataName] && (item as any)[headerDataName].length > 0
                     ? (item as any)[headerDataName]
                     : "_"}
                 </TableCell>
