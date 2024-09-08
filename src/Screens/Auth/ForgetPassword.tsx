@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
 
 import { FaUser } from "react-icons/fa";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { IoEye, IoLanguage } from "react-icons/io5";
-import { IoEyeOffSharp } from "react-icons/io5";
+import { IoLanguage } from "react-icons/io5";
 
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { LoginData, LoginResponse } from "@/types/login";
+import { LoginResponse } from "@/types/login";
 import { toast } from "sonner";
-import useLocalStorage from "@/Hooks/useStorage";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 import i18n from "./../../../i18n";
 import { useTranslation } from "react-i18next";
+import { ForgetPasswordType } from "@/types/ForgetPassword";
 
-export default function Login() {
+export default function ForgetPassword() {
   const { t } = useTranslation();
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [isShowPassword, setIsShowPassword] = useState(false);
-  const updateLocalStorageValue = useLocalStorage<string>("UserID", "");
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,39 +43,32 @@ export default function Login() {
     }
   }, []);
 
-  const hidePasswordHandler = () => {
-    setIsShowPassword(false);
-  };
-
-  const showPasswordHandler = () => {
-    setIsShowPassword(true);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     setIsLoading(true);
     e.preventDefault();
     mutation.mutate({
-      UserName: username,
-      Password: password,
-      DeviceID: "",
-      Info: "",
+      Email: email,
     });
   };
 
   const mutation = useMutation({
-    mutationKey: ["loginKey"],
-    mutationFn: async (data: LoginData) => {
+    mutationKey: ["forgetPasswordKey"],
+    mutationFn: async (data: ForgetPasswordType) => {
       const response = await axios.post(
-        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Login?Type=User`,
+        `${
+          import.meta.env.VITE_WEB_SERVICE_DOMAIN
+        }User/ForgetPassword?Type=User`,
         data
       );
       return response.data;
     },
     onSuccess: (data: LoginResponse) => {
+      console.log(data)
       if (data.Status == "0") {
-        updateLocalStorageValue(`${data.Data[0]?.UserID}`);
-        Cookies.set("authToken", data.Data[0]?.Token);
-        navigate("/dashboard");
+        toast.info(data.Message);
+        setTimeout(() => {
+          navigate("/");
+        }, 500);
       } else {
         toast.error(data.Message);
         setIsLoading(false);
@@ -134,9 +121,9 @@ export default function Login() {
     }
   };
 
-  const goToForgetPasswordPage = () => {
-    navigate("/forget_password");
-  }
+  const backToLoginPage = () => {
+    navigate("/");
+  };
 
   return (
     <div className="h-[48rem] w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex items-center justify-center">
@@ -152,7 +139,7 @@ export default function Login() {
           />
         </span>
         <h5 className="dark:text-white text-black font-vazirB text-[30px] text-center">
-          {t("login")}
+          {t("forgetPassword")}
         </h5>
         <form
           action=""
@@ -160,55 +147,31 @@ export default function Login() {
         >
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
-              type="text"
-              placeholder={t("Username")}
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
+              type="email"
+              placeholder={t("Email")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
               maxLength={30}
             />
             <FaUser className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
           </span>
-          <span className="w-full h-[45px] rounded-[20px] gap-2 border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
-            <input
-              type={isShowPassword == false ? "password" : "text"}
-              placeholder={t("Password")}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
-              maxLength={20}
-            />
-            {password.length > 0 && isShowPassword && (
-              <IoEye
-                className="dark:text-white text-purple-500 text-[22px] cursor-pointer"
-                onClick={hidePasswordHandler}
-              />
-            )}
-            {password.length > 0 && !isShowPassword && (
-              <IoEyeOffSharp
-                className="dark:text-white text-purple-500 text-[22px] cursor-pointer"
-                onClick={showPasswordHandler}
-              />
-            )}
-            <RiLockPasswordFill className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
-          </span>
         </form>
         <button
           className="w-full dark:bg-white bg-purple-600 outline-none border-none rounded-[20px] cursor-pointer flex items-center justify-center h-[45px] disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleSubmit}
-          disabled={
-            (username.length > 0 && password.length > 0) || isLoading
-              ? false
-              : true
-          }
+          disabled={email.length > 0 || isLoading ? false : true}
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
-            {t("login")}
+            {t("recoverPassword")}
           </p>
         </button>
-        <span className="w-full flex flex-col items-center justify-center gap-0" onClick={goToForgetPasswordPage}>
+        <span
+          className="w-full flex flex-col items-center justify-center gap-0"
+          onClick={backToLoginPage}
+        >
           <p className="text-[15px] pb-1 cursor-pointer font-vazirM">
-            {t("forgetPassword")}
+            {t("backToLoginPage")}
           </p>
           <small className="w-[90px] h-[2px] bg-white"></small>
         </span>

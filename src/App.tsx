@@ -11,12 +11,14 @@ import ConnectionHistory from "./Screens/Connection_history";
 import ErrorReport from "./Screens/Error_report";
 import CardexTraffic from "./Screens/Cardex_traffic";
 import CardexFinancial from "./Screens/Cardex_financial";
+import ForgetPassword from "./Screens/Auth/ForgetPassword";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/forget_password" element={<ForgetPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route
           path="/products_continuation"

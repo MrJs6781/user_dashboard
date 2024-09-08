@@ -60,5 +60,8 @@
   "Type": "Type",
   "Row": "Row",
   "V": "V",
-  "forgetPassword": "forgetPassword"
+  "forgetPassword": "forgetPassword",
+  "Email": "Email",
+  "backToLoginPage": "backToLoginPage",
+  "recoverPassword": "RecoverPassword"
 }

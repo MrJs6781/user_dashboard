@@ -59,6 +59,9 @@
   "Users": "کاربران",
   "Type": "تایپ",
   "Row": "ردیف",
-  "V" : "ورژن",
-  "forgetPassword" : "فراموشی رمز عبور"
+  "V": "ورژن",
+  "forgetPassword": "فراموشی رمز عبور",
+  "Email": "ایمیل",
+  "backToLoginPage": "بازگشت به صفحه ورود",
+  "recoverPassword": "بازیابی رمز عبور"
 }
