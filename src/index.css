@@ -99,18 +99,18 @@
 }
 
 @font-face {
-  font-family: "estedad_b";
-  src: url("./assets/fonts/Estedad-Bold.ttf");
+  font-family: "yekan_b";
+  src: url("./assets/fonts/YekanBakhBold.ttf");
 }
 
 @font-face {
-  font-family: "estedad_m";
-  src: url("./assets/fonts/Estedad-Medium.ttf");
+  font-family: "yekan_m";
+  src: url("./assets/fonts/YekanBakhMedium.ttf");
 }
 
 @font-face {
-  font-family: "estedad_l";
-  src: url("./assets/fonts/Estedad-Light.ttf");
+  font-family: "yekan_l";
+  src: url("./assets/fonts/YekanBakhLight.ttf");
 }
 
 * {

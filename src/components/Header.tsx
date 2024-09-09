@@ -272,7 +272,7 @@ export default function Header() {
                         className={cn(
                           "flex items-center gap-2 cursor-pointer h-full border-b w-full pb-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
                           pathname == item.link
-                            ? "text-[15px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] px-2 py-1 border-b-2 border-purple-600 dark:border-white"
+                            ? "text-[17px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] px-2 py-1 border-b-2 border-purple-600 dark:border-white"
                             : ""
                         )}
                       >
@@ -314,9 +314,9 @@ export default function Header() {
                 {item.icon}
                 <p
                   className={cn(
-                    "text-[14px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
+                    "text-[16px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
                     pathname == item.link
-                      ? "text-[15px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] px-2 py-1 border-b-2 border-purple-600 dark:border-white"
+                      ? "text-[17px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] px-2 py-1 border-b-2 border-purple-600 dark:border-white"
                       : ""
                   )}
                 >
@@ -332,7 +332,7 @@ export default function Header() {
                 onClick={logOutHandler}
               >
                 {item.icon}
-                <p className="text-[14px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                <p className="text-[16px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
                   {t(item.title)}
                 </p>
               </li>

@@ -403,7 +403,6 @@ export default function ConnectionHistory() {
             spaceBetween: 15,
           },
         }}
-        // navigation
         pagination={{ clickable: true }}
         className="w-full mt-12 px-6 bg-transparent h-[160px]"
       >
@@ -432,59 +431,59 @@ export default function ConnectionHistory() {
             >
               {item.icon}
               <span className="flex flex-col items-start gap-1">
-                <p className="font-vazirB text-[10px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                <p className="font-vazirB text-[12px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
                   {t(item.title)} :{" "}
                 </p>
                 {item.id == 1 && (
-                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.RemainedTime} {t("Day")}
                   </small>
                 )}
                 {item.id == 2 && (
-                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.RemainedTraffic}
                   </small>
                 )}
                 {item.id == 3 && (
-                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.WalletRemained}
                   </small>
                 )}
                 {/* {item.id == 4 && (
-                <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                   {fetchedData?.Data[0]?.RemainedTime}
                 </small>
               )} */}
                 {item.id == 5 && (
-                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.CreationTime
                       ? fetchedData?.Data[0]?.CreationTime
                       : ""}
                   </small>
                 )}
                 {item.id == 6 && (
-                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.FirstLogin
                       ? fetchedData?.Data[0]?.FirstLogin
                       : "_"}
                   </small>
                 )}
                 {item.id == 7 && (
-                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.ExpirationTime
                       ? fetchedData?.Data[0]?.ExpirationTime
                       : "_"}
                   </small>
                 )}
                 {item.id == 8 && (
-                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.OnlineCount
                       ? fetchedData?.Data[0]?.OnlineCount
                       : "_"}
                   </small>
                 )}
                 {item.id == 9 && (
-                  <small className="font-vazirB text-[11px] sm:text-[12px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
                     {fetchedData?.Data[0]?.IsTrafficBase == true
                       ? t("is")
                       : t("isNot")}
