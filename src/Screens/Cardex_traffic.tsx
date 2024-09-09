@@ -246,8 +246,10 @@ export default function CardexTraffic() {
   const [cardexTrafficTableHeader, setCardexTrafficTableHeader] = useState([]);
   const [cardexTrafficTableHeaderName, setCardexTrafficTableHeaderName] =
     useState([]);
-  const [TotalDataCount, setTotalDataCount] = useState(0);
 
+  const [TotalDataCount, setTotalDataCount] = useState(0);
+  const [TotalPageCount, setTotalPageCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
   const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
 
@@ -273,7 +275,9 @@ export default function CardexTraffic() {
   useEffect(() => {
     if (cardexTraffic) {
       if (cardexTraffic.Status == 0) {
+        setCurrentItems(cardexTraffic?.Data)
         setTotalDataCount(cardexTraffic?.TotalDataCount);
+        setTotalPageCount(cardexTraffic?.TotalPageCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -578,11 +582,15 @@ export default function CardexTraffic() {
                       headerDataName={cardexTrafficTableHeaderName}
                     />
                     <PaginationComponent
-                      paginationData={cardexTrafficFetchData}
                       perPage={perPage}
                       setCurrentItems={setCurrentItems}
                       setPerPage={setPerPage}
                       TotalDataCount={TotalDataCount}
+                      TotalPageCount={TotalPageCount}
+                      setIsShowLoading={setIsShowLoading}
+                      setTotalPageCount={setTotalPageCount}
+                      activePage={activePage}
+                      setActivePage={setActivePage}
                     />
                   </>
                 )}

@@ -243,9 +243,12 @@ export default function ConnectionHistory() {
     connectionHistoryTableHeaderName,
     setConnectionHistoryTableHeaderName,
   ] = useState([]);
+  
+  const [TotalDataCount, setTotalDataCount] = useState(0);
+  const [TotalPageCount , setTotalPageCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
   const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
-  const [TotalDataCount, setTotalDataCount] = useState(0);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -273,7 +276,9 @@ export default function ConnectionHistory() {
   useEffect(() => {
     if (connectionHistory) {
       if (connectionHistory.Status == 0) {
+        setCurrentItems(connectionHistory?.Data)
         setTotalDataCount(connectionHistory?.TotalDataCount);
+        setTotalPageCount(connectionHistory?.TotalPageCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -546,11 +551,15 @@ export default function ConnectionHistory() {
                       headerDataName={connectionHistoryTableHeaderName}
                     />
                     <PaginationComponent
-                      paginationData={connectionHistoryData}
                       perPage={perPage}
                       setCurrentItems={setCurrentItems}
                       setPerPage={setPerPage}
                       TotalDataCount={TotalDataCount}
+                      TotalPageCount={TotalPageCount}
+                      setIsShowLoading={setIsShowLoading}
+                      setTotalPageCount={setTotalPageCount}
+                      activePage={activePage}
+                      setActivePage={setActivePage}
                     />
                   </>
                 )}

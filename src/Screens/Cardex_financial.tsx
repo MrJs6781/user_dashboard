@@ -253,8 +253,10 @@ export default function CardexFinancial() {
   );
   const [cardexFinancialTableHeaderName, setCardexFinancialTableHeaderName] =
     useState([]);
-  const [TotalDataCount, setTotalDataCount] = useState(0);
 
+  const [TotalDataCount, setTotalDataCount] = useState(0);
+  const [TotalPageCount, setTotalPageCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
   const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
 
@@ -281,7 +283,9 @@ export default function CardexFinancial() {
     if (cardexFinancial) {
       // console.log(cardexFinancial)
       if (cardexFinancial.Status == 0) {
+        setCurrentItems(cardexFinancial?.Data);
         setTotalDataCount(cardexFinancial?.TotalDataCount);
+        setTotalPageCount(cardexFinancial?.TotalPageCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -586,11 +590,15 @@ export default function CardexFinancial() {
                       headerDataName={cardexFinancialTableHeaderName}
                     />
                     <PaginationComponent
-                      paginationData={cardexTrafficFinancialData}
                       perPage={perPage}
                       setCurrentItems={setCurrentItems}
                       setPerPage={setPerPage}
                       TotalDataCount={TotalDataCount}
+                      TotalPageCount={TotalPageCount}
+                      setIsShowLoading={setIsShowLoading}
+                      setTotalPageCount={setTotalPageCount}
+                      activePage={activePage}
+                      setActivePage={setActivePage}
                     />
                   </>
                 )}

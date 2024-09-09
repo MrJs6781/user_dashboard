@@ -266,6 +266,9 @@ export default function Products_continuation() {
   const [renewTableHeaderName, setRenewTableHeaderName]: any = useState([]);
   const [userProductsHeader, setUserProductsHeader]: any = useState([]);
   const [TotalDataCount, setTotalDataCount] = useState(0);
+  
+  const [TotalPageCount , setTotalPageCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
     if (fetchedData) {
@@ -311,7 +314,9 @@ export default function Products_continuation() {
   useEffect(() => {
     if (userRenew) {
       if (userRenew.Status == 0) {
+        setCurrentItems(userRenew?.Data)
         setTotalDataCount(userRenew?.TotalDataCount);
+        setTotalPageCount(userRenew?.TotalPageCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -752,11 +757,15 @@ export default function Products_continuation() {
                       headerDataName={renewTableHeaderName}
                     />
                     <PaginationComponent
-                      paginationData={userRenewDataTable}
                       perPage={perPage}
                       setCurrentItems={setCurrentItems}
                       setPerPage={setPerPage}
                       TotalDataCount={TotalDataCount}
+                      TotalPageCount={TotalPageCount}
+                      setIsShowLoading={setIsShowLoading}
+                      setTotalPageCount={setTotalPageCount}
+                      activePage={activePage}
+                      setActivePage={setActivePage}
                     />
                   </>
                 )}

@@ -245,8 +245,10 @@ export default function Trafic() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [trafficTableHeader, setTrafficTableHeader] = useState([]);
   const [trafficTableHeaderName, setTrafficTableHeaderName] = useState([]);
-  const [TotalDataCount, setTotalDataCount] = useState(0);
 
+  const [TotalDataCount, setTotalDataCount] = useState(0);
+  const [TotalPageCount , setTotalPageCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
   const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
 
@@ -276,7 +278,9 @@ export default function Trafic() {
   useEffect(() => {
     if (trafficData) {
       if (trafficData.Status == 0) {
+        setCurrentItems(trafficData?.Data)
         setTotalDataCount(trafficData?.TotalDataCount);
+        setTotalPageCount(trafficData?.TotalPageCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -581,11 +585,15 @@ export default function Trafic() {
                       headerDataName={trafficTableHeaderName}
                     />
                     <PaginationComponent
-                      paginationData={trafficDataTable}
                       perPage={perPage}
                       setCurrentItems={setCurrentItems}
                       setPerPage={setPerPage}
                       TotalDataCount={TotalDataCount}
+                      TotalPageCount={TotalPageCount}
+                      setIsShowLoading={setIsShowLoading}
+                      setTotalPageCount={setTotalPageCount}
+                      activePage={activePage}
+                      setActivePage={setActivePage}
                     />
                   </>
                 )}

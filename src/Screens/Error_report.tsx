@@ -240,8 +240,10 @@ export default function ErrorReport() {
   const [errorReportsTableHeader, setErrorReportsTableHeader] = useState([]);
   const [errorReportsTableHeaderName, setErrorReportsTableHeaderName] =
     useState([]);
-  const [TotalDataCount, setTotalDataCount] = useState(0);
 
+  const [TotalDataCount, setTotalDataCount] = useState(0);
+  const [TotalPageCount, setTotalPageCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
   const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
 
@@ -267,7 +269,9 @@ export default function ErrorReport() {
   useEffect(() => {
     if (errorReports) {
       if (errorReports.Status == 0) {
+        setCurrentItems(errorReports?.Data)
         setTotalDataCount(errorReports?.TotalDataCount);
+        setTotalPageCount(errorReports?.TotalPageCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -536,11 +540,15 @@ export default function ErrorReport() {
                       headerDataName={errorReportsTableHeaderName}
                     />
                     <PaginationComponent
-                      paginationData={errorReportsTableData}
                       perPage={perPage}
                       setCurrentItems={setCurrentItems}
                       setPerPage={setPerPage}
                       TotalDataCount={TotalDataCount}
+                      TotalPageCount={TotalPageCount}
+                      setIsShowLoading={setIsShowLoading}
+                      setTotalPageCount={setTotalPageCount}
+                      activePage={activePage}
+                      setActivePage={setActivePage}
                     />
                   </>
                 )}

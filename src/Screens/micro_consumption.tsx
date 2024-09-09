@@ -257,6 +257,8 @@ export default function MicroConsumption() {
   const [consumeTableHeaderName, setConsumeTableHeaderName] = useState([]);
   const [TotalDataCount, setTotalDataCount] = useState(0);
 
+  const [TotalPageCount , setTotalPageCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
   const [currentItems, setCurrentItems] = useState([]);
 
   useEffect(() => {
@@ -276,7 +278,9 @@ export default function MicroConsumption() {
   useEffect(() => {
     if (consumeFetch) {
       if (consumeFetch.Status == 0) {
+        setCurrentItems(consumeFetch?.Data)
         setTotalDataCount(consumeFetch?.TotalDataCount);
+        setTotalPageCount(consumeFetch?.TotalPageCount);
         let arr: any = [];
         let arr2: any = [];
 
@@ -581,11 +585,15 @@ export default function MicroConsumption() {
                       headerDataName={consumeTableHeaderName}
                     />
                     <PaginationComponent
-                      paginationData={consumeFetchData}
                       perPage={perPage}
                       setCurrentItems={setCurrentItems}
                       setPerPage={setPerPage}
                       TotalDataCount={TotalDataCount}
+                      TotalPageCount={TotalPageCount}
+                      setIsShowLoading={setIsShowLoading}
+                      setTotalPageCount={setTotalPageCount}
+                      activePage={activePage}
+                      setActivePage={setActivePage}
                     />
                   </>
                 )}

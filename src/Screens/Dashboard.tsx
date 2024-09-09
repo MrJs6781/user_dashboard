@@ -253,19 +253,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (fetchedData) {
-      console.log(fetchedData)
       if (fetchedData.Status == 0) {
-        // console.log(fetchedData);
-        // console.log(fetchedData?.Title?.split(","));
-        // let arr : any = [];
-        // fetchedData?.Title?.split(",").map((item: string) => {
-        //   if (item.length > 0) {
-        //     arr.push(item);
-        //     // setSliderList((prev: any) => [...prev, item]);
-        //   }
-        // });
-        // console.log(arr);
-        // setSliderList(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
