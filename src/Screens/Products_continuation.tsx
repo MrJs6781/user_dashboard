@@ -766,6 +766,7 @@ export default function Products_continuation() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      domainInput="User/Renew/Fetch?Type=User"
                     />
                   </>
                 )}

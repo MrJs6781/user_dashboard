@@ -594,6 +594,7 @@ export default function MicroConsumption() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      domainInput="User/Consume/Fetch?Type=User"
                     />
                   </>
                 )}

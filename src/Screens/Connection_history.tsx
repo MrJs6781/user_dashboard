@@ -560,6 +560,7 @@ export default function ConnectionHistory() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      domainInput="User/History/Fetch?Type=User"
                     />
                   </>
                 )}

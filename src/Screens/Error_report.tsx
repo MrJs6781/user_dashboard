@@ -549,6 +549,7 @@ export default function ErrorReport() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      domainInput="User/Log/Fetch?Type=User"
                     />
                   </>
                 )}

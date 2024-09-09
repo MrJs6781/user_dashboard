@@ -20,6 +20,7 @@ const PaginationComponent: React.FC<{
   setIsShowLoading: any;
   setTotalPageCount: any;
   setActivePage: any;
+  domainInput : string;
 }> = ({
   perPage,
   setPerPage,
@@ -30,6 +31,7 @@ const PaginationComponent: React.FC<{
   setTotalPageCount,
   activePage,
   setActivePage,
+  domainInput,
 }) => {
   const { t } = useTranslation();
   const [length, setLength] = useState<any>([]);
@@ -59,7 +61,7 @@ const PaginationComponent: React.FC<{
       const response = await fetch(
         `${
           import.meta.env.VITE_WEB_SERVICE_DOMAIN
-        }User/Consume/Fetch?Type=User`,
+        }${domainInput}`,
         {
           method: "POST",
           headers: myHeaders,

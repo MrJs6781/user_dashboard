@@ -599,6 +599,7 @@ export default function CardexFinancial() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      domainInput="User/Shop/Cardex?Type=User"
                     />
                   </>
                 )}

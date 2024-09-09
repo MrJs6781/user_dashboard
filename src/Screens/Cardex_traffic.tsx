@@ -591,6 +591,7 @@ export default function CardexTraffic() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      domainInput="User/Traffic/Cardex?Type=User"
                     />
                   </>
                 )}

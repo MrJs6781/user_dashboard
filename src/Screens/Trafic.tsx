@@ -594,6 +594,7 @@ export default function Trafic() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      domainInput="User/Traffic/Fetch?Type=User"
                     />
                   </>
                 )}
