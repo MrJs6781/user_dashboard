@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import { ModeToggle } from "./mode-toggle";
-import { BiMessageSquareDetail } from "react-icons/bi";
 import ProfileUser from "./ProfileUser";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -30,6 +29,11 @@ import { useFetchNotificationData } from "@/Hooks/useNotificationsFetch";
 import LottiePlayer from "./Loading";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { IoMdNotificationsOutline } from "react-icons/io";
+
+interface HeaderProps {
+  username: string;
+}
 
 type headerListType = {
   id: number;
@@ -122,7 +126,7 @@ const headerListData = [
   },
 ];
 
-export default function Header() {
+export default function Header({ username }: HeaderProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -197,9 +201,9 @@ export default function Header() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      // console.log(data)
+      console.log(data);
       if (data.Status == "0") {
-        // setUserRenewDataTable(data?.Data);
+        setShowAllNotification(data?.Data);
         // setTotalDataCount(data?.TotalDataCount);
       } else if (data.Status == "-103") {
         toast.info(data.Message);
@@ -340,14 +344,18 @@ export default function Header() {
           }
         })}
       </ul>
-      <span className="flex items-center gap-4">
-        <span className="relative">
+      <span className="flex items-center justify-center h-full gap-4">
+        <span className="relative h-[20px]">
           <Dialog onOpenChange={changeOpenHandler}>
             <DialogTrigger>
-              <BiMessageSquareDetail
-                className="cursor-pointer text-[20px]"
-                // onClick={() => setIsShowNotification(!isShowNotification)}
-              />
+              <IoMdNotificationsOutline className="cursor-pointer w-[20px] h-[20px] relative" />
+              {showAllNotification && showAllNotification.length > 0 && (
+                <span className="w-[18px] h-[18px] rounded-full flex items-center justify-center bg-red-500 absolute top-[-10px] right-[-10px]">
+                  <p className="text-[12px] font-semibold text-white font-vazirB">
+                    {notificationData?.Data?.length}
+                  </p>
+                </span>
+              )}
             </DialogTrigger>
             <DialogContent
               style={
@@ -367,16 +375,13 @@ export default function Header() {
                   <DialogDescription>
                     {showSingleNotification.Title.length > 0 ? (
                       <div className="mb-4 grid grid-cols-[0px_1fr] items-start pb-4 last:mb-0 last:pb-0 mt-4">
-                        {/* <span className="absolute left-3 top-5 cursor-pointer flex items-center justify-center rounded-[3px]">
-                          <FaAngleLeft className="text-[20px] cursor-pointer" />
-                        </span> */}
                         <span className="flex h-2 w-2 translate-y-1 rounded-full" />
                         <div className="space-y-2">
-                          <p className="text-[11px] sm:text-[17px] font-medium leading-none w-fit">
+                          <p className="text-[11px] sm:text-[17px] font-medium leading-none w-fit font-vazirB">
                             {showSingleNotification?.Title}
                           </p>
                           <p
-                            className="text-[11px] sm:text-sm text-muted-foreground w-fit"
+                            className="text-[11px] sm:text-sm text-muted-foreground w-fit font-vazirM"
                             style={
                               getLanguageId == "1"
                                 ? { textAlign: "right" }
@@ -402,11 +407,11 @@ export default function Header() {
                                   showNotificationHandler(notification)
                                 }
                               >
-                                <p className="text-[11px] sm:text-[17px] font-medium leading-none w-fit">
+                                <p className="text-[11px] sm:text-[17px] font-medium leading-none w-fit font-vazirB">
                                   {notification.Title}
                                 </p>
                                 <p
-                                  className="text-[11px] sm:text-sm text-muted-foreground w-fit truncate"
+                                  className="text-[11px] sm:text-sm text-muted-foreground w-fit truncate font-vazirM"
                                   style={
                                     getLanguageId == "1"
                                       ? { textAlign: "right" }
@@ -434,7 +439,7 @@ export default function Header() {
           )} */}
         </span>
         <ModeToggle />
-        <ProfileUser />
+        <ProfileUser username={username} />
       </span>
     </div>
   );

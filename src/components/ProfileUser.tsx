@@ -4,10 +4,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { FaUserTie } from "react-icons/fa";
 
 import { useTranslation } from "react-i18next";
+
+interface ProfileUserProps {
+  username: string;
+}
 
 const profileUserData = [
   {
@@ -56,13 +61,19 @@ const profileUserData = [
   },
 ];
 
-export default function ProfileUser() {
+export default function ProfileUser({ username }: ProfileUserProps) {
   const { t } = useTranslation();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <FaRegUserCircle className="cursor-pointer text-[20px]" />
+        <span className="w-[120px] cursor-pointer flex items-center justify-between px-2 border h-[28px]">
+          <span className="flex items-center justify-start gap-2">
+            <FaUserTie className="text-[20px] w-[14px] h-[14px]" />
+            <p className="text-[14px] font-semibold">{username}</p>
+          </span>
+          <FaAngleDown className="text-[10px]" />
+        </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px] flex flex-col items-start gap-2 px-4">
         {profileUserData.map((item) => (

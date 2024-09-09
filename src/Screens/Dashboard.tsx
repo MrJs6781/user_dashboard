@@ -253,6 +253,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (fetchedData) {
+      console.log(fetchedData)
       if (fetchedData.Status == 0) {
         // console.log(fetchedData);
         // console.log(fetchedData?.Title?.split(","));
@@ -316,7 +317,7 @@ export default function Dashboard() {
   if (fetchedDataLoading || consumeDataLoading) {
     return (
       <div className="w-full h-screen overflow-auto flex flex-col items-start">
-        <Header />
+        <Header username={fetchedData?.Data[0]?.UserName} />
         {dashboardBoxes?.length > 0 && totalData?.length > 0 ? (
           <>
             <Swiper
@@ -490,7 +491,7 @@ export default function Dashboard() {
 
   return (
     <div className="w-full h-screen overflow-auto flex flex-col items-start">
-      <Header />
+      <Header username={fetchedData?.Data[0]?.UserName} />
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={10}

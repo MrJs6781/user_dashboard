@@ -119,7 +119,7 @@ export default function EditPassword() {
 
   return (
     <div className="w-full h-screen overflow-auto flex items-center justify-center">
-      <Header />
+      <Header username={fetchedData?.Data[0]?.UserName} />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
         style={{ backdropFilter: "blur(50px)" }}

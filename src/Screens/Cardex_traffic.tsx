@@ -365,7 +365,7 @@ export default function CardexTraffic() {
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
-      <Header />
+      <Header username={fetchedData?.Data[0]?.UserName} />
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={10}

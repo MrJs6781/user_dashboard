@@ -11,11 +11,13 @@ import { FaPhoneAlt, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { FaUserTie } from "react-icons/fa";
 
 export default function EditProfile() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [username, setUserName] = useState("");
+  const [titleName, setTitleName] = useState("");
   const [email, setUserEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +28,9 @@ export default function EditProfile() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
-        setUserName(fetchedData?.Data[0]?.Title);
+        // console.log(fetchedData)
+        setUserName(fetchedData?.Data[0]?.UserName);
+        setTitleName(fetchedData?.Data[0]?.Title);
         setUserEmail(fetchedData?.Data[0]?.Email);
         setMobileNumber(fetchedData?.Data[0]?.Mobile);
       } else if (fetchedData.Status == "-103") {
@@ -123,7 +127,7 @@ export default function EditProfile() {
       className="w-full h-screen overflow-auto flex items-center justify-center"
        
     >
-      <Header />
+      <Header username={fetchedData?.Data[0]?.UserName} />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
         style={{ backdropFilter: "blur(50px)" }}
@@ -137,6 +141,17 @@ export default function EditProfile() {
             <input
               type="text"
               placeholder={t("TitleName")}
+              value={titleName}
+              onChange={(e) => setTitleName(e.target.value)}
+              className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
+              maxLength={30}
+            />
+            <FaUserTie className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
+          </span>
+          <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
+            <input
+              type="text"
+              placeholder={t("Username")}
               value={username}
               onChange={(e) => setUserName(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"

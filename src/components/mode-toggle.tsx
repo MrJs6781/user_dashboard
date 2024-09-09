@@ -7,11 +7,11 @@ export function ModeToggle() {
   return (
     <>
       <Sun
-        className="h-[1.2rem] w-[1.2rem] cursor-pointer hidden dark:flex"
+        className="h-[20px] w-[20px] cursor-pointer hidden dark:flex"
         onClick={() => setTheme("light")}
       />
       <Moon
-        className="h-[1.2rem] w-[1.2rem] cursor-pointer flex dark:hidden"
+        className="h-[20px] w-[20px] cursor-pointer flex dark:hidden"
         onClick={() => setTheme("dark")}
       />
     </>
