@@ -67,7 +67,7 @@ const PaginationComponent: React.FC<{
         <select
           name="row_per_page"
           id="row_per_page"
-          className="w-[100px] h-[35px] font-semibold border-2 rounded-md outline-none cursor-pointer dark:text-black"
+          className="w-[100px] h-[35px] font-semibold font-vazirM border-2 rounded-md outline-none cursor-pointer dark:text-black"
           value={perPage}
           onChange={(e) => setPerPage(e.target.value)}
         >
@@ -139,7 +139,7 @@ const PaginationComponent: React.FC<{
               key={item}
               onClick={() => changePageHandler(item)}
             >
-              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 font-vazirB">
                 {item}
               </span>
             </button>
