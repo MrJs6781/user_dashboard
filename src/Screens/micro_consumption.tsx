@@ -238,10 +238,15 @@ const dashboardBoxes = [
 export default function MicroConsumption() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [perPage, setPerPage] = useState(50);
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: consumeFetch, isLoading: consumeFetchLoading } =
-    useConsumeFetch(+window.localStorage.getItem("ssss_language_id")!);
+    useConsumeFetch(
+      +window.localStorage.getItem("ssss_language_id")!,
+      perPage,
+      1
+    );
 
   const [consumeFetchData, setConsumeFetchData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -252,7 +257,6 @@ export default function MicroConsumption() {
   const [consumeTableHeaderName, setConsumeTableHeaderName] = useState([]);
   const [TotalDataCount, setTotalDataCount] = useState(0);
 
-  const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
 
   useEffect(() => {

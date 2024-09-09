@@ -17,7 +17,7 @@ export const useCardexTraffic = (languageId? : number) => {
       {
         method: "POST",
         headers: myHeaders,
-        body : JSON.stringify({SortIndex : 1 , languageId}),
+        body : JSON.stringify({SortIndex : -1 , languageId}),
         redirect: "follow",
       }
     );

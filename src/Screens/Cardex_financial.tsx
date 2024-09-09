@@ -522,7 +522,7 @@ export default function CardexFinancial() {
             value={cardexFinancialType}
             onValueChange={setCardexFinancialType}
           >
-            <SelectTrigger className="w-[180px] h-[56px] font-vazirM">
+            <SelectTrigger className="w-[180px] h-[56px] font-vazirM focus:ring-0 focus:ring-opacity-0">
               <SelectValue placeholder={t("TransactionType")} />
             </SelectTrigger>
             <SelectContent>

@@ -257,7 +257,9 @@ export default function Products_continuation() {
       languageId: +window.localStorage.getItem("ssss_language_id")!,
     });
   const { isLoading: userRenewLoading, data: userRenew } = useFetchRenew(
-    +window.localStorage.getItem("ssss_language_id")!
+    +window.localStorage.getItem("ssss_language_id")!,
+    perPage,
+    1
   );
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [renewTableHeader, setRenewTableHeader]: any = useState([]);

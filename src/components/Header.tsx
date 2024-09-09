@@ -201,9 +201,10 @@ export default function Header({ username }: HeaderProps) {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      console.log(data);
+      // console.log(data);
       if (data.Status == "0") {
-        setShowAllNotification(data?.Data);
+        showAllNotification.pop()
+        // setShowAllNotification(data?.Data);
         // setTotalDataCount(data?.TotalDataCount);
       } else if (data.Status == "-103") {
         toast.info(data.Message);
@@ -236,7 +237,7 @@ export default function Header({ username }: HeaderProps) {
 
   return (
     <div
-      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] dark:border-b fixed top-0 z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] border-b dark:border-b fixed top-0 z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
       style={{
         borderTopLeftRadius: "0",
         borderTopRightRadius: "0",

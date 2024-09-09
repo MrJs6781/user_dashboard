@@ -54,14 +54,29 @@ const TrafficTable: React.FC<{
                   className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]"
                   key={index + 10000}
                 >
-                  {(item as any)[headerDataName] == "true"
+                  {/* {(item as any)[headerDataName] == "true"
                     ? t("is")
                     : (item as any)[headerDataName] == "false"
                     ? t("isNot")
                     : (item as any)[headerDataName] &&
                       (item as any)[headerDataName].length > 0
                     ? (item as any)[headerDataName]
-                    : "_"}
+                    : "_"} */}
+
+                  {headerDataName &&
+                    (item as any)[headerDataName] &&
+                    (item as any)[headerDataName]}
+
+                  {headerDataName &&
+                    typeof (item as any)[headerDataName] == "boolean" &&
+                    (item as any)[headerDataName] == true &&
+                    t("is")}
+                  {headerDataName &&
+                    typeof (item as any)[headerDataName] == "boolean" &&
+                    (item as any)[headerDataName] == false &&
+                    t("isNot")}
+
+                  {headerDataName && !(item as any)[headerDataName] && "_"}
                 </TableCell>
               ))}
             </TableRow>

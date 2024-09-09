@@ -1,7 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
-export const useConnectionHistory = (languageId? : number) => {
+export const useConnectionHistory = (
+  languageId?: number,
+  RowPerPage?: number,
+  PageNo?: number
+) => {
   const fetchData = async () => {
     // گرفتن توکن از کوکی
     const getToken = Cookies.get("authToken"); // تابع getCookie را خودتان پیاده‌سازی کنید
@@ -15,7 +19,12 @@ export const useConnectionHistory = (languageId? : number) => {
       {
         method: "POST",
         headers: myHeaders,
-        body : JSON.stringify({SortIndex : 1 , languageId}),
+        body: JSON.stringify({
+          SortIndex: 1,
+          languageId,
+          RowPerPage: RowPerPage ? RowPerPage : 50,
+          PageNo: PageNo ? PageNo : 1,
+        }),
         redirect: "follow",
       }
     );
