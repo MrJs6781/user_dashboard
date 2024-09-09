@@ -54,7 +54,6 @@ function Calendar({
   React.useEffect(() => {
     const Tbody = document.querySelectorAll(".rdp-tbody");
     Tbody.forEach((item) => {
-      // console.log(item)
       item.classList.add("rtl_direction_calender");
     });
   }, []);

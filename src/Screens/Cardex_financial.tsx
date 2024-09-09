@@ -279,6 +279,7 @@ export default function CardexFinancial() {
 
   useEffect(() => {
     if (cardexFinancial) {
+      // console.log(cardexFinancial)
       if (cardexFinancial.Status == 0) {
         setTotalDataCount(cardexFinancial?.TotalDataCount);
         let arr: any = [];
@@ -292,6 +293,7 @@ export default function CardexFinancial() {
             }
           }
         );
+        // console.log(arr2)
         setCardexFinancialTableHeader(arr);
         setCardexFinancialTableHeaderName(arr2);
         setCardexTrafficFinancialData(cardexFinancial?.Data);

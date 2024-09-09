@@ -136,7 +136,7 @@ export default function EditProfile() {
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type="text"
-              placeholder={t("Username")}
+              placeholder={t("TitleName")}
               value={username}
               onChange={(e) => setUserName(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"

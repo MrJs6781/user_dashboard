@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { FaUser } from "react-icons/fa";
 import { IoLanguage } from "react-icons/io5";
@@ -18,6 +18,7 @@ export default function ForgetPassword() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const input2Ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
@@ -63,7 +64,7 @@ export default function ForgetPassword() {
       return response.data;
     },
     onSuccess: (data: LoginResponse) => {
-      console.log(data)
+      console.log(data);
       if (data.Status == "0") {
         toast.info(data.Message);
         setTimeout(() => {
@@ -125,6 +126,16 @@ export default function ForgetPassword() {
     navigate("/");
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" && input2Ref.current) {
+      setIsLoading(true);
+      event.preventDefault();
+      mutation.mutate({
+        Email: email,
+      });
+    }
+  };
+
   return (
     <div className="h-[48rem] w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex items-center justify-center">
       <div
@@ -150,9 +161,11 @@ export default function ForgetPassword() {
               type="email"
               placeholder={t("Email")}
               value={email}
+              onKeyDown={handleKeyDown}
               onChange={(e) => setEmail(e.target.value)}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
               maxLength={30}
+              ref={input2Ref}
             />
             <FaUser className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
           </span>
@@ -160,7 +173,7 @@ export default function ForgetPassword() {
         <button
           className="w-full dark:bg-white bg-purple-600 outline-none border-none rounded-[20px] cursor-pointer flex items-center justify-center h-[45px] disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleSubmit}
-          disabled={email.length > 0 || isLoading ? false : true}
+          disabled={(email.length > 0 && isLoading == false) ? false : true}
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
             {t("recoverPassword")}

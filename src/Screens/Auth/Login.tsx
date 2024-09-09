@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -24,6 +24,8 @@ export default function Login() {
   const updateLocalStorageValue = useLocalStorage<string>("UserID", "");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const input1Ref = useRef<HTMLInputElement>(null);
+  const input2Ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
@@ -136,7 +138,23 @@ export default function Login() {
 
   const goToForgetPasswordPage = () => {
     navigate("/forget_password");
-  }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Tab" && input1Ref.current) {
+      input2Ref.current?.focus();
+      event.preventDefault();
+    } else if (event.key === "Enter" && input2Ref.current) {
+      setIsLoading(true);
+      event.preventDefault();
+      mutation.mutate({
+        UserName: username,
+        Password: password,
+        DeviceID: "",
+        Info: "",
+      });
+    }
+  };
 
   return (
     <div className="h-[48rem] w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex items-center justify-center">
@@ -164,8 +182,10 @@ export default function Login() {
               placeholder={t("Username")}
               value={username}
               onChange={(e) => setUserName(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
               maxLength={30}
+              ref={input1Ref}
             />
             <FaUser className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
           </span>
@@ -175,8 +195,10 @@ export default function Login() {
               placeholder={t("Password")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
               maxLength={20}
+              ref={input2Ref}
             />
             {password.length > 0 && isShowPassword && (
               <IoEye
@@ -196,17 +218,16 @@ export default function Login() {
         <button
           className="w-full dark:bg-white bg-purple-600 outline-none border-none rounded-[20px] cursor-pointer flex items-center justify-center h-[45px] disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleSubmit}
-          disabled={
-            (username.length > 0 && password.length > 0) || isLoading
-              ? false
-              : true
-          }
+          disabled={(isLoading == false && username?.length > 0 && password?.length > 0) ? false : true}
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
             {t("login")}
           </p>
         </button>
-        <span className="w-full flex flex-col items-center justify-center gap-0" onClick={goToForgetPasswordPage}>
+        <span
+          className="w-full flex flex-col items-center justify-center gap-0"
+          onClick={goToForgetPasswordPage}
+        >
           <p className="text-[15px] pb-1 cursor-pointer font-vazirM">
             {t("forgetPassword")}
           </p>

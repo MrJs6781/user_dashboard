@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface RenewCartProps {
@@ -16,12 +15,6 @@ interface RenewCartProps {
 export default function RenewCart({ data, index, headerData }: RenewCartProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [findImageUrlIndex, setFindImageUrlIndex] = useState(0);
-
-  useEffect(() => {
-    const find = headerData?.findIndex((item) => item.name == "ImageUrl");
-    setFindImageUrlIndex(find);
-  }, []);
 
   const handleSubmit = () => {
     mutation.mutate({
@@ -85,12 +78,12 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
     >
       <img
         src={
-          (data as any)[findImageUrlIndex]
-            ? (data as any)[findImageUrlIndex]
+          (data as any)["ImageUrl"]
+            ? (data as any)["ImageUrl"]
             : "/public/product_image.jpg"
         }
         alt="Image"
-        className="w-full h-full max-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
+        className="w-full h-full max-h-[150px] min-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
       />
       <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
         {headerData?.map(({ name, title }, i) => {
@@ -102,7 +95,7 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
               >
                 {title} :{" "}
                 <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
-                  {(data as any)[name]}
+                  {(data as any)[name] ? (data as any)[name] : "_"}
                 </h5>
               </li>
             );

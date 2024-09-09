@@ -24,14 +24,14 @@ const RenewTable: React.FC<{
           <TableRow>
             <TableHead
               key={0}
-              className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
+              className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border"
             >
               {t("Row")}
             </TableHead>
             {headerData && headerData?.map((header, index) => (
               <TableHead
                 key={index + 1}
-                className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
+                className="text-[14px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border"
               >
                 {header}
               </TableHead>
@@ -42,14 +42,14 @@ const RenewTable: React.FC<{
           {data && data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell
-                className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]"
+                className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border"
                 key={index + 1000000000}
               >
                 {index + 1}
               </TableCell>
               {headerDataName && headerDataName?.map((headerDataName, index) => (
                 <TableCell
-                  className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]"
+                  className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border"
                   key={index + 10000}
                 >
                   {(item as any)[headerDataName] == "true"
