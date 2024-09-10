@@ -32,7 +32,7 @@ const RenewTable: React.FC<{
           <TableRow>
             <TableHead
               key={0}
-              className={cn("text-[16px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border" , languageID == "1" ? "" : "font-robotoB")}
+              className={cn("text-[16px] font-vazirB w-[80px] text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border" , languageID == "1" ? "" : "font-robotoB")}
             >
               {t("Row")}
             </TableHead>

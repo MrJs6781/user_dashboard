@@ -34,7 +34,7 @@ const TrafficTable: React.FC<{
           <TableRow>
             <TableHead
               key={0}
-              className="text-[15px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] border to-[#0f766e]"
+              className="text-[15px] w-[80px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] border to-[#0f766e]"
             >
               {t("Row")}
             </TableHead>
