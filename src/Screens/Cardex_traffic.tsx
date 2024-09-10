@@ -268,6 +268,7 @@ export default function CardexTraffic() {
 
   useEffect(() => {
     if (fetchedData) {
+      // console.log(fetchedData)
       if (fetchedData.Status == 0) {
         const NameData = fetchedData?.Name?.split(",");
         const TitleData = fetchedData?.Title?.split(",");
@@ -278,8 +279,9 @@ export default function CardexTraffic() {
             (item: any) => item == itemBox.title
           );
           arr.push(TitleData[findIndexInName]);
-          dashboardBoxes[i].title = TitleData[findIndexInName];
+          // dashboardBoxes[i].title = TitleData[findIndexInName];
         });
+        // console.log(arr)
         setListSliderBox(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
