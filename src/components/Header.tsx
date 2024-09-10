@@ -56,73 +56,51 @@ type ReadNotificationType = {
 const headerListData = [
   {
     id: 1,
-    // icon: (
-    //   <AiOutlineDashboard className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     link: "/dashboard",
     title: "Dashboard",
   },
   {
     id: 2,
-    // icon: (
-    //   <FaChartLine className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     link: "/products_continuation",
     title: "Renew",
   },
   {
     id: 3,
-    // icon: (
-    //   <BiSolidSave className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     link: "/trafic",
     title: "Traffic",
   },
   {
     id: 4,
-    // icon: (
-    //   <TbMobiledata className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     link: "/micro_consumption",
     title: "MicroConsumption",
   },
   {
     id: 5,
-    // icon: (
-    //   <LiaRandomSolid className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     link: "/connection_history",
     title: "ConnectionHistory",
   },
   {
     id: 6,
-    // icon: (
-    //   <FaEdit className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     link: "/error_report",
     title: "ErrorReports",
   },
   {
     id: 7,
-    // icon: (
-    //   <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     link: "/cardex_traffic",
     title: "CardexTraffic",
   },
   {
     id: 8,
-    // icon: (
-    //   <FaChartBar className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     link: "/cardex_financial",
     title: "CardexFinancial",
   },
   {
+    id: 8,
+    link: "/education",
+    title: "Education",
+  },
+  {
     id: 9,
-    // icon: (
-    //   <FaPowerOff className="text-[18px] h-[18px] w-[18px] text-[#00000090] dark:text-[#ffffff]" />
-    // ),
     title: "Exit",
   },
 ];
@@ -435,12 +413,6 @@ export default function Header({ username , titleName }: HeaderProps) {
               </DialogHeader>
             </DialogContent>
           </Dialog>
-          {/* {isShowNotification && getLanguageId == "1" && (
-            <ShowNotification className="absolute top-10 left-0" />
-          )}
-          {isShowNotification && getLanguageId == "0" && (
-            <ShowNotification className="absolute top-10 right-0" />
-          )} */}
         </span>
         <ModeToggle />
         <ProfileUser username={username} titleName={titleName} />

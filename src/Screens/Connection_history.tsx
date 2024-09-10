@@ -494,6 +494,7 @@ export default function ConnectionHistory() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
+                    style={{direction : "ltr"}}
                   >
                     {fetchedData?.Data[0]?.CreationTime
                       ? fetchedData?.Data[0]?.CreationTime
@@ -506,6 +507,7 @@ export default function ConnectionHistory() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
+                    style={{direction : "ltr"}}
                   >
                     {fetchedData?.Data[0]?.FirstLogin
                       ? fetchedData?.Data[0]?.FirstLogin
@@ -518,6 +520,7 @@ export default function ConnectionHistory() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
+                    style={{direction : "ltr"}}
                   >
                     {fetchedData?.Data[0]?.ExpirationTime
                       ? fetchedData?.Data[0]?.ExpirationTime

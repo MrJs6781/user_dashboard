@@ -7,9 +7,12 @@ import {
 import { FaAngleDown } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { FaUserTie } from "react-icons/fa";
+import { GiExitDoor } from "react-icons/gi";
 
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileUserProps {
   username: string;
@@ -64,6 +67,7 @@ const profileUserData = [
 ];
 
 export default function ProfileUser({ username, titleName }: ProfileUserProps) {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [languageID, setLanguageID] = useState("1");
 
@@ -73,10 +77,16 @@ export default function ProfileUser({ username, titleName }: ProfileUserProps) {
     }
   }, []);
 
+  const exitUserHandler = () => {
+    Cookies.remove("authToken");
+    localStorage.removeItem("UserID");
+    navigate("/");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <span className="w-[120px] cursor-pointer flex items-center justify-between px-2 border h-[28px]">
+        <span className="w-fit min-w-[120px] cursor-pointer flex items-center gap-4 justify-between px-2 border h-[28px]">
           <span className="flex items-center justify-start gap-2">
             <FaUserTie className="text-[20px] w-[14px] h-[14px]" />
             <p className="text-[14px] font-semibold">{titleName}</p>
@@ -85,6 +95,17 @@ export default function ProfileUser({ username, titleName }: ProfileUserProps) {
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px] flex flex-col items-start gap-2 px-4">
+        <span
+          className="w-full px-2 pb-4 pt-2 flex items-center gap-2 border-b"
+          style={
+            languageID == "1" ? { direction: "rtl" } : { direction: "ltr" }
+          }
+        >
+          <FaUserTie className="w-[24px] h-[24px]" />
+          <p className="text-[14px] font-semibold font-vazirB">
+            {t("Username")} : {username}
+          </p>
+        </span>
         {profileUserData.map((item) => (
           <DropdownMenuItem
             key={item.id}
@@ -92,24 +113,21 @@ export default function ProfileUser({ username, titleName }: ProfileUserProps) {
           >
             <Link
               to={item.link}
-              className="flex items-center justify-between w-full"
+              className="flex items-center justify-end w-full"
             >
-              {item.icon}
               <p className="font-vazirB text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
                 {t(item.title)}
               </p>
+              {item.icon}
             </Link>
           </DropdownMenuItem>
         ))}
         <span
-          className="w-full px-2 pb-2 pt-2"
-          style={
-            languageID == "1" ? { direction: "rtl" } : { direction: "ltr" }
-          }
+          className="w-full px-2 pb-4 pt-2 flex items-center justify-end gap-2 border-t cursor-pointer"
+          onClick={exitUserHandler}
         >
-          <p className="text-[14px] font-semibold font-vazirB">
-            {t("Username")} : {username}
-          </p>
+          <p className="text-[14px] font-semibold font-vazirB">{t("Exit")}</p>
+          <GiExitDoor className="w-[24px] h-[24px]" />
         </span>
       </DropdownMenuContent>
     </DropdownMenu>

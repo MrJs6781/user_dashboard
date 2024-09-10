@@ -1,20 +1,13 @@
-import ConsumeTable from "@/components/ConsumeTable";
 import Header from "@/components/Header";
-import LottiePlayer from "@/components/Loading";
-import { useConsumeFetch } from "@/Hooks/useConsumeFetch";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
+import { useFetchErrorReports } from "@/Hooks/useFetchErrorReport";
 import { cn } from "@/lib/utils";
+import { ErrorReportsWithQuery } from "@/types/ErrorReports";
 import { useMutation } from "@tanstack/react-query";
-import dayjs from "dayjs";
 import Cookies from "js-cookie";
-import { ChangeEvent, useEffect, useState } from "react";
-import { DateRange } from "react-day-picker";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DatePickerWithRange } from "@/components/DatePickerWithJalaliRange";
-import { Button } from "@/components/ui/button";
-import { ConsumeFetchData } from "@/types/Consume";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -23,7 +16,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
-import PaginationComponent from "@/components/PaginationComponent";
 
 const dashboardBoxes = [
   {
@@ -235,32 +227,12 @@ const dashboardBoxes = [
   },
 ];
 
-export default function MicroConsumption() {
+export default function Education() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [perPage, setPerPage] = useState(50);
-  const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData();
-  const { data: consumeFetch, isLoading: consumeFetchLoading } =
-    useConsumeFetch(
-      +window.localStorage.getItem("ssss_language_id")!,
-      perPage,
-      1
-    );
-
-  const [consumeFetchData, setConsumeFetchData] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [date, setDate] = useState<DateRange | undefined>();
-  const [justActiveState, setJustActiveState] = useState(true);
-  const [isShowLoading, setIsShowLoading] = useState(false);
-  const [consumeTableHeader, setConsumeTableHeader] = useState([]);
-  const [consumeTableHeaderName, setConsumeTableHeaderName] = useState([]);
-  const [TotalDataCount, setTotalDataCount] = useState(0);
-
-  const [TotalPageCount, setTotalPageCount] = useState(0);
-  const [activePage, setActivePage] = useState(1);
-  const [currentItems, setCurrentItems] = useState([]);
   const [languageID, setLanguageID] = useState("1");
+
+  const { data: fetchedData } = useFetchDashboardData();
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -281,101 +253,6 @@ export default function MicroConsumption() {
       }
     }
   }, [fetchedData]);
-
-  useEffect(() => {
-    if (consumeFetch) {
-      if (consumeFetch.Status == 0) {
-        setCurrentItems(consumeFetch?.Data);
-        setTotalDataCount(consumeFetch?.TotalDataCount);
-        setTotalPageCount(consumeFetch?.TotalPageCount);
-        let arr: any = [];
-        let arr2: any = [];
-
-        consumeFetch?.Title.split(",")?.map((data: string, index: number) => {
-          if (data.length > 0) {
-            arr2.push(consumeFetch?.Name.split(",")[index]);
-            arr.push(data);
-          }
-        });
-        setConsumeTableHeader(arr);
-        setConsumeTableHeaderName(arr2);
-        setConsumeFetchData(consumeFetch?.Data);
-      } else {
-        toast.error(consumeFetch.Message);
-      }
-    }
-  }, [consumeFetch]);
-
-  const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
-
-  const searchProductsList = () => {
-    setIsShowLoading(true);
-    if (date != undefined) {
-      const getFromDate = dayjs(date?.from)
-        .calendar("jalali")
-        .format("YYYY/MM/DD");
-      const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
-      mutation.mutate({
-        FromDate: getFromDate,
-        ToDate: getToDate,
-        Query: searchValue,
-        JustActive: justActiveState,
-        Operand: "%",
-        PageNo: 0,
-        RowPerPage: 0,
-        SortIndex: 0,
-      });
-    } else {
-      mutation.mutate({
-        Query: searchValue,
-        JustActive: justActiveState,
-        Operand: "%",
-        PageNo: 0,
-        RowPerPage: 0,
-        SortIndex: 0,
-      });
-    }
-  };
-
-  const mutation = useMutation({
-    mutationKey: ["consumeWithQuery"],
-    mutationFn: async (MutateData: ConsumeFetchData) => {
-      const getToken = Cookies.get("authToken");
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${getToken}`);
-
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_WEB_SERVICE_DOMAIN
-        }User/Consume/Fetch?Type=User`,
-        {
-          method: "POST",
-          headers: myHeaders,
-          redirect: "follow",
-          body: JSON.stringify(MutateData),
-        }
-      );
-      const ResponseData = response.json();
-      return ResponseData;
-    },
-    onSuccess: (data: any) => {
-      if (data.Status == "0") {
-        setConsumeFetchData(data?.Data);
-        setTotalDataCount(data?.TotalDataCount);
-      } else {
-        toast.error(data.Message);
-      }
-      setIsShowLoading(false);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      setIsShowLoading(false);
-    },
-  });
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -574,98 +451,6 @@ export default function MicroConsumption() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
-        <div className="w-full flex items-center justify-start gap-6 flex-wrap">
-          <span className="w-fit flex items-center justify-start gap-2">
-            <Checkbox
-              checked={justActiveState}
-              onCheckedChange={() => {
-                setJustActiveState(!justActiveState);
-              }}
-              id="terms1"
-            />
-            <label
-              htmlFor="terms1"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              {t("DisplayOnlyActive")}
-            </label>
-          </span>
-          <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
-            <input
-              type="text"
-              placeholder={t("whatAreYouLookingFor")}
-              value={searchValue}
-              onChange={(e) => changeSearchHandler(e)}
-              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-search cursor-pointer"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </span>
-          <DatePickerWithRange date={date} setDate={setDate} />
-          <Button
-            className="bg-[#a855f7] dark:bg-[#1e293b] text-white md:text-[17px]"
-            onClick={searchProductsList}
-            size="lg"
-          >
-            {t("Search")}
-          </Button>
-        </div>
-        {fetchedDataLoading || consumeFetchLoading || isShowLoading ? (
-          <LottiePlayer />
-        ) : (
-          <>
-            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-              <>
-                {consumeFetchData.length > 0 && (
-                  <>
-                    <ConsumeTable
-                      data={currentItems}
-                      headerData={consumeTableHeader}
-                      headerDataName={consumeTableHeaderName}
-                    />
-                    <PaginationComponent
-                      perPage={perPage}
-                      setCurrentItems={setCurrentItems}
-                      setPerPage={setPerPage}
-                      TotalDataCount={TotalDataCount}
-                      TotalPageCount={TotalPageCount}
-                      setIsShowLoading={setIsShowLoading}
-                      setTotalPageCount={setTotalPageCount}
-                      activePage={activePage}
-                      setActivePage={setActivePage}
-                      domainInput="User/Consume/Fetch?Type=User"
-                    />
-                  </>
-                )}
-              </>
-            </div>
-            {consumeFetchData?.length == 0 &&
-              fetchedDataLoading == false &&
-              consumeFetchLoading == false &&
-              isShowLoading == false && (
-                <div className="w-full h-[50vh] flex items-center justify-center">
-                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-                    {t("CantFindData")}
-                  </h5>
-                </div>
-              )}
-          </>
-        )}
-      </div>
     </div>
   );
 }

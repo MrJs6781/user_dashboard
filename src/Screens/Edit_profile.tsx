@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaPhoneAlt, FaUser } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -160,7 +160,7 @@ export default function EditProfile() {
             />
             <FaUserTie className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
           </span>
-          <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
+          {/* <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type="text"
               placeholder={t("Username")}
@@ -175,7 +175,7 @@ export default function EditProfile() {
               maxLength={30}
             />
             <FaUser className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
-          </span>
+          </span> */}
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type="email"

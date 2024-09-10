@@ -247,7 +247,7 @@ export default function Dashboard() {
   const [languageID, setLanguageID] = useState("1");
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData();
+    useFetchDashboardData(1);
   const { data: consumeData, isLoading: consumeDataLoading } =
     useFetchDashboardConsume(1);
 
@@ -260,6 +260,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
+        console.log(fetchedData);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -443,9 +444,10 @@ export default function Dashboard() {
                       {item.id == 5 && (
                         <small
                           className={cn(
-                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] tracking-wider",
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                             languageID == "1" ? "" : "font-robotoB"
                           )}
+                          style={{ direction: "ltr" }}
                         >
                           {fetchedData?.Data[0]?.CreationTime
                             ? fetchedData?.Data[0]?.CreationTime
@@ -455,9 +457,10 @@ export default function Dashboard() {
                       {item.id == 6 && (
                         <small
                           className={cn(
-                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] tracking-wider",
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                             languageID == "1" ? "" : "font-robotoB"
                           )}
+                          style={{ direction: "ltr" }}
                         >
                           {fetchedData?.Data[0]?.FirstLogin
                             ? fetchedData?.Data[0]?.FirstLogin
@@ -470,6 +473,7 @@ export default function Dashboard() {
                             "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                             languageID == "1" ? "" : "font-robotoB"
                           )}
+                          style={{ direction: "ltr" }}
                         >
                           {fetchedData?.Data[0]?.ExpirationTime
                             ? fetchedData?.Data[0]?.ExpirationTime
@@ -660,6 +664,7 @@ export default function Dashboard() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
+                    style={{ direction: "ltr" }}
                   >
                     {fetchedData?.Data[0]?.CreationTime
                       ? fetchedData?.Data[0]?.CreationTime
@@ -672,6 +677,7 @@ export default function Dashboard() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
+                    style={{ direction: "ltr" }}
                   >
                     {fetchedData?.Data[0]?.FirstLogin
                       ? fetchedData?.Data[0]?.FirstLogin
@@ -684,6 +690,7 @@ export default function Dashboard() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
+                    style={{ direction: "ltr" }}
                   >
                     {fetchedData?.Data[0]?.ExpirationTime
                       ? fetchedData?.Data[0]?.ExpirationTime

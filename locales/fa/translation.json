@@ -64,5 +64,6 @@
   "forgetPassword": "فراموشی رمز عبور",
   "Email": "ایمیل",
   "backToLoginPage": "بازگشت به صفحه ورود",
-  "recoverPassword": "بازیابی رمز عبور"
+  "recoverPassword": "بازیابی رمز عبور",
+  "Education" : "آموزش"
 }

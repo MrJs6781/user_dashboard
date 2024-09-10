@@ -12,6 +12,7 @@ import ErrorReport from "./Screens/Error_report";
 import CardexTraffic from "./Screens/Cardex_traffic";
 import CardexFinancial from "./Screens/Cardex_financial";
 import ForgetPassword from "./Screens/Auth/ForgetPassword";
+import Education from "./Screens/Education";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/error_report" element={<ErrorReport />} />
         <Route path="/cardex_traffic" element={<CardexTraffic />} />
         <Route path="/cardex_financial" element={<CardexFinancial />} />
+        <Route path="/education" element={<Education />} />
       </Routes>
     </BrowserRouter>
   );
