@@ -260,6 +260,7 @@ export default function CardexFinancial() {
   const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
   const [languageID, setLanguageID] = useState("1");
+  const [listSliderBox, setListSliderBox] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
@@ -275,6 +276,18 @@ export default function CardexFinancial() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
+        const NameData = fetchedData?.Name?.split(",");
+        const TitleData = fetchedData?.Title?.split(",");
+        let arr: any = [];
+
+        dashboardBoxes.map((itemBox, i) => {
+          const findIndexInName = NameData?.findIndex(
+            (item: any) => item == itemBox.title
+          );
+          arr.push(TitleData[findIndexInName]);
+          dashboardBoxes[i].title = TitleData[findIndexInName];
+        });
+        setListSliderBox(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -468,7 +481,7 @@ export default function CardexFinancial() {
               {item.icon}
               <span className="flex flex-col items-start gap-1">
                 <p className="font-vazirB text-[12px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                  {t(item.title)} :{" "}
+                  {listSliderBox[index]} :{" "}
                 </p>
                 {item.id == 1 && (
                   <small
@@ -511,7 +524,7 @@ export default function CardexFinancial() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
-                    style={{direction : "ltr"}}
+                    style={{ direction: "ltr" }}
                   >
                     {fetchedData?.Data[0]?.CreationTime
                       ? fetchedData?.Data[0]?.CreationTime
@@ -524,7 +537,7 @@ export default function CardexFinancial() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
-                    style={{direction : "ltr"}}
+                    style={{ direction: "ltr" }}
                   >
                     {fetchedData?.Data[0]?.FirstLogin
                       ? fetchedData?.Data[0]?.FirstLogin
@@ -537,7 +550,7 @@ export default function CardexFinancial() {
                       "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
                       languageID == "1" ? "" : "font-robotoB"
                     )}
-                    style={{direction : "ltr"}}
+                    style={{ direction: "ltr" }}
                   >
                     {fetchedData?.Data[0]?.ExpirationTime
                       ? fetchedData?.Data[0]?.ExpirationTime

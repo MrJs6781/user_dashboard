@@ -90,7 +90,7 @@ module.exports = {
       },
       screens : {
         'mini' : "450px",
-        "lg_2" : "1200px"
+        "lg_2" : "1300px"
       }
     },
   },

@@ -40,7 +40,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "#a3e635",
-    title: "NumberOfDaysLeft",
+    title: "RemainedTime",
   },
   {
     id: 2,
@@ -63,7 +63,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "AmountOfRemainingVolume",
+    title: "RemainedTraffic",
   },
   {
     id: 3,
@@ -86,29 +86,8 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "WalletBalance",
+    title: "WalletRemained",
   },
-  // {
-  //   id: 4,
-  //   icon: (
-  //     <svg
-  //       xmlns="http://www.w3.org/2000/svg"
-  //       width="24"
-  //       height="24"
-  //       viewBox="0 0 24 24"
-  //       fill="none"
-  //       stroke="currentColor"
-  //       strokeWidth="2"
-  //       strokeLinecap="round"
-  //       strokeLinejoin="round"
-  //       className="lucide lucide-user"
-  //     >
-  //       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-  //       <circle cx="12" cy="7" r="4" />
-  //     </svg>
-  //   ),
-  //   title: "تعداد کاربران زیر مجموعه",
-  // },
   {
     id: 5,
     icon: (
@@ -131,7 +110,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "dateOfManufacture",
+    title: "CreationTime",
   },
   {
     id: 6,
@@ -152,7 +131,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "FirstConnectionTime",
+    title: "FirstLogin",
   },
   {
     id: 7,
@@ -174,7 +153,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "expirationDate",
+    title: "ExpirePeriodDesc",
   },
   {
     id: 8,
@@ -198,33 +177,33 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "OnlineNumberWithThisUser",
+    title: "OnlineCount",
   },
-  {
-    id: 9,
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="lucide lucide-truck"
-      >
-        <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
-        <path d="M15 18H9" />
-        <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
-        <circle cx="17" cy="18" r="2" />
-        <circle cx="7" cy="18" r="2" />
-      </svg>
-    ),
-    bg: "",
-    title: "VolumeUser",
-  },
+  // {
+  //   id: 9,
+  //   icon: (
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       width="24"
+  //       height="24"
+  //       viewBox="0 0 24 24"
+  //       fill="none"
+  //       stroke="currentColor"
+  //       strokeWidth="2"
+  //       strokeLinecap="round"
+  //       strokeLinejoin="round"
+  //       className="lucide lucide-truck"
+  //     >
+  //       <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+  //       <path d="M15 18H9" />
+  //       <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+  //       <circle cx="17" cy="18" r="2" />
+  //       <circle cx="7" cy="18" r="2" />
+  //     </svg>
+  //   ),
+  //   bg: "",
+  //   title: "VolumeUser",
+  // },
 ];
 
 interface DataItem {
@@ -245,9 +224,10 @@ export default function Dashboard() {
   const [uploadData, setUploadData] = useState<number[]>([]);
   const [totalData, setTotalData] = useState<number[]>([]);
   const [languageID, setLanguageID] = useState("1");
+  const [listSliderBox, setListSliderBox] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(1);
+    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
   const { data: consumeData, isLoading: consumeDataLoading } =
     useFetchDashboardConsume(1);
 
@@ -260,7 +240,18 @@ export default function Dashboard() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
-        console.log(fetchedData);
+        const NameData = fetchedData?.Name?.split(",");
+        const TitleData = fetchedData?.Title?.split(",");
+        let arr: any = [];
+
+        dashboardBoxes.map((itemBox, i) => {
+          const findIndexInName = NameData?.findIndex(
+            (item: any) => item == itemBox.title
+          );
+          arr.push(TitleData[findIndexInName]);
+          dashboardBoxes[i].title = TitleData[findIndexInName];
+        });
+        setListSliderBox(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -404,7 +395,7 @@ export default function Dashboard() {
                     {item.icon}
                     <span className="flex flex-col items-start gap-1">
                       <p className="font-vazirB text-[12px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                        {t(item.title)} :{" "}
+                        {listSliderBox[index]} :{" "}
                       </p>
                       {item.id == 1 && (
                         <small
@@ -621,7 +612,7 @@ export default function Dashboard() {
               {item.icon}
               <span className="flex flex-col items-start gap-1">
                 <p className="font-vazirB text-[12px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                  {t(item.title)} :{" "}
+                  {listSliderBox[index]} :{" "}
                 </p>
                 {item.id == 1 && (
                   <small

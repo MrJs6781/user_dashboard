@@ -246,12 +246,13 @@ export default function Products_continuation() {
   const [isActiveService, setIsActiveService] = useState("Data");
   const [date, setDate] = useState<DateRange | undefined>();
   const [userRenewDataTable, setUserRenewDataTable] = useState([]);
+  const [listSliderBox, setListSliderBox] = useState([]);
 
   const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
 
   const { isLoading: fetchedDataLoading, data: fetchedData } =
-    useFetchDashboardData();
+    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
   const { isLoading: userProductsLoading, data: userProducts } =
     useFetchUserProducts({
       languageId: +window.localStorage.getItem("ssss_language_id")!,
@@ -280,6 +281,18 @@ export default function Products_continuation() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
+        const NameData = fetchedData?.Name?.split(",");
+        const TitleData = fetchedData?.Title?.split(",");
+        let arr: any = [];
+
+        dashboardBoxes.map((itemBox, i) => {
+          const findIndexInName = NameData?.findIndex(
+            (item: any) => item == itemBox.title
+          );
+          arr.push(TitleData[findIndexInName]);
+          dashboardBoxes[i].title = TitleData[findIndexInName];
+        });
+        setListSliderBox(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -563,7 +576,7 @@ export default function Products_continuation() {
               {item.icon}
               <span className="flex flex-col items-start gap-1">
                 <p className="font-vazirB text-[12px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
-                  {t(item.title)} :{" "}
+                  {listSliderBox[index]} :{" "}
                 </p>
                 {item.id == 1 && (
                   <small

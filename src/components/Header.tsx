@@ -95,12 +95,12 @@ const headerListData = [
     title: "CardexFinancial",
   },
   {
-    id: 8,
+    id: 9,
     link: "/education",
     title: "Education",
   },
   {
-    id: 9,
+    id: 10,
     title: "Exit",
   },
 ];
