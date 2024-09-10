@@ -21,9 +21,16 @@ export default function EditProfile() {
   const [email, setUserEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [languageID, setLanguageID] = useState("1");
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   useEffect(() => {
     if (fetchedData) {
@@ -123,10 +130,7 @@ export default function EditProfile() {
   }
 
   return (
-    <div
-      className="w-full h-screen overflow-auto flex items-center justify-center"
-       
-    >
+    <div className="w-full h-screen overflow-auto flex items-center justify-center">
       <Header username={fetchedData?.Data[0]?.UserName} />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
@@ -134,7 +138,6 @@ export default function EditProfile() {
       >
         <form
           action=""
-           
           className="w-full max-w-[380px] flex flex-col items-start gap-4 mt-4"
         >
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
@@ -178,7 +181,6 @@ export default function EditProfile() {
               onChange={mobileNumberChangeHandler}
               className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
               maxLength={11}
-               
             />
             <FaPhoneAlt className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
           </span>

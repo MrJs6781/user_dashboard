@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import i18n from "./../../../i18n";
 import { useTranslation } from "react-i18next";
 import { ForgetPasswordType } from "@/types/ForgetPassword";
+import { cn } from "@/lib/utils";
 
 export default function ForgetPassword() {
   const { t } = useTranslation();
@@ -19,10 +20,12 @@ export default function ForgetPassword() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const input2Ref = useRef<HTMLInputElement>(null);
+  const [languageID, setLanguageID] = useState("1");
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
       const getLang = window.localStorage.getItem("ssss_language")!;
+      setLanguageID(getLang);
       if (getLang == "en") {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "ltr");
@@ -163,7 +166,7 @@ export default function ForgetPassword() {
               value={email}
               onKeyDown={handleKeyDown}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
+              className={cn("w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]" , languageID == "1" ? "" : "font-robotoM")}
               maxLength={30}
               ref={input2Ref}
             />
@@ -173,7 +176,7 @@ export default function ForgetPassword() {
         <button
           className="w-full dark:bg-white bg-purple-600 outline-none border-none rounded-[20px] cursor-pointer flex items-center justify-center h-[45px] disabled:opacity-60 disabled:cursor-not-allowed"
           onClick={handleSubmit}
-          disabled={(email.length > 0 && isLoading == false) ? false : true}
+          disabled={email.length > 0 && isLoading == false ? false : true}
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
             {t("recoverPassword")}
@@ -188,7 +191,12 @@ export default function ForgetPassword() {
           </p>
           <small className="w-[90px] h-[2px] bg-white"></small>
         </span>
-        <p className="mt-4 text-center text-[14px] font-vazirB">
+        <p
+          className={cn(
+            "mt-4 text-center text-[14px] font-vazirB",
+            languageID == "1" ? "" : "font-robotoB"
+          )}
+        >
           {t("V")} : 1.01
         </p>
       </div>

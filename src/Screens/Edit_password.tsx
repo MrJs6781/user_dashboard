@@ -19,6 +19,7 @@ export default function EditPassword() {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowNewPassword, setIsShowNewPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [languageID, setLanguageID] = useState("1");
 
   const hidePasswordHandler = () => {
     setIsShowPassword(false);
@@ -38,6 +39,12 @@ export default function EditPassword() {
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   useEffect(() => {
     if (fetchedData) {
@@ -73,7 +80,9 @@ export default function EditPassword() {
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/ChangePassword?Type=User`,
+        `${
+          import.meta.env.VITE_WEB_SERVICE_DOMAIN
+        }User/ChangePassword?Type=User`,
         {
           method: "POST",
           headers: myHeaders,
@@ -93,7 +102,7 @@ export default function EditPassword() {
         localStorage.removeItem("UserID");
         setTimeout(() => {
           // window.location.reload();
-          navigate("/"); 
+          navigate("/");
         }, 1000);
       } else if (data.Status == "-103") {
         toast.info(data.Message);

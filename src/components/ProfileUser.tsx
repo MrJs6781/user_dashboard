@@ -9,9 +9,11 @@ import { Link } from "react-router-dom";
 import { FaUserTie } from "react-icons/fa";
 
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 interface ProfileUserProps {
   username: string;
+  titleName: string;
 }
 
 const profileUserData = [
@@ -61,8 +63,15 @@ const profileUserData = [
   },
 ];
 
-export default function ProfileUser({ username }: ProfileUserProps) {
+export default function ProfileUser({ username, titleName }: ProfileUserProps) {
   const { t } = useTranslation();
+  const [languageID, setLanguageID] = useState("1");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   return (
     <DropdownMenu>
@@ -70,7 +79,7 @@ export default function ProfileUser({ username }: ProfileUserProps) {
         <span className="w-[120px] cursor-pointer flex items-center justify-between px-2 border h-[28px]">
           <span className="flex items-center justify-start gap-2">
             <FaUserTie className="text-[20px] w-[14px] h-[14px]" />
-            <p className="text-[14px] font-semibold">{username}</p>
+            <p className="text-[14px] font-semibold">{titleName}</p>
           </span>
           <FaAngleDown className="text-[10px]" />
         </span>
@@ -92,6 +101,16 @@ export default function ProfileUser({ username }: ProfileUserProps) {
             </Link>
           </DropdownMenuItem>
         ))}
+        <span
+          className="w-full px-2 pb-2 pt-2"
+          style={
+            languageID == "1" ? { direction: "rtl" } : { direction: "ltr" }
+          }
+        >
+          <p className="text-[14px] font-semibold font-vazirB">
+            {t("Username")} : {username}
+          </p>
+        </span>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -33,6 +33,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 
 interface HeaderProps {
   username: string;
+  titleName: string;
 }
 
 type headerListType = {
@@ -126,7 +127,7 @@ const headerListData = [
   },
 ];
 
-export default function Header({ username }: HeaderProps) {
+export default function Header({ username , titleName }: HeaderProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -440,7 +441,7 @@ export default function Header({ username }: HeaderProps) {
           )} */}
         </span>
         <ModeToggle />
-        <ProfileUser username={username} />
+        <ProfileUser username={username} titleName={titleName} />
       </span>
     </div>
   );

@@ -244,12 +244,18 @@ export default function Dashboard() {
   const [downloadData, setDownloadData] = useState<number[]>([]);
   const [uploadData, setUploadData] = useState<number[]>([]);
   const [totalData, setTotalData] = useState<number[]>([]);
-  // const [sliderList, setSliderList] = useState();
+  const [languageID, setLanguageID] = useState("1");
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData();
   const { data: consumeData, isLoading: consumeDataLoading } =
     useFetchDashboardConsume(1);
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   useEffect(() => {
     if (fetchedData) {
@@ -305,7 +311,10 @@ export default function Dashboard() {
   if (fetchedDataLoading || consumeDataLoading) {
     return (
       <div className="w-full h-screen overflow-auto flex flex-col items-start">
-        <Header username={fetchedData?.Data[0]?.UserName} />
+        <Header
+          username={fetchedData?.Data[0]?.UserName}
+          titleName={fetchedData?.Data[0]?.Title}
+        />
         {dashboardBoxes?.length > 0 && totalData?.length > 0 ? (
           <>
             <Swiper
@@ -313,51 +322,51 @@ export default function Dashboard() {
               spaceBetween={10}
               breakpoints={{
                 1800: {
-                  slidesPerView: 7,
+                  slidesPerView: 6.2,
                   spaceBetween: 15,
                 },
                 1700: {
-                  slidesPerView: 6.7,
+                  slidesPerView: 5.7,
                   spaceBetween: 15,
                 },
                 1600: {
-                  slidesPerView: 6.3,
+                  slidesPerView: 5.5,
                   spaceBetween: 15,
                 },
                 1500: {
-                  slidesPerView: 5.8,
+                  slidesPerView: 5.1,
                   spaceBetween: 15,
                 },
                 1400: {
-                  slidesPerView: 5.4,
+                  slidesPerView: 4.7,
                   spaceBetween: 15,
                 },
                 1300: {
-                  slidesPerView: 5,
+                  slidesPerView: 4.3,
                   spaceBetween: 15,
                 },
                 1200: {
-                  slidesPerView: 4.6,
+                  slidesPerView: 3.9,
                   spaceBetween: 15,
                 },
                 1100: {
-                  slidesPerView: 4.2,
-                  spaceBetween: 15,
-                },
-                920: {
                   slidesPerView: 3.5,
                   spaceBetween: 15,
                 },
+                920: {
+                  slidesPerView: 3.1,
+                  spaceBetween: 15,
+                },
                 740: {
-                  slidesPerView: 2.8,
+                  slidesPerView: 2.5,
                   spaceBetween: 15,
                 },
                 565: {
-                  slidesPerView: 2.4,
+                  slidesPerView: 2.1,
                   spaceBetween: 15,
                 },
                 425: {
-                  slidesPerView: 1.8,
+                  slidesPerView: 1.5,
                   spaceBetween: 15,
                 },
                 0: {
@@ -365,7 +374,6 @@ export default function Dashboard() {
                   spaceBetween: 15,
                 },
               }}
-              navigation
               pagination={{ clickable: true }}
               className="w-full mt-12 px-6 bg-transparent h-[160px]"
             >
@@ -394,59 +402,99 @@ export default function Dashboard() {
                   >
                     {item.icon}
                     <span className="flex flex-col items-start gap-1">
-                      <p className="font-vazirB text-[12] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
+                      <p className="font-vazirB text-[12px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]">
                         {t(item.title)} :{" "}
                       </p>
                       {item.id == 1 && (
-                        <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                        <small
+                          className={cn(
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                        >
                           {fetchedData?.Data[0]?.RemainedTime} {t("Day")}
                         </small>
                       )}
                       {item.id == 2 && (
-                        <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                        <small
+                          className={cn(
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                        >
                           {fetchedData?.Data[0]?.RemainedTraffic}
                         </small>
                       )}
                       {item.id == 3 && (
-                        <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                        <small
+                          className={cn(
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                        >
                           {fetchedData?.Data[0]?.WalletRemained}
                         </small>
                       )}
                       {/* {item.id == 4 && (
-                <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                <small className={cn("font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]" , languageID == "1" ? "" : "")}font-robotoB>
                   {fetchedData?.Data[0]?.RemainedTime}
                 </small>
               )} */}
                       {item.id == 5 && (
-                        <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                        <small
+                          className={cn(
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                        >
                           {fetchedData?.Data[0]?.CreationTime
                             ? fetchedData?.Data[0]?.CreationTime
                             : ""}
                         </small>
                       )}
                       {item.id == 6 && (
-                        <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                        <small
+                          className={cn(
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                        >
                           {fetchedData?.Data[0]?.FirstLogin
                             ? fetchedData?.Data[0]?.FirstLogin
                             : "_"}
                         </small>
                       )}
                       {item.id == 7 && (
-                        <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                        <small
+                          className={cn(
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                        >
                           {fetchedData?.Data[0]?.ExpirationTime
                             ? fetchedData?.Data[0]?.ExpirationTime
                             : "_"}
                         </small>
                       )}
                       {item.id == 8 && (
-                        <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                        <small
+                          className={cn(
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                        >
                           {fetchedData?.Data[0]?.OnlineCount
                             ? fetchedData?.Data[0]?.OnlineCount
-                            : "_"}
+                            : 0}
                         </small>
                       )}
                       {item.id == 9 && (
-                        <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                        <small
+                          className={cn(
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                        >
                           {fetchedData?.Data[0]?.IsTrafficBase == true
                             ? t("is")
                             : t("isNot")}
@@ -479,57 +527,60 @@ export default function Dashboard() {
 
   return (
     <div className="w-full h-screen overflow-auto flex flex-col items-start">
-      <Header username={fetchedData?.Data[0]?.UserName} />
+      <Header
+        username={fetchedData?.Data[0]?.UserName}
+        titleName={fetchedData?.Data[0]?.Title}
+      />
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={10}
         breakpoints={{
           1800: {
-            slidesPerView: 7,
+            slidesPerView: 6.2,
             spaceBetween: 15,
           },
           1700: {
-            slidesPerView: 6.7,
+            slidesPerView: 5.7,
             spaceBetween: 15,
           },
           1600: {
-            slidesPerView: 6.3,
+            slidesPerView: 5.5,
             spaceBetween: 15,
           },
           1500: {
-            slidesPerView: 5.8,
+            slidesPerView: 5.1,
             spaceBetween: 15,
           },
           1400: {
-            slidesPerView: 5.4,
+            slidesPerView: 4.7,
             spaceBetween: 15,
           },
           1300: {
-            slidesPerView: 5,
+            slidesPerView: 4.3,
             spaceBetween: 15,
           },
           1200: {
-            slidesPerView: 4.6,
+            slidesPerView: 3.9,
             spaceBetween: 15,
           },
           1100: {
-            slidesPerView: 4.2,
-            spaceBetween: 15,
-          },
-          920: {
             slidesPerView: 3.5,
             spaceBetween: 15,
           },
+          920: {
+            slidesPerView: 3.1,
+            spaceBetween: 15,
+          },
           740: {
-            slidesPerView: 2.8,
+            slidesPerView: 2.5,
             spaceBetween: 15,
           },
           565: {
-            slidesPerView: 2.4,
+            slidesPerView: 2.1,
             spaceBetween: 15,
           },
           425: {
-            slidesPerView: 1.8,
+            slidesPerView: 1.5,
             spaceBetween: 15,
           },
           0: {
@@ -569,55 +620,95 @@ export default function Dashboard() {
                   {t(item.title)} :{" "}
                 </p>
                 {item.id == 1 && (
-                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small
+                    className={cn(
+                      "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
                     {fetchedData?.Data[0]?.RemainedTime} {t("Day")}
                   </small>
                 )}
                 {item.id == 2 && (
-                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small
+                    className={cn(
+                      "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
                     {fetchedData?.Data[0]?.RemainedTraffic}
                   </small>
                 )}
                 {item.id == 3 && (
-                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small
+                    className={cn(
+                      "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
                     {fetchedData?.Data[0]?.WalletRemained}
                   </small>
                 )}
                 {/* {item.id == 4 && (
-                <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                <small className={cn("font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]" , languageID == "1" ? "" : "")}font-robotoB>
                   {fetchedData?.Data[0]?.RemainedTime}
                 </small>
               )} */}
                 {item.id == 5 && (
-                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small
+                    className={cn(
+                      "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
                     {fetchedData?.Data[0]?.CreationTime
                       ? fetchedData?.Data[0]?.CreationTime
                       : ""}
                   </small>
                 )}
                 {item.id == 6 && (
-                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small
+                    className={cn(
+                      "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
                     {fetchedData?.Data[0]?.FirstLogin
                       ? fetchedData?.Data[0]?.FirstLogin
                       : "_"}
                   </small>
                 )}
                 {item.id == 7 && (
-                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small
+                    className={cn(
+                      "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
                     {fetchedData?.Data[0]?.ExpirationTime
                       ? fetchedData?.Data[0]?.ExpirationTime
                       : "_"}
                   </small>
                 )}
                 {item.id == 8 && (
-                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small
+                    className={cn(
+                      "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
                     {fetchedData?.Data[0]?.OnlineCount
                       ? fetchedData?.Data[0]?.OnlineCount
-                      : "_"}
+                      : 0}
                   </small>
                 )}
                 {item.id == 9 && (
-                  <small className="font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                  <small
+                    className={cn(
+                      "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
                     {fetchedData?.Data[0]?.IsTrafficBase == true
                       ? t("is")
                       : t("isNot")}

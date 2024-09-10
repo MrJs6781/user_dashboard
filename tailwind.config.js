@@ -84,9 +84,9 @@ module.exports = {
         robotoB: "roboto_b",
         robotoM: "roboto_m",
         robotoS: "roboto_l",
-        vazirB: "yekan_b",
-        vazirM: "yekan_m",
-        vazirS: "yekan_l",
+        vazirB: "vazir_b",
+        vazirM: "vazir_m",
+        vazirS: "vazir_l",
       },
       screens : {
         'mini' : "450px",
