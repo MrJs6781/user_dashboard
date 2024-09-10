@@ -1,6 +1,6 @@
 // src/components/ComboChart.tsx
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -36,6 +36,13 @@ interface ComboChartProps {
 
 const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
   const { t } = useTranslation();
+  const [languageID, setLanguageID] = useState("1");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   const chartData = {
     labels,
@@ -76,7 +83,7 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
         labels: {
           font: {
             size: 14,
-            family: "vazir_b, sans-serif", // Apply font family
+            family : languageID == "1" ? "vazir_b" : "roboto_b"
           },
         },
       },
@@ -85,7 +92,7 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
         text: t("YourConsumptionChart"),
         font: {
           size: 16,
-          family: "vazir_b, sans-serif", // Apply font family
+          family : languageID == "1" ? "vazir_b" : "roboto_b"
         },
       },
       tooltip: {
@@ -104,14 +111,14 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
         beginAtZero: true,
         ticks: {
           font: {
-            family: "vazir_b, sans-serif", // Apply font family
+            family : languageID == "1" ? "vazir_b" : "roboto_b"
           },
         },
       },
       x: {
         ticks: {
           font: {
-            family: "vazir_b, sans-serif", // Apply font family
+            family : languageID == "1" ? "vazir_b" : "roboto_b"
           },
         },
       },

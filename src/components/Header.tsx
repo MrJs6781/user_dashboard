@@ -137,10 +137,12 @@ export default function Header({ username , titleName }: HeaderProps) {
   const [showSingleNotification, setShowSingleNotification] =
     useState<notificaitonType>({ ID: 0, Text: "", Title: "" });
   const [showAllNotification, setShowAllNotification] = useState([]);
+  const [languageID, setLanguageID] = useState("1");
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
       const getLang = window.localStorage.getItem("ssss_language")!;
+      setLanguageID(getLang)
       if (getLang == "en") {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "ltr");
@@ -353,7 +355,7 @@ export default function Header({ username , titleName }: HeaderProps) {
               <IoMdNotificationsOutline className="cursor-pointer w-[20px] h-[20px] relative" />
               {showAllNotification && showAllNotification.length > 0 && (
                 <span className="w-[18px] h-[18px] rounded-full flex items-center justify-center bg-red-500 absolute top-[-10px] right-[-10px]">
-                  <p className="text-[12px] font-semibold text-white font-vazirB">
+                  <p className={cn("text-[12px] font-semibold text-white font-vazirB" , languageID == "1" ? "" : "font-robotoB")}>
                     {notificationData?.Data?.length}
                   </p>
                 </span>

@@ -25,7 +25,7 @@ export default function ForgetPassword() {
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
       const getLang = window.localStorage.getItem("ssss_language")!;
-      setLanguageID(getLang);
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
       if (getLang == "en") {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "ltr");

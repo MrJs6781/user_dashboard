@@ -443,7 +443,7 @@ export default function Dashboard() {
                       {item.id == 5 && (
                         <small
                           className={cn(
-                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] tracking-wider",
                             languageID == "1" ? "" : "font-robotoB"
                           )}
                         >
@@ -455,7 +455,7 @@ export default function Dashboard() {
                       {item.id == 6 && (
                         <small
                           className={cn(
-                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]",
+                            "font-vazirB text-[13px] sm:text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] tracking-wider",
                             languageID == "1" ? "" : "font-robotoB"
                           )}
                         >

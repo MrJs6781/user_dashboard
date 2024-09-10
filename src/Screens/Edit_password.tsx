@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { EditPasswordUser } from "@/types/Profile";
 import LottiePlayer from "@/components/Loading";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 export default function EditPassword() {
   const { t } = useTranslation();
@@ -128,7 +129,10 @@ export default function EditPassword() {
 
   return (
     <div className="w-full h-screen overflow-auto flex items-center justify-center">
-      <Header username={fetchedData?.Data[0]?.UserName} />
+      <Header
+        username={fetchedData?.Data[0]?.UserName}
+        titleName={fetchedData?.Data[0]?.Title}
+      />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
         style={{ backdropFilter: "blur(50px)" }}
@@ -143,7 +147,12 @@ export default function EditPassword() {
               placeholder={t("CurrentPassword")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
+              className={cn(
+                "w-[93%] placeholder:font-vazirB h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirB text-[14px]",
+                languageID == "1"
+                  ? "placeholder:font-vazirB"
+                  : "font-robotoM placeholder:font-robotoB"
+              )}
               maxLength={30}
             />
             {password.length > 0 && isShowPassword && (
@@ -166,7 +175,12 @@ export default function EditPassword() {
               placeholder={t("RepeatPassword")}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]"
+              className={cn(
+                "w-[93%] placeholder:font-vazirB h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirB text-[14px]",
+                languageID == "1"
+                  ? "placeholder:font-vazirB"
+                  : "font-robotoM placeholder:font-robotoB"
+              )}
               maxLength={30}
             />
             {newPassword.length > 0 && isShowNewPassword && (

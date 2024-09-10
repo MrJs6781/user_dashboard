@@ -32,7 +32,8 @@ export default function Login() {
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
       const getLang = window.localStorage.getItem("ssss_language")!;
-      setLanguageID(getLang);
+      // console.log(getLang)
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
       if (getLang == "en") {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "ltr");
@@ -112,6 +113,7 @@ export default function Login() {
         getHTML?.style.setProperty("direction", "rtl");
         getHTML?.setAttribute("lang", "fa");
         changeLanguage("fa");
+        setLanguageID("1");
         setTimeout(() => {
           window.location.reload();
         }, 500);
@@ -122,6 +124,7 @@ export default function Login() {
         getHTML?.style.setProperty("direction", "ltr");
         getHTML?.setAttribute("lang", "en");
         changeLanguage("en");
+        setLanguageID("0");
         setTimeout(() => {
           window.location.reload();
         }, 500);
@@ -133,6 +136,7 @@ export default function Login() {
       getHTML?.style.setProperty("direction", "ltr");
       getHTML?.setAttribute("lang", "en");
       changeLanguage("en");
+      setLanguageID("0");
       setTimeout(() => {
         window.location.reload();
       }, 500);
@@ -186,7 +190,12 @@ export default function Login() {
               value={username}
               onChange={(e) => setUserName(e.target.value)}
               onKeyDown={handleKeyDown}
-              className={cn("w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]" , languageID == "1" ? "" : "font-robotoM")}
+              className={cn(
+                "w-[93%] placeholder:font-vazirB h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirB text-[14px]",
+                languageID == "1"
+                  ? "placeholder:font-vazirB"
+                  : "font-robotoM placeholder:font-robotoB"
+              )}
               maxLength={30}
               ref={input1Ref}
             />
@@ -199,7 +208,12 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={handleKeyDown}
-              className={cn("w-[93%] h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirM text-[14px]" , languageID == "1" ? "" : "font-robotoM")}
+              className={cn(
+                "w-[93%] placeholder:font-vazirB h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirB text-[14px]",
+                languageID == "1"
+                  ? "placeholder:font-vazirB"
+                  : "font-robotoM placeholder:font-robotoB"
+              )}
               maxLength={20}
               ref={input2Ref}
             />
@@ -240,7 +254,12 @@ export default function Login() {
           </p>
           <small className="w-[90px] h-[2px] bg-white"></small>
         </span>
-        <p className={cn("mt-4 text-center text-[14px] font-vazirB" , languageID == "1" ? "" : "font-robotoB")}>
+        <p
+          className={cn(
+            "mt-4 text-center text-[14px] font-vazirB",
+            languageID == "1" ? "" : "font-robotoB"
+          )}
+        >
           {t("V")} : 1.01
         </p>
       </div>
