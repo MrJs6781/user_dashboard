@@ -44,7 +44,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "#a3e635",
-    title: "NumberOfDaysLeft",
+    title: "RemainedTime",
   },
   {
     id: 2,
@@ -67,7 +67,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "AmountOfRemainingVolume",
+    title: "RemainedTraffic",
   },
   {
     id: 3,
@@ -90,29 +90,8 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "WalletBalance",
+    title: "WalletRemained",
   },
-  // {
-  //   id: 4,
-  //   icon: (
-  //     <svg
-  //       xmlns="http://www.w3.org/2000/svg"
-  //       width="24"
-  //       height="24"
-  //       viewBox="0 0 24 24"
-  //       fill="none"
-  //       stroke="currentColor"
-  //       strokeWidth="2"
-  //       strokeLinecap="round"
-  //       strokeLinejoin="round"
-  //       className="lucide lucide-user"
-  //     >
-  //       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-  //       <circle cx="12" cy="7" r="4" />
-  //     </svg>
-  //   ),
-  //   title: "تعداد کاربران زیر مجموعه",
-  // },
   {
     id: 5,
     icon: (
@@ -135,7 +114,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "dateOfManufacture",
+    title: "CreationTime",
   },
   {
     id: 6,
@@ -156,7 +135,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "FirstConnectionTime",
+    title: "FirstLogin",
   },
   {
     id: 7,
@@ -178,7 +157,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "expirationDate",
+    title: "ExpirePeriodDesc",
   },
   {
     id: 8,
@@ -202,33 +181,33 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "OnlineNumberWithThisUser",
+    title: "OnlineCount",
   },
-  {
-    id: 9,
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="lucide lucide-truck"
-      >
-        <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
-        <path d="M15 18H9" />
-        <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
-        <circle cx="17" cy="18" r="2" />
-        <circle cx="7" cy="18" r="2" />
-      </svg>
-    ),
-    bg: "",
-    title: "VolumeUser",
-  },
+  // {
+  //   id: 9,
+  //   icon: (
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       width="24"
+  //       height="24"
+  //       viewBox="0 0 24 24"
+  //       fill="none"
+  //       stroke="currentColor"
+  //       strokeWidth="2"
+  //       strokeLinecap="round"
+  //       strokeLinejoin="round"
+  //       className="lucide lucide-truck"
+  //     >
+  //       <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+  //       <path d="M15 18H9" />
+  //       <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+  //       <circle cx="17" cy="18" r="2" />
+  //       <circle cx="7" cy="18" r="2" />
+  //     </svg>
+  //   ),
+  //   bg: "",
+  //   title: "VolumeUser",
+  // },
 ];
 
 export default function ErrorReport() {
@@ -250,7 +229,7 @@ export default function ErrorReport() {
   const [listSliderBox, setListSliderBox] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData();
+    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
   const { data: errorReports, isLoading: errorReportsLoading } =
     useFetchErrorReports(+window.localStorage.getItem("ssss_language_id")!);
 
