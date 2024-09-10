@@ -254,7 +254,7 @@ export default function ConnectionHistory() {
         const TitleData = fetchedData?.Title?.split(",");
         let arr: any = [];
 
-        dashboardBoxes.map((itemBox, i) => {
+        dashboardBoxes.map((itemBox) => {
           const findIndexInName = NameData?.findIndex(
             (item: any) => item == itemBox.title
           );

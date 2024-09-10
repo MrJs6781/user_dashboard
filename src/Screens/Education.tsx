@@ -1,9 +1,6 @@
 import Header from "@/components/Header";
 import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
-import { useFetchErrorReports } from "@/Hooks/useFetchErrorReport";
 import { cn } from "@/lib/utils";
-import { ErrorReportsWithQuery } from "@/types/ErrorReports";
-import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -250,7 +247,7 @@ export default function Education() {
         const TitleData = fetchedData?.Title?.split(",");
         let arr: any = [];
 
-        dashboardBoxes.map((itemBox, i) => {
+        dashboardBoxes.map((itemBox) => {
           const findIndexInName = NameData?.findIndex(
             (item: any) => item == itemBox.title
           );
