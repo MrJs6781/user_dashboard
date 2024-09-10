@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface RenewCartProps {
   data: UserProductResponse;
@@ -15,6 +17,13 @@ interface RenewCartProps {
 export default function RenewCart({ data, index, headerData }: RenewCartProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [languageID, setLanguageID] = useState("1");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   const handleSubmit = () => {
     mutation.mutate({
@@ -91,7 +100,10 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
             return (
               <li
                 key={i}
-                className="flex items-center gap-2 text-[15px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]"
+                className={cn(
+                  "flex items-center gap-2 text-[15px] font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
+                  languageID == "1" ? "" : "font-robotoB"
+                )}
               >
                 {title} :{" "}
                 <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
@@ -103,7 +115,10 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
         })}
       </ul>
       <button
-        className="w-[95%] mx-auto mb-4 rounded-[12px] h-[50px] flex items-center justify-center outline-none cursor-pointer border-none bg-[#a855f7] dark:bg-[#1e293b]"
+        className={cn(
+          "w-[95%] mx-auto mb-4 rounded-[12px] h-[50px] flex items-center justify-center outline-none cursor-pointer border-none bg-[#a855f7] dark:bg-[#1e293b]",
+          languageID == "1" ? "" : "font-robotoB"
+        )}
         onClick={handleSubmit}
       >
         <p className="text-[15px] font-vazirB text-white">{t("Renew")}</p>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { RenewData } from "@/types/Renew";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const RenewTable: React.FC<{
   data: RenewData[];
@@ -16,6 +17,13 @@ const RenewTable: React.FC<{
   headerDataName: string[];
 }> = ({ data, headerData, headerDataName }) => {
   const { t } = useTranslation();
+  const [languageID, setLanguageID] = useState("1");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   return (
     <div className="overflow-x-auto w-full">
@@ -24,7 +32,7 @@ const RenewTable: React.FC<{
           <TableRow>
             <TableHead
               key={0}
-              className="text-[16px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border"
+              className={cn("text-[16px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border" , languageID == "1" ? "" : "font-robotoB")}
             >
               {t("Row")}
             </TableHead>
@@ -32,7 +40,7 @@ const RenewTable: React.FC<{
               headerData?.map((header, index) => (
                 <TableHead
                   key={index + 1}
-                  className="text-[16px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border"
+                  className={cn("text-[16px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border" , languageID == "1" ? "" : "font-robotoB")}
                 >
                   {header}
                 </TableHead>
@@ -44,7 +52,7 @@ const RenewTable: React.FC<{
             data?.map((item, index) => (
               <TableRow key={index}>
                 <TableCell
-                  className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]"
+                  className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
                   key={index + 1000000000}
                 >
                   {index + 1}
@@ -52,7 +60,7 @@ const RenewTable: React.FC<{
                 {headerDataName &&
                   headerDataName?.map((headerDataName, index) => (
                     <TableCell
-                      className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]"
+                      className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
                       key={index + 10000}
                     >
                       {headerDataName &&

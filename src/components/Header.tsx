@@ -322,9 +322,9 @@ export default function Header({ username , titleName }: HeaderProps) {
                 {item.icon}
                 <p
                   className={cn(
-                    "text-[16px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
+                    "text-[14px] font-vazirM gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
                     pathname == item.link
-                      ? "text-[17px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] px-2 py-1 border-b-2 border-purple-600 dark:border-white"
+                      ? "text-[15px] font-vazirB dark:from-[#ffffff] dark:to-[#ffffff] from-[#000000] to-[#000000] px-2 py-1 border-b-2 border-purple-600 dark:border-white"
                       : ""
                   )}
                 >

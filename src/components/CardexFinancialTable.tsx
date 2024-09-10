@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import { CardexFinancial, CardexUser } from "@/types/Cardex";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const tableNameChild = ["Type", "Users"];
 
@@ -20,6 +21,13 @@ const CardexFinancialTable: React.FC<{
   headerDataName: string[];
 }> = ({ data, headerData, headerDataName }) => {
   const { t } = useTranslation();
+  const [languageID, setLanguageID] = useState("1");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   return (
     <div className="overflow-x-auto w-full">
@@ -46,7 +54,10 @@ const CardexFinancialTable: React.FC<{
           {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell
-                className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]"
+                className={cn(
+                  "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                  languageID == "1" ? "" : "font-robotoB"
+                )}
                 key={index + 1000000000}
               >
                 {index + 1}
@@ -54,7 +65,10 @@ const CardexFinancialTable: React.FC<{
               {headerDataName?.length > 0 &&
                 headerDataName?.map((headerDataName, index) => (
                   <TableCell
-                    className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]"
+                    className={cn(
+                      "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
                     key={index + 10000}
                   >
                     {headerDataName == "Users" &&
@@ -93,12 +107,12 @@ const CardexFinancialTable: React.FC<{
                                       ) => {
                                         return (
                                           <TableRow key={indexData}>
-                                            <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
+                                            <TableCell className={cn("text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB" , languageID == "1" ? "" : "font-robotoB")}>
                                               {itemData.Typ
                                                 ? itemData.Typ
                                                 : "_"}
                                             </TableCell>
-                                            <TableCell className="text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB">
+                                            <TableCell className={cn("text-center gradiant_to_color gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] px-4 py-5 font-vazirB" , languageID == "1" ? "" : "font-robotoB")}>
                                               {itemData.UserName
                                                 ? itemData.UserName
                                                 : "_"}

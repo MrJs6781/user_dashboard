@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { ErrorReports } from "@/types/ErrorReports";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const ErrorReportsTable: React.FC<{
   data: ErrorReports[];
@@ -16,6 +17,13 @@ const ErrorReportsTable: React.FC<{
   headerDataName: string[];
 }> = ({ data, headerData, headerDataName }) => {
   const { t } = useTranslation();
+  const [languageID, setLanguageID] = useState("1");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   return (
     <div className="overflow-x-auto w-full">
@@ -42,7 +50,7 @@ const ErrorReportsTable: React.FC<{
           {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell
-                className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]"
+                className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
                 key={index + 1000000000}
               >
                 {index + 1}
@@ -50,7 +58,7 @@ const ErrorReportsTable: React.FC<{
               {headerDataName?.length > 0 &&
                 headerDataName?.map((headerDataName, index) => (
                   <TableCell
-                    className="text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]"
+                    className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
                     key={index + 10000}
                   >
                     {(item as any)[headerDataName] == "true"

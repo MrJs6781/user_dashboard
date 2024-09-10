@@ -12,6 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 // اضافه کردن پلاگین jalaliday به dayjs
 dayjs.extend(jalaliday);
@@ -35,6 +36,13 @@ export function DatePickerWithRange({
   setDate,
 }: DatePickerWithRangeProps) {
   const { t } = useTranslation();
+  const [languageID, setLanguageID] = useState("1");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   return (
     <div className={cn("grid gap-2")}>
@@ -45,7 +53,8 @@ export function DatePickerWithRange({
             variant={"outline"}
             className={cn(
               "w-[300px] h-[58px] justify-start items-center text-left font-vazirM rounded-[12px] gap-4",
-              !date && "text-muted-foreground"
+              !date && "text-muted-foreground",
+              languageID == "1" ? "" : "font-robotoM"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -71,7 +80,7 @@ export function DatePickerWithRange({
             selected={date}
             onSelect={setDate}
             numberOfMonths={1}
-            className="font-vazirB"
+            className={languageID == "1" ? "font-vazirB" : "font-robotoB"}
           />
         </PopoverContent>
       </Popover>

@@ -20,7 +20,7 @@ const PaginationComponent: React.FC<{
   setIsShowLoading: any;
   setTotalPageCount: any;
   setActivePage: any;
-  domainInput : string;
+  domainInput: string;
 }> = ({
   perPage,
   setPerPage,
@@ -35,6 +35,13 @@ const PaginationComponent: React.FC<{
 }) => {
   const { t } = useTranslation();
   const [length, setLength] = useState<any>([]);
+  const [languageID, setLanguageID] = useState("1");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("ssss_language_id")) {
+      setLanguageID(window.localStorage.getItem("ssss_language_id")!);
+    }
+  }, []);
 
   useEffect(() => {
     let arr = [];
@@ -59,9 +66,7 @@ const PaginationComponent: React.FC<{
       myHeaders.append("Authorization", `Bearer ${getToken}`);
 
       const response = await fetch(
-        `${
-          import.meta.env.VITE_WEB_SERVICE_DOMAIN
-        }${domainInput}`,
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}${domainInput}`,
         {
           method: "POST",
           headers: myHeaders,
@@ -101,7 +106,9 @@ const PaginationComponent: React.FC<{
   return (
     <section className="w-full flex items-center justify-center mt-4 gap-4 flex-wrap">
       <div className="flex items-center justify-center gap-4">
-        <p className="font-vazirM">
+        <p
+          className={cn("font-vazirM", languageID == "1" ? "" : "font-robotoM")}
+        >
           {t("AllData")} : {TotalDataCount}
         </p>
       </div>
@@ -110,7 +117,10 @@ const PaginationComponent: React.FC<{
         <select
           name="row_per_page"
           id="row_per_page"
-          className="w-[100px] h-[35px] font-semibold font-vazirM border-2 rounded-md outline-none cursor-pointer dark:text-black"
+          className={cn(
+            "w-[100px] h-[35px] font-semibold font-vazirM border-2 rounded-md outline-none cursor-pointer dark:text-black",
+            languageID == "1" ? "" : "font-robotoM"
+          )}
           value={perPage}
           onChange={(e) => chagneSelectHandler(e)}
         >
@@ -160,7 +170,12 @@ const PaginationComponent: React.FC<{
               key={item}
               onClick={() => changePageHandler(item)}
             >
-              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 font-vazirB">
+              <span
+                className={cn(
+                  "absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 font-vazirB",
+                  languageID == "1" ? "" : "font-robotoB"
+                )}
+              >
                 {item}
               </span>
             </button>
