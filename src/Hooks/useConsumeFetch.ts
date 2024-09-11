@@ -20,7 +20,6 @@ export const useConsumeFetch = (
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify({
-          SortIndex: 1,
           languageId,
           RowPerPage: RowPerPage ? RowPerPage : 50,
           PageNo: PageNo ? PageNo : 1,

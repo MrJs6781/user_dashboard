@@ -15,7 +15,7 @@ export const useFetchNotificationData = (languageId?: number) => {
       {
         method: "POST",
         headers: myHeaders,
-        body: JSON.stringify({ SortIndex: 1, languageId }),
+        body: JSON.stringify({ languageId }),
         redirect: "follow",
       }
     );
