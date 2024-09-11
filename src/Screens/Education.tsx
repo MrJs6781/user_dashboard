@@ -208,26 +208,6 @@ export default function Education() {
   const navigate = useNavigate();
   const [languageID, setLanguageID] = useState("1");
   const [listSliderBox, setListSliderBox] = useState([]);
-  const content = `
-    <h1>این یک عنوان است</h1>
-    <p>این یک پاراگراف نمونه است.</p>
-    <ul>
-      <li>آیتم اول</li>
-      <li>آیتم دوم</li>
-    </ul>
-    <h1>این یک عنوان است</h1>
-    <p>این یک پاراگراف نمونه است.</p>
-    <ul>
-      <li>آیتم اول</li>
-      <li>آیتم دوم</li>
-    </ul>
-    <h1>این یک عنوان است</h1>
-    <p>این یک پاراگراف نمونه است.</p>
-    <ul>
-      <li>آیتم اول</li>
-      <li>آیتم دوم</li>
-    </ul>
-  `;
 
   const { data: fetchedData } = useFetchDashboardData(
     +window.localStorage.getItem("ssss_language_id")!
@@ -464,9 +444,6 @@ export default function Education() {
           </SwiperSlide>
         ))}
       </Swiper>
-      {/* <div>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
-      </div> */}
       <iframe src="https://cloudius.co/" className="w-full max-w-[95%] mx-auto h-[70vh]"></iframe>
     </div>
   );

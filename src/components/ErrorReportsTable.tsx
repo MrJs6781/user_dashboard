@@ -50,27 +50,73 @@ const ErrorReportsTable: React.FC<{
           {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell
-                className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
+                className={cn(
+                  "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                  languageID == "1" ? "" : "font-robotoB"
+                )}
                 key={index + 1000000000}
               >
                 {index + 1}
               </TableCell>
-              {headerDataName?.length > 0 &&
-                headerDataName?.map((headerDataName, index) => (
-                  <TableCell
-                    className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
-                    key={index + 10000}
-                  >
-                    {(item as any)[headerDataName] == "true"
-                      ? t("is")
-                      : (item as any)[headerDataName] == "false"
-                      ? t("isNot")
-                      : (item as any)[headerDataName] &&
-                        (item as any)[headerDataName].length > 0
-                      ? (item as any)[headerDataName]
-                      : "_"}
-                  </TableCell>
-                ))}
+              {headerDataName &&
+                headerDataName?.map((headerDataName, index) => {
+                  if (headerDataName == "DateTime") {
+                    return (
+                      <TableCell
+                        className={cn(
+                          "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                          languageID == "1" ? "" : "font-robotoB"
+                        )}
+                        key={index + 10000}
+                        style={{ direction: "ltr" }}
+                      >
+                        {headerDataName &&
+                          (item as any)[headerDataName] &&
+                          (item as any)[headerDataName]}
+
+                        {headerDataName &&
+                          typeof (item as any)[headerDataName] == "boolean" &&
+                          (item as any)[headerDataName] == true &&
+                          t("is")}
+                        {headerDataName &&
+                          typeof (item as any)[headerDataName] == "boolean" &&
+                          (item as any)[headerDataName] == false &&
+                          t("isNot")}
+
+                        {headerDataName &&
+                          !(item as any)[headerDataName] &&
+                          "_"}
+                      </TableCell>
+                    );
+                  } else {
+                    return (
+                      <TableCell
+                        className={cn(
+                          "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                          languageID == "1" ? "" : "font-robotoB"
+                        )}
+                        key={index + 10000}
+                      >
+                        {headerDataName &&
+                          (item as any)[headerDataName] &&
+                          (item as any)[headerDataName]}
+
+                        {headerDataName &&
+                          typeof (item as any)[headerDataName] == "boolean" &&
+                          (item as any)[headerDataName] == true &&
+                          t("is")}
+                        {headerDataName &&
+                          typeof (item as any)[headerDataName] == "boolean" &&
+                          (item as any)[headerDataName] == false &&
+                          t("isNot")}
+
+                        {headerDataName &&
+                          !(item as any)[headerDataName] &&
+                          "_"}
+                      </TableCell>
+                    );
+                  }
+                })}
             </TableRow>
           ))}
         </TableBody>
