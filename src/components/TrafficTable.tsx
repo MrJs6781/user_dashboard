@@ -11,8 +11,6 @@ import { TrafficData } from "@/types/Traffic";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
-// const tableName = ["ترافیک", "زمان", "شرح"];
-
 const TrafficTable: React.FC<{
   data: TrafficData[];
   headerData: string[];
@@ -49,37 +47,79 @@ const TrafficTable: React.FC<{
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell
-                className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
-                key={index + 1000000000}
-              >
-                {index + 1}
-              </TableCell>
-              {headerDataName?.map((headerDataName, index) => (
+          {data &&
+            data?.map((item, index) => (
+              <TableRow key={index}>
                 <TableCell
-                  className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
-                  key={index + 10000}
+                  className={cn(
+                    "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                    languageID == "1" ? "" : "font-robotoB"
+                  )}
+                  key={index + 1000000000}
                 >
-                  {headerDataName &&
-                    (item as any)[headerDataName] &&
-                    (item as any)[headerDataName]}
-
-                  {headerDataName &&
-                    typeof (item as any)[headerDataName] == "boolean" &&
-                    (item as any)[headerDataName] == true &&
-                    t("is")}
-                  {headerDataName &&
-                    typeof (item as any)[headerDataName] == "boolean" &&
-                    (item as any)[headerDataName] == false &&
-                    t("isNot")}
-
-                  {headerDataName && !(item as any)[headerDataName] && "_"}
+                  {index + 1}
                 </TableCell>
-              ))}
-            </TableRow>
-          ))}
+                {headerDataName &&
+                  headerDataName?.map((headerDataName, index) => {
+                    if (headerDataName == "TimeStamp") {
+                      return (
+                        <TableCell
+                          className={cn(
+                            "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                          key={index + 10000}
+                          style={{ direction: "ltr" }}
+                        >
+                          {headerDataName &&
+                            (item as any)[headerDataName] &&
+                            (item as any)[headerDataName]}
+
+                          {headerDataName &&
+                            typeof (item as any)[headerDataName] == "boolean" &&
+                            (item as any)[headerDataName] == true &&
+                            t("is")}
+                          {headerDataName &&
+                            typeof (item as any)[headerDataName] == "boolean" &&
+                            (item as any)[headerDataName] == false &&
+                            t("isNot")}
+
+                          {headerDataName &&
+                            !(item as any)[headerDataName] &&
+                            "_"}
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell
+                          className={cn(
+                            "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                          key={index + 10000}
+                        >
+                          {headerDataName &&
+                            (item as any)[headerDataName] &&
+                            (item as any)[headerDataName]}
+
+                          {headerDataName &&
+                            typeof (item as any)[headerDataName] == "boolean" &&
+                            (item as any)[headerDataName] == true &&
+                            t("is")}
+                          {headerDataName &&
+                            typeof (item as any)[headerDataName] == "boolean" &&
+                            (item as any)[headerDataName] == false &&
+                            t("isNot")}
+
+                          {headerDataName &&
+                            !(item as any)[headerDataName] &&
+                            "_"}
+                        </TableCell>
+                      );
+                    }
+                  })}
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>

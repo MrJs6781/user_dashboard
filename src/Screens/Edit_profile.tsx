@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 export default function EditProfile() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [username, setUserName] = useState("");
+  // const [username, setUserName] = useState("");
   const [titleName, setTitleName] = useState("");
   const [email, setUserEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -37,7 +37,7 @@ export default function EditProfile() {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
         // console.log(fetchedData)
-        setUserName(fetchedData?.Data[0]?.UserName);
+        // setUserName(fetchedData?.Data[0]?.UserName);
         setTitleName(fetchedData?.Data[0]?.Title);
         setUserEmail(fetchedData?.Data[0]?.Email);
         setMobileNumber(fetchedData?.Data[0]?.Mobile);
@@ -68,7 +68,7 @@ export default function EditProfile() {
   const handleSubmit = () => {
     setIsLoading(true);
     mutation.mutate({
-      Title: username,
+      Title: titleName,
       Email: email,
       Mobile: mobileNumber,
     });
@@ -131,14 +131,14 @@ export default function EditProfile() {
   }
 
   return (
-    <div className="w-full h-screen overflow-auto flex items-center justify-center">
+    <div className="w-full h-screen overflow-auto flex items-center justify-center dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2]">
       <Header
         username={fetchedData?.Data[0]?.UserName}
         titleName={fetchedData?.Data[0]?.Title}
       />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
-        style={{ backdropFilter: "blur(50px)" }}
+        style={{ backdropFilter: "blur(50px)" , direction : "ltr" }}
       >
         <form
           action=""
@@ -160,22 +160,6 @@ export default function EditProfile() {
             />
             <FaUserTie className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
           </span>
-          {/* <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
-            <input
-              type="text"
-              placeholder={t("Username")}
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
-              className={cn(
-                "w-[93%] placeholder:font-vazirB h-full bg-transparent outline-none border-none dark:text-white placeholder:dark:text-white font-vazirB text-[14px]",
-                languageID == "1"
-                  ? "placeholder:font-vazirB"
-                  : "font-robotoM placeholder:font-robotoB"
-              )}
-              maxLength={30}
-            />
-            <FaUser className="dark:text-white text-purple-500 text-[18px] cursor-pointer" />
-          </span> */}
           <span className="w-full h-[45px] rounded-[20px] border dark:border-[#eeeeee50] px-3 flex items-center justify-between">
             <input
               type="email"

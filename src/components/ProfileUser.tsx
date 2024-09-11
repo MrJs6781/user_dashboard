@@ -96,24 +96,27 @@ export default function ProfileUser({ username, titleName }: ProfileUserProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px] flex flex-col items-start gap-2 px-4">
         <span
-          className="w-full px-2 pb-4 pt-2 flex items-center gap-2 border-b"
+          className="w-full px-2 pb-4 pt-2 flex items-center justify-between gap-2 border-b"
           style={
             languageID == "1" ? { direction: "rtl" } : { direction: "ltr" }
           }
         >
-          <FaUserTie className="w-[24px] h-[24px]" />
           <p className="text-[14px] font-semibold font-vazirB">
             {t("Username")} : {username}
           </p>
+          <FaUserTie className="w-[24px] h-[24px]" />
         </span>
         {profileUserData.map((item) => (
           <DropdownMenuItem
             key={item.id}
             className="w-full flex items-center justify-between px-2 cursor-pointer"
+            style={
+              languageID == "1" ? { direction: "rtl" } : { direction: "ltr" }
+            }
           >
             <Link
               to={item.link}
-              className="flex items-center justify-end w-full"
+              className="flex items-center justify-between w-full"
             >
               <p className="font-vazirB text-[14px] gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#09203F] to-[#000]">
                 {t(item.title)}
@@ -123,8 +126,11 @@ export default function ProfileUser({ username, titleName }: ProfileUserProps) {
           </DropdownMenuItem>
         ))}
         <span
-          className="w-full px-2 pb-4 pt-2 flex items-center justify-end gap-2 border-t cursor-pointer"
+          className="w-full px-2 pb-4 pt-2 flex items-center justify-between gap-2 border-t cursor-pointer"
           onClick={exitUserHandler}
+          style={
+            languageID == "1" ? { direction: "rtl" } : { direction: "ltr" }
+          }
         >
           <p className="text-[14px] font-semibold font-vazirB">{t("Exit")}</p>
           <GiExitDoor className="w-[24px] h-[24px]" />

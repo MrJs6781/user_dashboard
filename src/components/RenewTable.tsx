@@ -32,7 +32,10 @@ const RenewTable: React.FC<{
           <TableRow>
             <TableHead
               key={0}
-              className={cn("text-[16px] font-vazirB w-[80px] text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border" , languageID == "1" ? "" : "font-robotoB")}
+              className={cn(
+                "text-[16px] font-vazirB w-[80px] text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border",
+                languageID == "1" ? "" : "font-robotoB"
+              )}
             >
               {t("Row")}
             </TableHead>
@@ -40,7 +43,10 @@ const RenewTable: React.FC<{
               headerData?.map((header, index) => (
                 <TableHead
                   key={index + 1}
-                  className={cn("text-[16px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border" , languageID == "1" ? "" : "font-robotoB")}
+                  className={cn(
+                    "text-[16px] font-vazirB text-center px-4 py-2 gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e] border",
+                    languageID == "1" ? "" : "font-robotoB"
+                  )}
                 >
                   {header}
                 </TableHead>
@@ -52,33 +58,73 @@ const RenewTable: React.FC<{
             data?.map((item, index) => (
               <TableRow key={index}>
                 <TableCell
-                  className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
+                  className={cn(
+                    "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                    languageID == "1" ? "" : "font-robotoB"
+                  )}
                   key={index + 1000000000}
                 >
                   {index + 1}
                 </TableCell>
                 {headerDataName &&
-                  headerDataName?.map((headerDataName, index) => (
-                    <TableCell
-                      className={cn("text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]" , languageID == "1" ? "" : "font-robotoB")}
-                      key={index + 10000}
-                    >
-                      {headerDataName &&
-                        (item as any)[headerDataName] &&
-                        (item as any)[headerDataName]}
+                  headerDataName?.map((headerDataName, index) => {
+                    if (headerDataName == "DateTime") {
+                      return (
+                        <TableCell
+                          className={cn(
+                            "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                          key={index + 10000}
+                          style={{direction : "ltr"}}
+                        >
+                          {headerDataName &&
+                            (item as any)[headerDataName] &&
+                            (item as any)[headerDataName]}
 
-                      {headerDataName &&
-                        typeof (item as any)[headerDataName] == "boolean" &&
-                        (item as any)[headerDataName] == true &&
-                        t("is")}
-                      {headerDataName &&
-                        typeof (item as any)[headerDataName] == "boolean" &&
-                        (item as any)[headerDataName] == false &&
-                        t("isNot")}
+                          {headerDataName &&
+                            typeof (item as any)[headerDataName] == "boolean" &&
+                            (item as any)[headerDataName] == true &&
+                            t("is")}
+                          {headerDataName &&
+                            typeof (item as any)[headerDataName] == "boolean" &&
+                            (item as any)[headerDataName] == false &&
+                            t("isNot")}
 
-                      {headerDataName && !(item as any)[headerDataName] && "_"}
-                    </TableCell>
-                  ))}
+                          {headerDataName &&
+                            !(item as any)[headerDataName] &&
+                            "_"}
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell
+                          className={cn(
+                            "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                            languageID == "1" ? "" : "font-robotoB"
+                          )}
+                          key={index + 10000}
+                        >
+                          {headerDataName &&
+                            (item as any)[headerDataName] &&
+                            (item as any)[headerDataName]}
+
+                          {headerDataName &&
+                            typeof (item as any)[headerDataName] == "boolean" &&
+                            (item as any)[headerDataName] == true &&
+                            t("is")}
+                          {headerDataName &&
+                            typeof (item as any)[headerDataName] == "boolean" &&
+                            (item as any)[headerDataName] == false &&
+                            t("isNot")}
+
+                          {headerDataName &&
+                            !(item as any)[headerDataName] &&
+                            "_"}
+                        </TableCell>
+                      );
+                    }
+                  })}
               </TableRow>
             ))}
         </TableBody>

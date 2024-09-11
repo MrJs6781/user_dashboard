@@ -128,14 +128,14 @@ export default function EditPassword() {
   }
 
   return (
-    <div className="w-full h-screen overflow-auto flex items-center justify-center">
+    <div className="w-full h-screen overflow-auto flex items-center justify-center dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2]">
       <Header
         username={fetchedData?.Data[0]?.UserName}
         titleName={fetchedData?.Data[0]?.Title}
       />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
-        style={{ backdropFilter: "blur(50px)" }}
+        style={{ backdropFilter: "blur(50px)" , direction : "ltr" }}
       >
         <form
           action=""
