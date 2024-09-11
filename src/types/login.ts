@@ -18,6 +18,7 @@ export interface LoginData {
   Password: string;
   DeviceID?: string;
   Info?: string;
+  languageID?: string;
 }
 
 export interface loginResponseData {

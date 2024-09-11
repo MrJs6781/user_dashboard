@@ -231,7 +231,7 @@ export default function ErrorReport() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
   const { data: errorReports, isLoading: errorReportsLoading } =
-    useFetchErrorReports(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchErrorReports(+window.localStorage.getItem("ssss_language_id")! , perPage , 1);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -270,6 +270,7 @@ export default function ErrorReport() {
   useEffect(() => {
     if (errorReports) {
       if (errorReports.Status == 0) {
+        // console.log(errorReports)
         setCurrentItems(errorReports?.Data);
         setTotalDataCount(errorReports?.TotalDataCount);
         setTotalPageCount(errorReports?.TotalPageCount);

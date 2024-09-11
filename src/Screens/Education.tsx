@@ -464,9 +464,10 @@ export default function Education() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div>
+      {/* <div>
         <div dangerouslySetInnerHTML={{ __html: content }} />
-      </div>
+      </div> */}
+      <iframe src="https://cloudius.co/" className="w-full max-w-[95%] mx-auto h-[70vh]"></iframe>
     </div>
   );
 }

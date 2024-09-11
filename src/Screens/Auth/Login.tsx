@@ -28,7 +28,7 @@ export default function Login() {
   const input1Ref = useRef<HTMLInputElement>(null);
   const input2Ref = useRef<HTMLInputElement>(null);
   const [languageID, setLanguageID] = useState("1");
-  const [isShowLoadingForLogin , setIsShowLoadingForLogin] = useState(false);
+  const [isShowLoadingForLogin, setIsShowLoadingForLogin] = useState(false);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
@@ -73,6 +73,7 @@ export default function Login() {
       Password: password,
       DeviceID: "",
       Info: "",
+      languageID: window.localStorage.getItem("ssss_language_id")!,
     });
   };
 
@@ -93,11 +94,13 @@ export default function Login() {
       } else {
         toast.error(data.Message);
         setIsLoading(false);
+        setIsShowLoadingForLogin(false);
       }
     },
     onError: (err: any) => {
       console.log(err);
       setIsLoading(false);
+      setIsShowLoadingForLogin(false);
     },
   });
 
@@ -169,7 +172,7 @@ export default function Login() {
     <div className="h-[48rem] w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex items-center justify-center">
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
-        style={{ backdropFilter: "blur(50px)" , direction : "ltr" }}
+        style={{ backdropFilter: "blur(50px)", direction: "ltr" }}
       >
         <span className="flex items-center justify-between w-full">
           <h5 className="text-[15px] font-vazirM">{t("SelectLanguage")}</h5>
@@ -244,7 +247,7 @@ export default function Login() {
           }
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
-            {isShowLoadingForLogin ? t("Loading") :t("login")}
+            {isShowLoadingForLogin ? t("Loading") : t("login")}
           </p>
         </button>
         <span
