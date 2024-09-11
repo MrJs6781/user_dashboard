@@ -13,9 +13,9 @@
   "NumberOfDaysLeft": "Number Of Days Left",
   "AmountOfRemainingVolume": "Amount Of Remaining Volume",
   "WalletBalance": "Wallet Balance",
-  "dateOfManufacture": "date Of Manufacture",
+  "dateOfManufacture": "Date Of Manufacture",
   "FirstConnectionTime": "First Connection Time",
-  "expirationDate": "expiration Date",
+  "expirationDate": "Expiration Date",
   "OnlineNumberWithThisUser": "Online Number With This User",
   "VolumeUser": "Volume User",
   "YourConsumptionChart": "Your Consumption Chart",
@@ -28,7 +28,7 @@
   "Password": "Password",
   "RenewService": "Renew Service",
   "LastRenewList": "Last RenewList",
-  "whatAreYouLookingFor": "what Are You Looking For",
+  "whatAreYouLookingFor": "What Are You Looking For",
   "SelectDate": "Select Date",
   "Search": "Search",
   "DisplayOnlyActive": "Display Only Active",
@@ -65,5 +65,6 @@
   "Email": "Email",
   "backToLoginPage": "Back To Login Page",
   "recoverPassword": "Recover Password",
-  "Education": "Education"
+  "Education": "Education",
+  "Loading" : "Loading ..."
 }

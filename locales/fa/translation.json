@@ -65,5 +65,6 @@
   "Email": "ایمیل",
   "backToLoginPage": "بازگشت به صفحه ورود",
   "recoverPassword": "بازیابی رمز عبور",
-  "Education" : "آموزش"
+  "Education": "آموزش",
+  "Loading": "در حال پردازش اطلاعات ..."
 }

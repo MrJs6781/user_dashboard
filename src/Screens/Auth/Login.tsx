@@ -28,6 +28,7 @@ export default function Login() {
   const input1Ref = useRef<HTMLInputElement>(null);
   const input2Ref = useRef<HTMLInputElement>(null);
   const [languageID, setLanguageID] = useState("1");
+  const [isShowLoadingForLogin , setIsShowLoadingForLogin] = useState(false);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
@@ -64,6 +65,7 @@ export default function Login() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setIsShowLoadingForLogin(true);
     setIsLoading(true);
     e.preventDefault();
     mutation.mutate({
@@ -242,7 +244,7 @@ export default function Login() {
           }
         >
           <p className="text-[15px] font-vazirM dark:text-black text-white">
-            {t("login")}
+            {isShowLoadingForLogin ? t("Loading") :t("login")}
           </p>
         </button>
         <span
