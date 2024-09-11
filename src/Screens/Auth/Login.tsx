@@ -167,7 +167,7 @@ export default function Login() {
     <div className="h-[48rem] w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex items-center justify-center">
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
-        style={{ backdropFilter: "blur(50px)" }}
+        style={{ backdropFilter: "blur(50px)" , direction : "ltr" }}
       >
         <span className="flex items-center justify-between w-full">
           <h5 className="text-[15px] font-vazirM">{t("SelectLanguage")}</h5>

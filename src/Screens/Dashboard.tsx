@@ -239,7 +239,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (fetchedData) {
-      // console.log(fetchedData)
+      console.log(fetchedData)
       if (fetchedData.Status == 0) {
         const NameData = fetchedData?.Name?.split(",");
         const TitleData = fetchedData?.Title?.split(",");

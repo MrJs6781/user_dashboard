@@ -415,7 +415,7 @@ export default function Header({ username , titleName }: HeaderProps) {
           </Dialog>
         </span>
         <ModeToggle />
-        <ProfileUser username={username} titleName={titleName} />
+        <ProfileUser username={username} titleNameInput={titleName} />
       </span>
     </div>
   );

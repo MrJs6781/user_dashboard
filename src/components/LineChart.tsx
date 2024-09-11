@@ -104,6 +104,9 @@ const ComboChart: React.FC<ComboChartProps> = ({ labels, data }) => {
             return `${label}: ${convertedValue}`;
           },
         },
+        bodyFont: {
+          family: languageID == "1" ? "vazir_b" : "roboto_b",
+        },
       },
     },
     scales: {
