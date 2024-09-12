@@ -50,8 +50,6 @@ export default function EditPassword() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
-        // setPassword(fetchedData?.Data[0]?.Password);
-        // setIsShowPassword(true);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -68,6 +66,7 @@ export default function EditPassword() {
     mutation.mutate({
       OldPassword: password,
       Password: newPassword,
+      languageID: window.localStorage.getItem("ssss_language_id")!,
     });
   };
 
@@ -95,14 +94,12 @@ export default function EditPassword() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      // console.log(data);
       if (data.Status == "0") {
         toast.success(data.Message);
         setIsLoading(false);
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
         setTimeout(() => {
-          // window.location.reload();
           navigate("/");
         }, 1000);
       } else if (data.Status == "-103") {
@@ -135,7 +132,7 @@ export default function EditPassword() {
       />
       <div
         className="w-[92%] max-w-[380px] min-h-[380px] rounded-[12px] flex items-center justify-between flex-col gap-4 p-6 shadow-xl glass z-30"
-        style={{ backdropFilter: "blur(50px)" , direction : "ltr" }}
+        style={{ backdropFilter: "blur(50px)", direction: "ltr" }}
       >
         <form
           action=""

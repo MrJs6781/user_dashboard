@@ -52,6 +52,7 @@ export default function ForgetPassword() {
     e.preventDefault();
     mutation.mutate({
       Email: email,
+      languageID: window.localStorage.getItem("ssss_language_id")!,
     });
   };
 

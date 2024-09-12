@@ -317,18 +317,20 @@ export default function MicroConsumption() {
         Query: searchValue,
         JustActive: justActiveState,
         Operand: "%",
-        PageNo: 0,
-        RowPerPage: 0,
+        PageNo: activePage,
+        RowPerPage: perPage,
         SortIndex: 0,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
       });
     } else {
       mutation.mutate({
         Query: searchValue,
         JustActive: justActiveState,
         Operand: "%",
-        PageNo: 0,
-        RowPerPage: 0,
+        PageNo: activePage,
+        RowPerPage: perPage,
         SortIndex: 0,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
       });
     }
   };

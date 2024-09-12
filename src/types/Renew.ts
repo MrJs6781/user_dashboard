@@ -34,6 +34,7 @@ export interface RenewResponse {
 export interface UserRenewAdd {
   ProductID: string;
   Description?: string;
+  languageID?: string;
 }
 
 export interface UserRenewQuery {
@@ -44,4 +45,5 @@ export interface UserRenewQuery {
   PageNo?: string;
   RowPerPage?: string;
   SortIndex?: number;
+  languageID?: string;
 }

@@ -17,7 +17,6 @@ import { cn } from "@/lib/utils";
 export default function EditProfile() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  // const [username, setUserName] = useState("");
   const [titleName, setTitleName] = useState("");
   const [email, setUserEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -36,8 +35,6 @@ export default function EditProfile() {
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.Status == 0) {
-        // console.log(fetchedData)
-        // setUserName(fetchedData?.Data[0]?.UserName);
         setTitleName(fetchedData?.Data[0]?.Title);
         setUserEmail(fetchedData?.Data[0]?.Email);
         setMobileNumber(fetchedData?.Data[0]?.Mobile);
@@ -71,6 +68,7 @@ export default function EditProfile() {
       Title: titleName,
       Email: email,
       Mobile: mobileNumber,
+      languageID: window.localStorage.getItem("ssss_language_id")!,
     });
   };
 
@@ -96,18 +94,16 @@ export default function EditProfile() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      // console.log(data);
       if (data.Status == "0") {
         toast.success(data.Message);
-        // setIsLoading(false);
-        setTimeout(() => {
-          Cookies.remove("authToken");
-          localStorage.removeItem("UserID");
-          navigate("/");
-        }, 1000);
         // setTimeout(() => {
-        //   window.location.reload();
+        //   Cookies.remove("authToken");
+        //   localStorage.removeItem("UserID");
+        //   navigate("/");
         // }, 1000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else if (data.Status == "-103") {
         toast.info(data.Message);
         setTimeout(() => {

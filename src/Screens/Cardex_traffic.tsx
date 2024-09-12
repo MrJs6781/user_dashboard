@@ -247,7 +247,6 @@ export default function CardexTraffic() {
 
   useEffect(() => {
     if (fetchedData) {
-      // console.log(fetchedData)
       if (fetchedData.Status == 0) {
         const NameData = fetchedData?.Name?.split(",");
         const TitleData = fetchedData?.Title?.split(",");
@@ -258,9 +257,7 @@ export default function CardexTraffic() {
             (item: any) => item == itemBox.title
           );
           arr.push(TitleData[findIndexInName]);
-          // dashboardBoxes[i].title = TitleData[findIndexInName];
         });
-        // console.log(arr)
         setListSliderBox(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
@@ -314,18 +311,20 @@ export default function CardexTraffic() {
         Query: searchValue,
         JustActive: justActiveState,
         Operand: "%",
-        PageNo: 0,
-        RowPerPage: 0,
+        PageNo: activePage,
+        RowPerPage: perPage,
         SortIndex: 1,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
       });
     } else {
       mutation.mutate({
         Query: searchValue,
         JustActive: justActiveState,
         Operand: "%",
-        PageNo: 0,
-        RowPerPage: 0,
+        PageNo: activePage,
+        RowPerPage: perPage,
         SortIndex: 1,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
       });
     }
   };

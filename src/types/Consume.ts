@@ -31,4 +31,5 @@ export interface ConsumeFetchData {
   PageNo?: number;
   RowPerPage?: number;
   SortIndex?: number;
+  languageID?: string;
 }

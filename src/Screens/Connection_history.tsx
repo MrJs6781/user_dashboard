@@ -277,6 +277,7 @@ export default function ConnectionHistory() {
   useEffect(() => {
     if (connectionHistory) {
       if (connectionHistory.Status == 0) {
+        // console.log(connectionHistory)
         setCurrentItems(connectionHistory?.Data);
         setTotalDataCount(connectionHistory?.TotalDataCount);
         setTotalPageCount(connectionHistory?.TotalPageCount);
@@ -309,9 +310,10 @@ export default function ConnectionHistory() {
     mutation.mutate({
       Query: searchValue,
       Operand: "%",
-      PageNo: 0,
-      RowPerPage: 0,
+      PageNo: activePage,
+      RowPerPage: perPage,
       SortIndex: 0,
+      languageID: window.localStorage.getItem("ssss_language_id")!,
     });
   };
 

@@ -37,4 +37,5 @@ export interface ErrorReportsWithQuery {
   PageNo?: number;
   RowPerPage?: number;
   SortIndex?: number;
+  languageID?: string;
 }

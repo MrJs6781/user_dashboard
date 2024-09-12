@@ -29,4 +29,5 @@ export interface TrafficQuery {
   PageNo?: string;
   RowPerPage?: string;
   SortIndex?: number;
+  languageID?: string;
 }

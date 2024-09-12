@@ -29,6 +29,7 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
     mutation.mutate({
       ProductID: `${data.ProductID}`,
       Description: "",
+      languageID: window.localStorage.getItem("ssss_language_id")!,
     });
   };
 

@@ -37,4 +37,5 @@ export interface ConnectionHistoryWithQuery {
   PageNo?: number;
   RowPerPage?: number;
   SortIndex?: number;
+  languageID?: string;
 }

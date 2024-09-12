@@ -64,6 +64,7 @@ export interface TrafficCardexFetchData {
   PageNo?: number;
   RowPerPage?: number;
   SortIndex?: number;
+  languageID?: string;
 }
 
 export interface TrafficFinancialCardexFetchData {
@@ -75,4 +76,5 @@ export interface TrafficFinancialCardexFetchData {
   PageNo?: number;
   RowPerPage?: number;
   SortIndex?: number;
+  languageID?: string;
 }

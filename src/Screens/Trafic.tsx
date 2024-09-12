@@ -250,7 +250,6 @@ export default function Trafic() {
 
   useEffect(() => {
     if (fetchedData) {
-      // console.log(fetchedData)
       if (fetchedData.Status == 0) {
         const NameData = fetchedData?.Name?.split(",");
         const TitleData = fetchedData?.Title?.split(",");
@@ -261,9 +260,7 @@ export default function Trafic() {
             (item: any) => item == itemBox.title
           );
           arr.push(TitleData[findIndexInName]);
-          // dashboardBoxes[i].title = TitleData[findIndexInName];
         });
-        // console.log(arr)
         setListSliderBox(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
@@ -317,18 +314,20 @@ export default function Trafic() {
         Query: searchValue,
         JustActive: justActiveState,
         Operand: "%",
-        PageNo: "0",
-        RowPerPage: "0",
+        PageNo: `${activePage}`,
+        RowPerPage: `${perPage}`,
         SortIndex: 1,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
       });
     } else {
       mutation.mutate({
         Query: searchValue,
         JustActive: justActiveState,
         Operand: "%",
-        PageNo: "0",
-        RowPerPage: "0",
+        PageNo: `${activePage}`,
+        RowPerPage: `${perPage}`,
         SortIndex: 1,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
       });
     }
   };
@@ -357,7 +356,9 @@ export default function Trafic() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
+      // console.log(data)
       if (data.Status == "0") {
+        setCurrentItems(data?.Data);
         setTrafficDataTable(data?.Data);
         setTotalDataCount(data?.TotalDataCount);
       } else {
