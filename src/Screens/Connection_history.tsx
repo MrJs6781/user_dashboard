@@ -342,6 +342,7 @@ export default function ConnectionHistory() {
     },
     onSuccess: (data: any) => {
       if (data.Status == "0") {
+        setCurrentItems(data?.Data);
         setConnectionHistoryData(data?.Data);
         setTotalDataCount(data?.TotalDataCount);
       } else {
@@ -609,6 +610,8 @@ export default function ConnectionHistory() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      date={undefined}
+                      Query={""}
                       domainInput="User/History/Fetch?Type=User"
                     />
                   </>

@@ -46,11 +46,6 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
-  // const today = dayjs().calendar("jalali").toDate();
-
-  // محاسبه تاریخ ۱۰ روز قبل از امروز
-  // const startDate = dayjs(today).subtract(10, "day").toDate();
-
   React.useEffect(() => {
     const Tbody = document.querySelectorAll(".rdp-tbody");
     Tbody.forEach((item) => {

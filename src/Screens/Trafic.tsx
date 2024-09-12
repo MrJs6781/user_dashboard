@@ -24,6 +24,7 @@ import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
+import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
 
 const dashboardBoxes = [
   {
@@ -232,6 +233,7 @@ export default function Trafic() {
   const [currentItems, setCurrentItems] = useState([]);
   const [languageID, setLanguageID] = useState("1");
   const [listSliderBox, setListSliderBox] = useState([]);
+  const [dateMiladi, setDateMiladi] = useState<DateRange | undefined>();
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
@@ -303,32 +305,58 @@ export default function Trafic() {
 
   const searchProductsList = () => {
     setIsShowLoading(true);
-    if (date != undefined) {
-      const getFromDate = dayjs(date?.from)
-        .calendar("jalali")
-        .format("YYYY/MM/DD");
-      const getToDate = dayjs(date?.to).calendar("jalali").format("YYYY/MM/DD");
-      mutation.mutate({
-        FromDate: getFromDate,
-        ToDate: getToDate,
-        Query: searchValue,
-        JustActive: justActiveState,
-        Operand: "%",
-        PageNo: `${activePage}`,
-        RowPerPage: `${perPage}`,
-        SortIndex: 1,
-        languageID: window.localStorage.getItem("ssss_language_id")!,
-      });
+    if (languageID == "1") {
+      if (date != undefined) {
+        const getFromDate = dayjs(date?.from)
+          .calendar("jalali")
+          .format("YYYY/MM/DD");
+        const getToDate = dayjs(date?.to)
+          .calendar("jalali")
+          .format("YYYY/MM/DD");
+        mutation.mutate({
+          FromDate: getFromDate,
+          ToDate: getToDate,
+          Query: searchValue,
+          Operand: "%",
+          PageNo: `${activePage}`,
+          RowPerPage: `${perPage}`,
+          SortIndex: 0,
+          languageID: window.localStorage.getItem("ssss_language_id")!,
+        });
+      } else {
+        mutation.mutate({
+          Query: searchValue,
+          Operand: "%",
+          PageNo: `${activePage}`,
+          RowPerPage: `${perPage}`,
+          SortIndex: 0,
+          languageID: window.localStorage.getItem("ssss_language_id")!,
+        });
+      }
     } else {
-      mutation.mutate({
-        Query: searchValue,
-        JustActive: justActiveState,
-        Operand: "%",
-        PageNo: `${activePage}`,
-        RowPerPage: `${perPage}`,
-        SortIndex: 1,
-        languageID: window.localStorage.getItem("ssss_language_id")!,
-      });
+      if (dateMiladi != undefined) {
+        const getFromDate = dayjs(dateMiladi?.from).format("YYYY/MM/DD");
+        const getToDate = dayjs(dateMiladi?.to).format("YYYY/MM/DD");
+        mutation.mutate({
+          FromDate: getFromDate,
+          ToDate: getToDate,
+          Query: searchValue,
+          Operand: "%",
+          PageNo: `${activePage}`,
+          RowPerPage: `${perPage}`,
+          SortIndex: 0,
+          languageID: window.localStorage.getItem("ssss_language_id")!,
+        });
+      } else {
+        mutation.mutate({
+          Query: searchValue,
+          Operand: "%",
+          PageNo: `${activePage}`,
+          RowPerPage: `${perPage}`,
+          SortIndex: 0,
+          languageID: window.localStorage.getItem("ssss_language_id")!,
+        });
+      }
     }
   };
 
@@ -356,7 +384,6 @@ export default function Trafic() {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      // console.log(data)
       if (data.Status == "0") {
         setCurrentItems(data?.Data);
         setTrafficDataTable(data?.Data);
@@ -610,7 +637,14 @@ export default function Trafic() {
               <path d="m21 21-4.3-4.3" />
             </svg>
           </span>
-          <DatePickerWithRange date={date} setDate={setDate} />
+          {languageID == "1" ? (
+            <DatePickerWithRange date={date} setDate={setDate} />
+          ) : (
+            <DatePickerWithRangeMiladi
+              date={dateMiladi}
+              setDate={setDateMiladi}
+            />
+          )}
           <Button
             className="bg-[#a855f7] dark:bg-[#1e293b] text-white md:text-[17px]"
             onClick={searchProductsList}
@@ -642,6 +676,8 @@ export default function Trafic() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      date={languageID == "1" ? date : dateMiladi}
+                      Query={searchValue}
                       domainInput="User/Traffic/Fetch?Type=User"
                     />
                   </>

@@ -231,7 +231,11 @@ export default function ErrorReport() {
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
   const { data: errorReports, isLoading: errorReportsLoading } =
-    useFetchErrorReports(+window.localStorage.getItem("ssss_language_id")! , perPage , 1);
+    useFetchErrorReports(
+      +window.localStorage.getItem("ssss_language_id")!,
+      perPage,
+      1
+    );
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -331,6 +335,7 @@ export default function ErrorReport() {
     },
     onSuccess: (data: any) => {
       if (data.Status == "0") {
+        setCurrentItems(data?.Data);
         setErrorReportsTableData(data?.Data);
         setTotalDataCount(data?.TotalDataCount);
       } else {
@@ -598,6 +603,8 @@ export default function ErrorReport() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      date={undefined}
+                      Query={""}
                       domainInput="User/Log/Fetch?Type=User"
                     />
                   </>

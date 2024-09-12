@@ -4,10 +4,16 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { useMutation } from "@tanstack/react-query";
+import { DateRange } from "react-day-picker";
+import dayjs from "dayjs";
 
 interface updatePaginationProps {
   RowPerPage: number;
   PageNo: number;
+  FromDate?: string;
+  ToDate?: string;
+  Query: string;
+  Operand: string;
 }
 
 const PaginationComponent: React.FC<{
@@ -21,6 +27,8 @@ const PaginationComponent: React.FC<{
   setTotalPageCount: any;
   setActivePage: any;
   domainInput: string;
+  date: DateRange | undefined;
+  Query: string;
 }> = ({
   perPage,
   setPerPage,
@@ -32,6 +40,8 @@ const PaginationComponent: React.FC<{
   activePage,
   setActivePage,
   domainInput,
+  date,
+  Query,
 }) => {
   const { t } = useTranslation();
   const [length, setLength] = useState<any>([]);
@@ -52,7 +62,51 @@ const PaginationComponent: React.FC<{
   }, []);
 
   const changePageHandler = (item: number) => {
-    mutation.mutate({ PageNo: item, RowPerPage: perPage });
+    if (languageID == "1") {
+      if (date) {
+        const getFromDate = dayjs(date?.from)
+          .calendar("jalali")
+          .format("YYYY/MM/DD");
+        const getToDate = dayjs(date?.to)
+          .calendar("jalali")
+          .format("YYYY/MM/DD");
+        mutation.mutate({
+          PageNo: item,
+          RowPerPage: perPage,
+          FromDate: getFromDate,
+          ToDate: getToDate,
+          Operand: "%",
+          Query: Query ? Query : "",
+        });
+      } else {
+        mutation.mutate({
+          PageNo: item,
+          RowPerPage: perPage,
+          Operand: "%",
+          Query: Query ? Query : "",
+        });
+      }
+    } else {
+      if (date) {
+        const getFromDate = dayjs(date?.from).format("YYYY/MM/DD");
+        const getToDate = dayjs(date?.to).format("YYYY/MM/DD");
+        mutation.mutate({
+          PageNo: item,
+          RowPerPage: perPage,
+          FromDate: getFromDate,
+          ToDate: getToDate,
+          Operand: "%",
+          Query: Query ? Query : "",
+        });
+      } else {
+        mutation.mutate({
+          PageNo: item,
+          RowPerPage: perPage,
+          Operand: "%",
+          Query: Query ? Query : "",
+        });
+      }
+    }
   };
 
   const mutation = useMutation({
@@ -100,7 +154,51 @@ const PaginationComponent: React.FC<{
   });
 
   const chagneSelectHandler = (e: any) => {
-    mutation.mutate({ PageNo: 1, RowPerPage: +e.target.value });
+    if (languageID == "1") {
+      if (date) {
+        const getFromDate = dayjs(date?.from)
+          .calendar("jalali")
+          .format("YYYY/MM/DD");
+        const getToDate = dayjs(date?.to)
+          .calendar("jalali")
+          .format("YYYY/MM/DD");
+        mutation.mutate({
+          PageNo: 1,
+          RowPerPage: +e.target.value,
+          FromDate: getFromDate,
+          ToDate: getToDate,
+          Operand: "%",
+          Query: Query ? Query : "",
+        });
+      } else {
+        mutation.mutate({
+          PageNo: 1,
+          RowPerPage: +e.target.value,
+          Operand: "%",
+          Query: Query ? Query : "",
+        });
+      }
+    } else {
+      if (date) {
+        const getFromDate = dayjs(date?.from).format("YYYY/MM/DD");
+        const getToDate = dayjs(date?.to).format("YYYY/MM/DD");
+        mutation.mutate({
+          PageNo: 1,
+          RowPerPage: +e.target.value,
+          FromDate: getFromDate,
+          ToDate: getToDate,
+          Operand: "%",
+          Query: Query ? Query : "",
+        });
+      } else {
+        mutation.mutate({
+          PageNo: 1,
+          RowPerPage: +e.target.value,
+          Operand: "%",
+          Query: Query ? Query : "",
+        });
+      }
+    }
   };
 
   return (

@@ -356,6 +356,7 @@ export default function CardexFinancial() {
     },
     onSuccess: (data: any) => {
       if (data.Status == "0") {
+        setCurrentItems(data?.Data);
         setCardexTrafficFinancialData(data?.Data);
         setTotalDataCount(data?.TotalDataCount);
       } else {
@@ -645,6 +646,8 @@ export default function CardexFinancial() {
                       setTotalPageCount={setTotalPageCount}
                       activePage={activePage}
                       setActivePage={setActivePage}
+                      date={undefined}
+                      Query={""}
                       domainInput="User/Shop/Cardex?Type=User"
                     />
                   </>

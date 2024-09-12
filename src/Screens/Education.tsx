@@ -208,6 +208,7 @@ export default function Education() {
   const navigate = useNavigate();
   const [languageID, setLanguageID] = useState("1");
   const [listSliderBox, setListSliderBox] = useState([]);
+  const [TutorialAddress , setTutorialAddress] = useState();
 
   const { data: fetchedData } = useFetchDashboardData(
     +window.localStorage.getItem("ssss_language_id")!
@@ -223,6 +224,7 @@ export default function Education() {
     if (fetchedData) {
       // console.log(fetchedData)
       if (fetchedData.Status == 0) {
+        setTutorialAddress(fetchedData?.Data[0]?.TutorialAddress)
         const NameData = fetchedData?.Name?.split(",");
         const TitleData = fetchedData?.Title?.split(",");
         let arr: any = [];
@@ -232,9 +234,7 @@ export default function Education() {
             (item: any) => item == itemBox.title
           );
           arr.push(TitleData[findIndexInName]);
-          // dashboardBoxes[i].title = TitleData[findIndexInName];
         });
-        // console.log(arr)
         setListSliderBox(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
@@ -444,7 +444,7 @@ export default function Education() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <iframe src="https://cloudius.co/" className="w-full max-w-[95%] mx-auto h-[70vh]"></iframe>
+      <iframe src={TutorialAddress} className="w-full max-w-[95%] mx-auto h-[70vh]"></iframe>
     </div>
   );
 }
