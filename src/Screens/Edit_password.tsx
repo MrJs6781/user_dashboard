@@ -1,5 +1,4 @@
 import Header from "@/components/Header";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +10,7 @@ import { EditPasswordUser } from "@/types/Profile";
 import LottiePlayer from "@/components/Loading";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 export default function EditPassword() {
   const { t } = useTranslation();
@@ -39,7 +39,9 @@ export default function EditPassword() {
   };
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData();
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {

@@ -12,6 +12,7 @@ interface updatePaginationProps {
   PageNo: number;
   FromDate?: string;
   ToDate?: string;
+  languageId?: string;
   Query: string;
   Operand: string;
 }
@@ -77,6 +78,7 @@ const PaginationComponent: React.FC<{
           ToDate: getToDate,
           Operand: "%",
           Query: Query ? Query : "",
+          languageId: languageID,
         });
       } else {
         mutation.mutate({
@@ -84,6 +86,7 @@ const PaginationComponent: React.FC<{
           RowPerPage: perPage,
           Operand: "%",
           Query: Query ? Query : "",
+          languageId: languageID,
         });
       }
     } else {
@@ -97,6 +100,7 @@ const PaginationComponent: React.FC<{
           ToDate: getToDate,
           Operand: "%",
           Query: Query ? Query : "",
+          languageId: languageID,
         });
       } else {
         mutation.mutate({
@@ -104,6 +108,7 @@ const PaginationComponent: React.FC<{
           RowPerPage: perPage,
           Operand: "%",
           Query: Query ? Query : "",
+          languageId: languageID,
         });
       }
     }
@@ -133,6 +138,7 @@ const PaginationComponent: React.FC<{
     },
     onSuccess: (data: any) => {
       if (data.Status == "0") {
+        // console.log(data);
         setCurrentItems(data?.Data);
         setTotalPageCount(data?.TotalPageCount);
         setPerPage(data?.RowPerPage);
@@ -169,6 +175,7 @@ const PaginationComponent: React.FC<{
           ToDate: getToDate,
           Operand: "%",
           Query: Query ? Query : "",
+          languageId: languageID,
         });
       } else {
         mutation.mutate({
@@ -176,6 +183,7 @@ const PaginationComponent: React.FC<{
           RowPerPage: +e.target.value,
           Operand: "%",
           Query: Query ? Query : "",
+          languageId: languageID,
         });
       }
     } else {
@@ -189,6 +197,7 @@ const PaginationComponent: React.FC<{
           ToDate: getToDate,
           Operand: "%",
           Query: Query ? Query : "",
+          languageId: languageID,
         });
       } else {
         mutation.mutate({
@@ -196,6 +205,7 @@ const PaginationComponent: React.FC<{
           RowPerPage: +e.target.value,
           Operand: "%",
           Query: Query ? Query : "",
+          languageId: languageID,
         });
       }
     }

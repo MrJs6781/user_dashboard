@@ -92,10 +92,6 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={{
-        IconLeft: () => <ChevronRight className="h-4 w-4" />, // تغییر آیکون برای راست به چپ
-        IconRight: () => <ChevronLeft className="h-4 w-4" />, // تغییر آیکون برای راست به چپ
-      }}
       formatters={{
         formatCaption: (date) =>
           `${MONTHS[dayjs(date).calendar("jalali").month()]} ${dayjs(date)

@@ -27,7 +27,7 @@ import { useMutation } from "@tanstack/react-query";
 import { EditPasswordUser, EditProfileUser } from "@/types/Profile";
 import { MdEmail } from "react-icons/md";
 import { PhoneNumberRegex } from "@/Regex/PhoneNumber";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 interface ProfileUserProps {
   username: string;
@@ -101,7 +101,9 @@ export default function ProfileUser({
   const [email, setUserEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
 
-  const { data: fetchedData } = useFetchDashboardData();
+  const { data: fetchedData } = useFetchDashboardDataSlider(
+    +window.localStorage.getItem("ssss_language_id")!
+  );
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -163,6 +165,7 @@ export default function ProfileUser({
     mutation.mutate({
       OldPassword: password,
       Password: newPassword,
+      languageID: +window.localStorage.getItem("ssss_language_id")!,
     });
   };
 
@@ -236,6 +239,7 @@ export default function ProfileUser({
       Title: titleName,
       Email: email,
       Mobile: mobileNumber,
+      languageID: +window.localStorage.getItem("ssss_language_id")!,
     });
   };
 

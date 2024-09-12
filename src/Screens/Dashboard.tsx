@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import { useEffect, useState } from "react";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +15,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 const dashboardBoxes = [
   {
@@ -227,9 +227,11 @@ export default function Dashboard() {
   const [listSliderBox, setListSliderBox] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
   const { data: consumeData, isLoading: consumeDataLoading } =
-    useFetchDashboardConsume(1);
+    useFetchDashboardConsume(+window.localStorage.getItem("ssss_language_id")!);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -239,7 +241,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (fetchedData) {
-      // console.log(fetchedData)
       if (fetchedData.Status == 0) {
         const NameData = fetchedData?.Name?.split(",");
         const TitleData = fetchedData?.Title?.split(",");
@@ -250,9 +251,7 @@ export default function Dashboard() {
             (item: any) => item == itemBox.title
           );
           arr.push(TitleData[findIndexInName]);
-          // dashboardBoxes[i].title = TitleData[findIndexInName];
         });
-        // console.log(arr)
         setListSliderBox(arr);
       } else if (fetchedData.Status == "-103") {
         Cookies.remove("authToken");
@@ -266,7 +265,6 @@ export default function Dashboard() {
   }, [fetchedData]);
 
   useEffect(() => {
-    // console.log(consumeData);
     const parsedLabels = consumeData?.Data?.map(
       (item: DataItem) => item.TimeStamp
     );

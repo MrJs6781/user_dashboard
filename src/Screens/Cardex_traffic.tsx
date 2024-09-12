@@ -5,7 +5,6 @@ import LottiePlayer from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useCardexTraffic } from "@/Hooks/useCardexTraffic";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";
 import { TrafficCardexFetchData } from "@/types/Cardex";
 import { useMutation } from "@tanstack/react-query";
@@ -25,6 +24,7 @@ import "swiper/css/pagination";
 import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
 import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 const dashboardBoxes = [
   {
@@ -237,7 +237,9 @@ export default function CardexTraffic() {
   const [dateMiladi, setDateMiladi] = useState<DateRange | undefined>();
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
   const { data: cardexTraffic, isLoading: cardexTrafficLoading } =
     useCardexTraffic(+window.localStorage.getItem("ssss_language_id")!);
 

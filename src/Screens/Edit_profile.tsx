@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { PhoneNumberRegex } from "@/Regex/PhoneNumber";
 import { EditProfileUser } from "@/types/Profile";
 import { useMutation } from "@tanstack/react-query";
@@ -13,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FaUserTie } from "react-icons/fa";
 import { cn } from "@/lib/utils";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 export default function EditProfile() {
   const { t } = useTranslation();
@@ -24,7 +24,9 @@ export default function EditProfile() {
   const [languageID, setLanguageID] = useState("1");
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData();
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -68,7 +70,7 @@ export default function EditProfile() {
       Title: titleName,
       Email: email,
       Mobile: mobileNumber,
-      languageID: window.localStorage.getItem("ssss_language_id")!,
+      languageID: +window.localStorage.getItem("ssss_language_id")!,
     });
   };
 
@@ -80,6 +82,8 @@ export default function EditProfile() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      console.log(data)
 
       const response = await fetch(
         `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/EditProfile?Type=User`,

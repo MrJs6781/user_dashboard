@@ -3,7 +3,6 @@ import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import TrafficTable from "@/components/TrafficTable";
 import { Button } from "@/components/ui/button";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchTrafficData } from "@/Hooks/useFetchTrafficData";
 import { cn } from "@/lib/utils";
 import { TrafficQuery } from "@/types/Traffic";
@@ -25,6 +24,7 @@ import "swiper/css/pagination";
 import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
 import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 const dashboardBoxes = [
   {
@@ -236,7 +236,9 @@ export default function Trafic() {
   const [dateMiladi, setDateMiladi] = useState<DateRange | undefined>();
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
   const { data: trafficData, isLoading: trafficDataLoading } =
     useFetchTrafficData(
       +window.localStorage.getItem("ssss_language_id")!,

@@ -2,7 +2,6 @@ import ConsumeTable from "@/components/ConsumeTable";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import { useConsumeFetch } from "@/Hooks/useConsumeFetch";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -25,6 +24,7 @@ import "swiper/css/pagination";
 import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
 import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 const dashboardBoxes = [
   {
@@ -220,7 +220,9 @@ export default function MicroConsumption() {
   const navigate = useNavigate();
   const [perPage, setPerPage] = useState(50);
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
   const { data: consumeFetch, isLoading: consumeFetchLoading } =
     useConsumeFetch(
       +window.localStorage.getItem("ssss_language_id")!,

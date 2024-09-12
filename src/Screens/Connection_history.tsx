@@ -3,7 +3,6 @@ import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { useConnectionHistory } from "@/Hooks/useConnectionHistory";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";
 import { ConnectionHistoryWithQuery } from "@/types/ConnectionHistory";
 import { useMutation } from "@tanstack/react-query";
@@ -20,6 +19,7 @@ import "swiper/css/pagination";
 import PaginationComponent from "@/components/PaginationComponent";
 
 import { useTranslation } from "react-i18next";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 const dashboardBoxes = [
   {
@@ -232,7 +232,9 @@ export default function ConnectionHistory() {
   const [listSliderBox, setListSliderBox] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
   const { data: connectionHistory, isLoading: connectionHistoryLoading } =
     useConnectionHistory(
       +window.localStorage.getItem("ssss_language_id")!,

@@ -3,7 +3,6 @@ import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { useCardexFinancial } from "@/Hooks/useCardexFinancial";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { cn } from "@/lib/utils";
 import { TrafficFinancialCardexFetchData } from "@/types/Cardex";
 import { useMutation } from "@tanstack/react-query";
@@ -28,6 +27,7 @@ import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 const dashboardBoxes = [
   {
@@ -242,7 +242,9 @@ export default function CardexFinancial() {
   const [listSliderBox, setListSliderBox] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
   const { data: cardexFinancial, isLoading: cardexFinancialLoading } =
     useCardexFinancial(+window.localStorage.getItem("ssss_language_id")!);
 

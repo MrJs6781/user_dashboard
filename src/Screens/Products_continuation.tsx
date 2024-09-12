@@ -4,7 +4,6 @@ import LottiePlayer from "@/components/Loading";
 import RenewCart from "@/components/RenewCart";
 import RenewTable from "@/components/RenewTable";
 import { Button } from "@/components/ui/button";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchRenew } from "@/Hooks/useFetchRenew";
 import { useFetchUserProducts } from "@/Hooks/useFetchUserProducts";
 import { cn } from "@/lib/utils";
@@ -27,6 +26,7 @@ import "swiper/css/pagination";
 import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
 import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 const dashboardBoxes = [
   {
@@ -231,8 +231,10 @@ export default function Products_continuation() {
   const [perPage, setPerPage] = useState(50);
   const [currentItems, setCurrentItems] = useState([]);
 
-  const { isLoading: fetchedDataLoading, data: fetchedData } =
-    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
+  const { data: fetchedData, isLoading: fetchedDataLoading } =
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
   const { isLoading: userProductsLoading, data: userProducts } =
     useFetchUserProducts({
       languageId: +window.localStorage.getItem("ssss_language_id")!,

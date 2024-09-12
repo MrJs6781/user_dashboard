@@ -2,7 +2,6 @@ import ErrorReportsTable from "@/components/ErrorReportsTable";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
 import { Button } from "@/components/ui/button";
-import { useFetchDashboardData } from "@/Hooks/useFetchDashboardData";
 import { useFetchErrorReports } from "@/Hooks/useFetchErrorReport";
 import { cn } from "@/lib/utils";
 import { ErrorReportsWithQuery } from "@/types/ErrorReports";
@@ -20,6 +19,7 @@ import "swiper/css/pagination";
 
 import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
+import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
 const dashboardBoxes = [
   {
@@ -229,7 +229,9 @@ export default function ErrorReport() {
   const [listSliderBox, setListSliderBox] = useState([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
-    useFetchDashboardData(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchDashboardDataSlider(
+      +window.localStorage.getItem("ssss_language_id")!
+    );
   const { data: errorReports, isLoading: errorReportsLoading } =
     useFetchErrorReports(
       +window.localStorage.getItem("ssss_language_id")!,

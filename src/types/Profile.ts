@@ -4,11 +4,11 @@ export interface EditProfileUser {
   Mobile: string;
   ExternalUser?: string;
   ExternalServer?: string;
-  languageID?: string;
+  languageID?: number;
 }
 
 export interface EditPasswordUser {
   OldPassword : string;
   Password : string
-  languageID? : string
+  languageID?: number;
 }
