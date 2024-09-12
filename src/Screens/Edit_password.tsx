@@ -68,7 +68,7 @@ export default function EditPassword() {
     mutation.mutate({
       OldPassword: password,
       Password: newPassword,
-      languageID: window.localStorage.getItem("ssss_language_id")!,
+      languageID: +window.localStorage.getItem("ssss_language_id")!,
     });
   };
 

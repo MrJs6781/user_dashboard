@@ -1,5 +1,4 @@
 import * as React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import dayjs from "dayjs";
 import jalaliday from "jalaliday";
@@ -68,8 +67,8 @@ function Calendar({
           buttonVariants({ variant: "outline" }),
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
         ),
-        nav_button_previous: "absolute right-1", // تغییر موقعیت دکمه قبلی به راست
-        nav_button_next: "absolute left-1", // تغییر موقعیت دکمه بعدی به چپ
+        nav_button_previous: "absolute right-1 transform rotate-180", // تغییر موقعیت دکمه قبلی به راست و چرخاندن آن
+        nav_button_next: "absolute left-1 transform rotate-180", // تغییر موقعیت دکمه بعدی به چپ و چرخاندن آن
         table: "w-full border-collapse space-y-1",
         head_row: "flex",
         head_cell:
@@ -97,7 +96,6 @@ function Calendar({
           `${MONTHS[dayjs(date).calendar("jalali").month()]} ${dayjs(date)
             .calendar("jalali")
             .format("YYYY")}`,
-        // formatDay: (day) => day.getDate().toLocaleString("fa-IR"),
         formatDay: (date) => dayjs(date).calendar("jalali").format("D"),
         formatWeekdayName: (date) => WEEKDAYS_LONG[date.getDay()],
       }}
