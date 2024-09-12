@@ -222,7 +222,6 @@ export default function Education() {
 
   useEffect(() => {
     if (fetchedData) {
-      // console.log(fetchedData)
       if (fetchedData.Status == 0) {
         setTutorialAddress(fetchedData?.Data[0]?.TutorialAddress)
         const NameData = fetchedData?.Name?.split(",");
