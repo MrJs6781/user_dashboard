@@ -26,7 +26,7 @@ export function DatePickerWithRangeMiladi({
   setDate,
   className,
 }: DatePickerWithRangeMiladiProps) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [languageID, setLanguageID] = React.useState("1");
 
   React.useEffect(() => {
@@ -70,6 +70,7 @@ export function DatePickerWithRangeMiladi({
             selected={date}
             onSelect={setDate}
             numberOfMonths={1}
+            showOutsideDays={false}
             className={languageID == "1" ? "font-vazirB" : "font-robotoB"}
           />
         </PopoverContent>
