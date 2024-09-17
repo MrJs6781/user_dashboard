@@ -22,18 +22,18 @@ function App() {
         <Route path="/forget_password" element={<ForgetPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route
-          path="/products_continuation"
+          path="/renew"
           element={<Products_continuation />}
         />
-        <Route path="/edit_password" element={<EditPassword />} />
-        <Route path="/edit_profile" element={<EditProfile />} />
+        {/* <Route path="/change_password" element={<EditPassword />} />
+        <Route path="/edit_profile" element={<EditProfile />} /> */}
         <Route path="/trafic" element={<Trafic />} />
-        <Route path="/micro_consumption" element={<MicroConsumption />} />
-        <Route path="/connection_history" element={<ConnectionHistory />} />
+        <Route path="/consume" element={<MicroConsumption />} />
+        <Route path="/history" element={<ConnectionHistory />} />
         <Route path="/error_report" element={<ErrorReport />} />
-        <Route path="/cardex_traffic" element={<CardexTraffic />} />
-        <Route path="/cardex_financial" element={<CardexFinancial />} />
-        <Route path="/education" element={<Education />} />
+        <Route path="/traffic_cardex" element={<CardexTraffic />} />
+        <Route path="/shop_cardex" element={<CardexFinancial />} />
+        <Route path="/tutorial" element={<Education />} />
       </Routes>
     </BrowserRouter>
   );

@@ -61,7 +61,7 @@ const headerListData = [
   },
   {
     id: 2,
-    link: "/products_continuation",
+    link: "/renew",
     title: "Renew",
   },
   {
@@ -71,12 +71,12 @@ const headerListData = [
   },
   {
     id: 4,
-    link: "/micro_consumption",
+    link: "/consume",
     title: "MicroConsumption",
   },
   {
     id: 5,
-    link: "/connection_history",
+    link: "/history",
     title: "ConnectionHistory",
   },
   {
@@ -86,17 +86,17 @@ const headerListData = [
   },
   {
     id: 7,
-    link: "/cardex_traffic",
+    link: "/traffic_cardex",
     title: "CardexTraffic",
   },
   {
     id: 8,
-    link: "/cardex_financial",
+    link: "/shop_cardex",
     title: "CardexFinancial",
   },
   {
     id: 9,
-    link: "/education",
+    link: "/tutorial",
     title: "Education",
   },
   {
@@ -206,9 +206,10 @@ export default function Header({ username , titleName }: HeaderProps) {
   });
 
   const showNotificationHandler = (notificationInput: notificaitonType) => {
-    mutation.mutate({
-      NotificationID: `${notificationInput.ID}`,
-    });
+    console.log(notificationInput)
+    // mutation.mutate({
+    //   NotificationID: `${notificationInput.ID}`,
+    // });
     setShowSingleNotification(notificationInput);
   };
 
