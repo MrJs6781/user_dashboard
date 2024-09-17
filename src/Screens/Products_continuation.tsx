@@ -28,6 +28,15 @@ import PaginationComponent from "@/components/PaginationComponent";
 import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
 import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useCategoryFetch } from "@/Hooks/useFetchCategory";
+
 const dashboardBoxes = [
   {
     id: 1,
@@ -244,6 +253,10 @@ export default function Products_continuation() {
     perPage,
     1
   );
+  const { data: fetchCategoryData } = useCategoryFetch(
+    +window.localStorage.getItem("ssss_language_id")!
+  );
+
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [renewTableHeader, setRenewTableHeader]: any = useState([]);
   const [renewTableHeaderName, setRenewTableHeaderName]: any = useState([]);
@@ -254,6 +267,9 @@ export default function Products_continuation() {
   const [activePage, setActivePage] = useState(1);
   const [languageID, setLanguageID] = useState("1");
   const [dateMiladi, setDateMiladi] = useState<DateRange | undefined>();
+  const [userProductType, setUserProductType] = useState("");
+
+  const [categoryData, setCategoryData] = useState<any>([]);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -337,6 +353,27 @@ export default function Products_continuation() {
       }
     }
   }, [userRenew]);
+
+  useEffect(() => {
+    if (fetchCategoryData) {
+      if (fetchCategoryData.Status == 0) {
+        let arr: any = [];
+        fetchCategoryData?.Data?.map((item: any) => {
+          if (item.Title && item.Title.length > 0) {
+            arr.push(item.Title);
+          }
+        });
+        setCategoryData(arr);
+      } else if (fetchCategoryData.Status == "-103") {
+        Cookies.remove("authToken");
+        localStorage.removeItem("UserID");
+        navigate("/");
+        toast.error(fetchCategoryData.Message);
+      } else {
+        toast.error(fetchCategoryData.Message);
+      }
+    }
+  }, [fetchCategoryData]);
 
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -727,6 +764,24 @@ export default function Products_continuation() {
         {isActiveService == "Data" ? (
           <>
             <div className="w-full flex items-center justify-start gap-4 flex-wrap">
+              <Select
+                value={userProductType}
+                onValueChange={setUserProductType}
+              >
+                <SelectTrigger className="w-[180px] h-[56px] font-vazirM focus:ring-0 focus:ring-opacity-0">
+                  <SelectValue placeholder={t("TransactionType")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem className="font-vazirM" value="All">
+                    {t("All")}
+                  </SelectItem>
+                  {categoryData?.map((item: string, i: number) => (
+                    <SelectItem className="font-vazirM" value={item} key={i}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
                 <input
                   type="text"
@@ -865,21 +920,21 @@ export default function Products_continuation() {
                 )}
               </div>
             )}
+            {userRenewDataTable &&
+              userRenewDataTable?.length == 0 &&
+              fetchedDataLoading == false &&
+              userProductsLoading == false &&
+              userRenewLoading == false &&
+              isShowLoading == false && (
+                <div className="w-full h-[50vh] flex items-center justify-center">
+                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                    {t("CantFindData")}
+                  </h5>
+                </div>
+              )}
           </>
         )}
       </div>
-      {userRenewDataTable &&
-        userRenewDataTable?.length == 0 &&
-        fetchedDataLoading == false &&
-        userProductsLoading == false &&
-        userRenewLoading == false &&
-        isShowLoading == false && (
-          <div className="w-full h-[50vh] flex items-center justify-center">
-            <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-              {t("CantFindData")}
-            </h5>
-          </div>
-        )}
     </div>
   );
 }

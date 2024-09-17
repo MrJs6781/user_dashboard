@@ -670,7 +670,7 @@ export default function Trafic() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="w-full flex items-center justify-center gap-8 flex-col sm:flex-row mt-6">
+      <div className="w-full flex items-center justify-center gap-8 flex-col sm:flex-row mt-6 mb-6">
         <h5
           className={cn(
             "font-vazirB text-[15px] cursor-pointer",
@@ -848,18 +848,18 @@ export default function Trafic() {
                       />
                     </>
                   )}
+                  {trafficDataTable?.length == 0 &&
+                    fetchedDataLoading == false &&
+                    trafficDataLoading == false &&
+                    isShowLoading == false && (
+                      <div className="w-full h-[50vh] flex items-center justify-center">
+                        <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                          {t("CantFindData")}
+                        </h5>
+                      </div>
+                    )}
                 </>
               </div>
-              {trafficDataTable?.length == 0 &&
-                fetchedDataLoading == false &&
-                trafficDataLoading == false &&
-                isShowLoading == false && (
-                  <div className="w-full h-[50vh] flex items-center justify-center">
-                    <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-                      {t("CantFindData")}
-                    </h5>
-                  </div>
-                )}
             </>
           )}
         </div>
