@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
-export const useFetchDashboardDataSlider = (languageId?: number) => {
+export const useFetchUserTraffic = (languageId?: number) => {
   const fetchData = async () => {
     // گرفتن توکن از کوکی
     const getToken = Cookies.get("authToken"); // تابع getCookie را خودتان پیاده‌سازی کنید
@@ -10,14 +10,14 @@ export const useFetchDashboardDataSlider = (languageId?: number) => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${getToken}`);
 
-    // console.log(languageId)
-
     const response = await fetch(
-      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Dashboard?Type=User`,
+      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Traffic/Fetch?Type=User`,
       {
         method: "POST",
         headers: myHeaders,
-        body: JSON.stringify({ languageId }),
+        body: JSON.stringify({
+          languageId,
+        }),
         redirect: "follow",
       }
     );
@@ -25,5 +25,5 @@ export const useFetchDashboardDataSlider = (languageId?: number) => {
     return data;
   };
 
-  return useQuery({ queryKey: ["getDashboardSliderData"], queryFn: fetchData });
+  return useQuery({ queryKey: ["getUserTrafficData"], queryFn: fetchData });
 };

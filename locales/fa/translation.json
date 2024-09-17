@@ -66,5 +66,7 @@
   "backToLoginPage": "بازگشت به صفحه ورود",
   "recoverPassword": "بازیابی رمز عبور",
   "Education": "آموزش",
-  "Loading": "در حال پردازش اطلاعات ..."
+  "Loading": "در حال پردازش اطلاعات ...",
+  "TrafficService": "تمدید / خرید ترافیک",
+  "LastTrafficList": "لیست تمدید های قبلی"
 }

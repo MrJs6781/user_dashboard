@@ -66,5 +66,7 @@
   "backToLoginPage": "Back To Login Page",
   "recoverPassword": "Recover Password",
   "Education": "Tutorial",
-  "Loading" : "Loading ..."
+  "Loading" : "Loading ...",
+  "TrafficService" : "TrafficService",
+  "LastTrafficList" : "LastTrafficList"
 }

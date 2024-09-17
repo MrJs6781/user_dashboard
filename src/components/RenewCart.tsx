@@ -7,14 +7,21 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { UserTrafficAdd } from "@/types/Traffic";
 
 interface RenewCartProps {
-  data: UserProductResponse;
+  data: any;
   index: number;
   headerData: { name: string; title: string }[];
+  isTraffic?: boolean;
 }
 
-export default function RenewCart({ data, index, headerData }: RenewCartProps) {
+export default function RenewCart({
+  data,
+  index,
+  headerData,
+  isTraffic,
+}: RenewCartProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [languageID, setLanguageID] = useState("1");
@@ -26,11 +33,21 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
   }, []);
 
   const handleSubmit = () => {
-    mutation.mutate({
-      ProductID: `${data.ProductID}`,
-      Description: "",
-      languageID: window.localStorage.getItem("ssss_language_id")!,
-    });
+    if (isTraffic) {
+      // console.log('first')
+      console.log(data)
+      TrafficMutation.mutate({
+        ProductID: data.UserTrafficID,
+        Description: data.Description,
+        LanguageID: +window.localStorage.getItem("ssss_language_id")!,
+      });
+    } else {
+      mutation.mutate({
+        ProductID: `${data.ProductID}`,
+        Description: "",
+        languageID: window.localStorage.getItem("ssss_language_id")!,
+      });
+    }
   };
 
   const mutation = useMutation({
@@ -44,6 +61,50 @@ export default function RenewCart({ data, index, headerData }: RenewCartProps) {
 
       const response = await fetch(
         `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Renew/Add?Type=User`,
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      console.log(data);
+      if (data.Status == "0") {
+        toast.success(data.Message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else if (data.Status == "-103") {
+        toast.info(data.Message);
+        setTimeout(() => {
+          Cookies.remove("authToken");
+          localStorage.removeItem("UserID");
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error(data.Message);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err);
+    },
+  });
+
+  const TrafficMutation = useMutation({
+    mutationKey: ["TrafficAdd"],
+    mutationFn: async (MutateData: UserTrafficAdd) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Traffic/Add?Type=User`,
         {
           method: "POST",
           headers: myHeaders,

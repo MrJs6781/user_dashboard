@@ -25,8 +25,6 @@ function App() {
           path="/renew"
           element={<Products_continuation />}
         />
-        {/* <Route path="/change_password" element={<EditPassword />} />
-        <Route path="/edit_profile" element={<EditProfile />} /> */}
         <Route path="/trafic" element={<Trafic />} />
         <Route path="/consume" element={<MicroConsumption />} />
         <Route path="/history" element={<ConnectionHistory />} />

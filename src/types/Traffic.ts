@@ -31,3 +31,22 @@ export interface TrafficQuery {
   SortIndex?: number;
   languageID?: string;
 }
+
+export interface UserTrafficQuery {
+  LanguageID: string;
+  UserTrafficID?: string;
+  FromDate?: string;
+  ToDate?: string;
+  JustActive?: boolean;
+  Query?: string;
+  Operand?: string;
+  PageNo?: string;
+  RowPerPage?: string;
+  SortIndex?: number;
+}
+
+export interface UserTrafficAdd {
+  ProductID: number;
+  Description?: string;
+  LanguageID?: number;
+}
