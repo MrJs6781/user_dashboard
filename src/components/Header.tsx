@@ -207,9 +207,9 @@ export default function Header({ username , titleName }: HeaderProps) {
 
   const showNotificationHandler = (notificationInput: notificaitonType) => {
     console.log(notificationInput)
-    // mutation.mutate({
-    //   NotificationID: `${notificationInput.ID}`,
-    // });
+    mutation.mutate({
+      NotificationID: `${notificationInput.ID}`,
+    });
     setShowSingleNotification(notificationInput);
   };
 

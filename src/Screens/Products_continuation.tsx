@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { DateRange } from "react-day-picker";
 import { useMutation } from "@tanstack/react-query";
-import { UserRenewQuery } from "@/types/Renew";
+import { UserRenewProductQuery, UserRenewQuery } from "@/types/Renew";
 import dayjs from "dayjs";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -271,6 +271,7 @@ export default function Products_continuation() {
   const [userProductType, setUserProductType] = useState("");
 
   const [categoryData, setCategoryData] = useState<any>([]);
+  const [allCategoryData, setAllCategoryData] = useState<any>([]);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -359,12 +360,15 @@ export default function Products_continuation() {
     if (fetchCategoryData) {
       if (fetchCategoryData.Status == 0) {
         let arr: any = [];
+        let arr2: any = [];
         fetchCategoryData?.Data?.map((item: any) => {
           if (item.Title && item.Title.length > 0) {
             arr.push(item.Title);
+            arr2.push(item);
           }
         });
         setCategoryData(arr);
+        setAllCategoryData(arr2);
       } else if (fetchCategoryData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -488,7 +492,7 @@ export default function Products_continuation() {
 
   const searchProductsData = () => {
     setIsShowLoading(true);
-    productMutation.mutate({
+    mutation.mutate({
       Query: searchProduct,
       Operand: "%",
       PageNo: `${activePage}`,
@@ -498,9 +502,37 @@ export default function Products_continuation() {
     });
   };
 
+  const changeSelectHandler = (event: string) => {
+    setIsShowLoading(true);
+    setUserProductType(event);
+    const findItem = allCategoryData.find((item: any) => item.Title == event);
+    if (event == "All") {
+      productMutation.mutate({
+        Query: "",
+        Operand: "%",
+        PageNo: `${activePage}`,
+        ProductType : "r",
+        RowPerPage: `${perPage}`,
+        SortIndex: 1,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
+      });
+    } else {
+      productMutation.mutate({
+        Query: "",
+        Operand: "%",
+        CategoryID: findItem?.CategoryID,
+        ProductType : "r",
+        PageNo: `${activePage}`,
+        RowPerPage: `${perPage}`,
+        SortIndex: 1,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
+      });
+    }
+  };
+
   const productMutation = useMutation({
-    mutationKey: ["productFilterWithQuery"],
-    mutationFn: async (MutateData: UserRenewQuery) => {
+    mutationKey: ["productFilterWithQueryTraffic"],
+    mutationFn: async (MutateData: UserRenewProductQuery) => {
       const getToken = Cookies.get("authToken");
 
       const myHeaders = new Headers();
@@ -521,6 +553,7 @@ export default function Products_continuation() {
     },
     onSuccess: (data: any) => {
       if (data.Status == "0") {
+        // console.log(data)
         setUserProductsData(data?.Data);
       } else if (data.Status == "-103") {
         toast.info(data.Message);
@@ -539,10 +572,6 @@ export default function Products_continuation() {
       setIsShowLoading(false);
     },
   });
-
-  const changeSelectHandler = (event: string) => {
-    setUserProductType(event);
-  };
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -741,7 +770,7 @@ export default function Products_continuation() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="w-full h-auto mt-8 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
+      <div className="w-full h-auto mt-8 flex flex-col items-start px-6 overflow-y-hidden">
         <div className="w-full flex items-center justify-center gap-8 flex-col sm:flex-row">
           <h5
             className={cn(
@@ -767,7 +796,7 @@ export default function Products_continuation() {
           </h5>
         </div>
         {isActiveService == "Data" ? (
-          <>
+          <section className="w-full flex flex-col items-start gap-4 border-2 dark:border-white p-4">
             <div className="w-full flex items-center justify-start gap-4 flex-wrap">
               <Select
                 value={userProductType}
@@ -850,9 +879,9 @@ export default function Products_continuation() {
                 )}
               </>
             )}
-          </>
+          </section>
         ) : (
-          <>
+          <section className="w-full flex flex-col items-start gap-4 border-2 dark:border-white p-4">
             <div className="w-full flex items-center justify-start gap-6 flex-wrap">
               <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
                 <input
@@ -860,7 +889,7 @@ export default function Products_continuation() {
                   placeholder={t("whatAreYouLookingFor")}
                   value={searchValue}
                   onChange={(e) => changeSearchHandler(e)}
-                  className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+                  className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px]"
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -900,7 +929,7 @@ export default function Products_continuation() {
             isShowLoading ? (
               <LottiePlayer />
             ) : (
-              <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1200px] flex-col">
+              <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1200px] flex-col" style={{scrollbarWidth : "none"}}>
                 {userRenewDataTable && userRenewDataTable?.length > 0 && (
                   <>
                     <RenewTable
@@ -938,7 +967,7 @@ export default function Products_continuation() {
                   </h5>
                 </div>
               )}
-          </>
+          </section>
         )}
       </div>
     </div>

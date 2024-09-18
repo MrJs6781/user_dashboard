@@ -37,6 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { UserRenewProductQuery } from "@/types/Renew";
 
 const dashboardBoxes = [
   {
@@ -229,6 +230,7 @@ export default function Trafic() {
 
   const [userProductType, setUserProductType] = useState("");
   const [categoryData, setCategoryData] = useState<any>([]);
+  const [allCategoryData, setAllCategoryData] = useState<any>([]);
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardDataSlider(
@@ -333,12 +335,15 @@ export default function Trafic() {
     if (fetchCategoryData) {
       if (fetchCategoryData.Status == 0) {
         let arr: any = [];
+        let arr2: any = [];
         fetchCategoryData?.Data?.map((item: any) => {
           if (item.Title && item.Title.length > 0) {
             arr.push(item.Title);
+            arr2.push(item);
           }
         });
         setCategoryData(arr);
+        setAllCategoryData(arr2);
       } else if (fetchCategoryData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -512,7 +517,75 @@ export default function Trafic() {
 
   const changeSelectHandler = (event: string) => {
     setUserProductType(event);
+    setIsShowLoading(true);
+    setUserProductType(event);
+    const findItem = allCategoryData.find((item: any) => item.Title == event);
+    if (event == "All") {
+      TrafficMutation.mutate({
+        Query: "",
+        Operand: "%",
+        ProductType : "t",
+        PageNo: `${activePage}`,
+        RowPerPage: `${perPage}`,
+        SortIndex: 1,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
+      });
+    } else {
+      TrafficMutation.mutate({
+        Query: "",
+        Operand: "%",
+        ProductType : "t",
+        CategoryID: findItem?.CategoryID,
+        PageNo: `${activePage}`,
+        RowPerPage: `${perPage}`,
+        SortIndex: 1,
+        languageID: window.localStorage.getItem("ssss_language_id")!,
+      });
+    }
   };
+
+  const TrafficMutation = useMutation({
+    mutationKey: ["productFilterWithQuery"],
+    mutationFn: async (MutateData: UserRenewProductQuery) => {
+      const getToken = Cookies.get("authToken");
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${getToken}`);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}Product/Fetch?Type=User`,
+        {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+          body: JSON.stringify(MutateData),
+        }
+      );
+      const ResponseData = response.json();
+      return ResponseData;
+    },
+    onSuccess: (data: any) => {
+      if (data.Status == "0") {
+        // console.log(data);
+        setUserTrafficData(data?.Data);
+      } else if (data.Status == "-103") {
+        toast.info(data.Message);
+        setTimeout(() => {
+          Cookies.remove("authToken");
+          localStorage.removeItem("UserID");
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error(data.Message);
+      }
+      setIsShowLoading(false);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      setIsShowLoading(false);
+    },
+  });
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -711,7 +784,7 @@ export default function Trafic() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="w-full flex items-center justify-center gap-8 flex-col sm:flex-row mt-6 mb-6">
+      <div className="w-full flex items-center justify-center gap-8 flex-col sm:flex-row mt-6">
         <h5
           className={cn(
             "font-vazirB text-[15px] cursor-pointer",
@@ -736,8 +809,8 @@ export default function Trafic() {
         </h5>
       </div>
       {isActiveService == "Data" ? (
-        <>
-          <div className="w-[95%] mx-auto flex items-center justify-start gap-4 flex-wrap">
+        <section className="w-[98%] mx-auto flex flex-col items-start gap-4 border-2 dark:border-white p-4">
+          <div className="w-full mx-auto flex items-center justify-start gap-4 flex-wrap">
             <Select
               value={userProductType}
               onValueChange={(event) => changeSelectHandler(event)}
@@ -797,7 +870,7 @@ export default function Trafic() {
           ) : (
             <>
               {userTrafficData && userTrafficData.length > 0 ? (
-                <ul className="flex items-start justify-start gap-6 flex-wrap w-[95%] mx-auto mt-8">
+                <ul className="flex items-start justify-start gap-6 flex-wrap w-full mx-auto mt-8">
                   {userTrafficData &&
                     userTrafficData?.map(
                       (item: UserProductResponse, i: number) => (
@@ -820,9 +893,9 @@ export default function Trafic() {
               )}
             </>
           )}
-        </>
+        </section>
       ) : (
-        <div className="w-full h-auto mt-6 flex flex-col items-start gap-5 px-6 overflow-y-hidden">
+        <div className="w-full h-auto flex flex-col items-start gap-5 px-6 overflow-y-hidden border-2 dark:border-white p-4">
           <div className="w-full flex items-center justify-start gap-6 flex-wrap">
             <span className="w-fit flex items-center justify-start gap-2">
               <Checkbox
@@ -882,45 +955,46 @@ export default function Trafic() {
           {fetchedDataLoading || trafficDataLoading || isShowLoading ? (
             <LottiePlayer />
           ) : (
-            <>
-              <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
-                <>
-                  {trafficDataTable?.length > 0 && (
-                    <>
-                      <TrafficTable
-                        data={currentItems}
-                        headerData={trafficTableHeader}
-                        headerDataName={trafficTableHeaderName}
-                      />
-                      <PaginationComponent
-                        perPage={perPage}
-                        setCurrentItems={setCurrentItems}
-                        setPerPage={setPerPage}
-                        TotalDataCount={TotalDataCount}
-                        TotalPageCount={TotalPageCount}
-                        setIsShowLoading={setIsShowLoading}
-                        setTotalPageCount={setTotalPageCount}
-                        activePage={activePage}
-                        setActivePage={setActivePage}
-                        date={languageID == "1" ? date : dateMiladi}
-                        Query={searchValue}
-                        domainInput="User/Traffic/Fetch?Type=User"
-                      />
-                    </>
+            <div
+              className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col"
+              style={{ scrollbarWidth: "none" }}
+            >
+              <>
+                {trafficDataTable?.length > 0 && (
+                  <>
+                    <TrafficTable
+                      data={currentItems}
+                      headerData={trafficTableHeader}
+                      headerDataName={trafficTableHeaderName}
+                    />
+                    <PaginationComponent
+                      perPage={perPage}
+                      setCurrentItems={setCurrentItems}
+                      setPerPage={setPerPage}
+                      TotalDataCount={TotalDataCount}
+                      TotalPageCount={TotalPageCount}
+                      setIsShowLoading={setIsShowLoading}
+                      setTotalPageCount={setTotalPageCount}
+                      activePage={activePage}
+                      setActivePage={setActivePage}
+                      date={languageID == "1" ? date : dateMiladi}
+                      Query={searchValue}
+                      domainInput="User/Traffic/Fetch?Type=User"
+                    />
+                  </>
+                )}
+                {trafficDataTable?.length == 0 &&
+                  fetchedDataLoading == false &&
+                  trafficDataLoading == false &&
+                  isShowLoading == false && (
+                    <div className="w-full h-[50vh] flex items-center justify-center">
+                      <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                        {t("CantFindData")}
+                      </h5>
+                    </div>
                   )}
-                  {trafficDataTable?.length == 0 &&
-                    fetchedDataLoading == false &&
-                    trafficDataLoading == false &&
-                    isShowLoading == false && (
-                      <div className="w-full h-[50vh] flex items-center justify-center">
-                        <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-                          {t("CantFindData")}
-                        </h5>
-                      </div>
-                    )}
-                </>
-              </div>
-            </>
+              </>
+            </div>
           )}
         </div>
       )}

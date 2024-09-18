@@ -556,7 +556,7 @@ export default function ErrorReport() {
               placeholder={t("whatAreYouLookingFor")}
               value={searchValue}
               onChange={(e) => changeSearchHandler(e)}
-              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px]"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -586,7 +586,7 @@ export default function ErrorReport() {
           <LottiePlayer />
         ) : (
           <>
-            <div className="w-full flex flex-col items-start justify-center overflow-x-scroll min-w-[800px]">
+            <div className="w-full flex flex-col items-start justify-center overflow-x-scroll min-w-[800px]" style={{scrollbarWidth : "none"}}>
               <>
                 {errorReportsTableData.length > 0 && (
                   <>

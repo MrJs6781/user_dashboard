@@ -47,3 +47,14 @@ export interface UserRenewQuery {
   SortIndex?: number;
   languageID?: string;
 }
+
+export interface UserRenewProductQuery {
+  CategoryID?: string;
+  ProductType?: string;
+  Query?: string;
+  Operand?: string;
+  PageNo?: string;
+  RowPerPage?: string;
+  SortIndex?: number;
+  languageID?: string;
+}

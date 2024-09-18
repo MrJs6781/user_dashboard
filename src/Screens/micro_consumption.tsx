@@ -624,7 +624,7 @@ export default function MicroConsumption() {
               placeholder={t("whatAreYouLookingFor")}
               value={searchValue}
               onChange={(e) => changeSearchHandler(e)}
-              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px]"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -662,7 +662,7 @@ export default function MicroConsumption() {
           <LottiePlayer />
         ) : (
           <>
-            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col">
+            <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col" style={{scrollbarWidth : "none"}}>
               <>
                 {consumeFetchData.length > 0 && (
                   <>
