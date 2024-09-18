@@ -3,8 +3,6 @@ import Login from "./Screens/Auth/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Screens/Dashboard";
 import Products_continuation from "./Screens/Products_continuation";
-import EditPassword from "./Screens/Edit_password";
-import EditProfile from "./Screens/Edit_profile";
 import Trafic from "./Screens/Trafic";
 import MicroConsumption from "./Screens/micro_consumption";
 import ConnectionHistory from "./Screens/Connection_history";

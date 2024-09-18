@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
-export const useCategoryFetch = (
-  languageId?: number,
-) => {
+export const useCategoryFetch = (languageId?: number, type?: string) => {
   const fetchData = async () => {
     // گرفتن توکن از کوکی
     const getToken = Cookies.get("authToken"); // تابع getCookie را خودتان پیاده‌سازی کنید
@@ -19,6 +17,7 @@ export const useCategoryFetch = (
         headers: myHeaders,
         body: JSON.stringify({
           languageId,
+          ProductType: type,
         }),
         redirect: "follow",
       }

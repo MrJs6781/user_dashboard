@@ -28,6 +28,15 @@ import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider
 import { useFetchUserTraffic } from "@/Hooks/useFetchUserTraffic";
 import { UserProductResponse } from "@/types/UserProducts";
 import RenewCart from "@/components/RenewCart";
+import { useCategoryFetch } from "@/Hooks/useFetchCategory";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const dashboardBoxes = [
   {
@@ -218,6 +227,9 @@ export default function Trafic() {
   const [userTrafficHeader, setUserTrafficHeader]: any = useState([]);
   const [userTrafficData, setUserTrafficData] = useState([]);
 
+  const [userProductType, setUserProductType] = useState("");
+  const [categoryData, setCategoryData] = useState<any>([]);
+
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardDataSlider(
       +window.localStorage.getItem("ssss_language_id")!
@@ -230,6 +242,10 @@ export default function Trafic() {
     );
   const { isLoading: userTrafficLoading, data: userTraffic } =
     useFetchUserTraffic(+window.localStorage.getItem("ssss_language_id")!);
+  const { data: fetchCategoryData } = useCategoryFetch(
+    +window.localStorage.getItem("ssss_language_id")!,
+    "t"
+  );
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -312,6 +328,27 @@ export default function Trafic() {
       }
     }
   }, [userTraffic]);
+
+  useEffect(() => {
+    if (fetchCategoryData) {
+      if (fetchCategoryData.Status == 0) {
+        let arr: any = [];
+        fetchCategoryData?.Data?.map((item: any) => {
+          if (item.Title && item.Title.length > 0) {
+            arr.push(item.Title);
+          }
+        });
+        setCategoryData(arr);
+      } else if (fetchCategoryData.Status == "-103") {
+        Cookies.remove("authToken");
+        localStorage.removeItem("UserID");
+        navigate("/");
+        toast.error(fetchCategoryData.Message);
+      } else {
+        toast.error(fetchCategoryData.Message);
+      }
+    }
+  }, [fetchCategoryData]);
 
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -472,6 +509,10 @@ export default function Trafic() {
       setIsShowLoading(false);
     },
   });
+
+  const changeSelectHandler = (event: string) => {
+    setUserProductType(event);
+  };
 
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
@@ -697,6 +738,25 @@ export default function Trafic() {
       {isActiveService == "Data" ? (
         <>
           <div className="w-[95%] mx-auto flex items-center justify-start gap-4 flex-wrap">
+            <Select
+              value={userProductType}
+              onValueChange={(event) => changeSelectHandler(event)}
+              dir={languageID == "1" ? "rtl" : "ltr"}
+            >
+              <SelectTrigger className="w-[180px] h-[56px] font-vazirM focus:ring-0 focus:ring-opacity-0">
+                <SelectValue placeholder={t("FilterBy")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem className="font-vazirM" value="All">
+                  {t("All")}
+                </SelectItem>
+                {categoryData?.map((item: string, i: number) => (
+                  <SelectItem className="font-vazirM" value={item} key={i}>
+                    {item}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
               <input
                 type="text"

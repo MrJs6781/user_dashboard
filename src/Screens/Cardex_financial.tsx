@@ -549,6 +549,7 @@ export default function CardexFinancial() {
           <Select
             value={cardexFinancialType}
             onValueChange={setCardexFinancialType}
+            dir={languageID == "1" ? "rtl" : "ltr"}
           >
             <SelectTrigger className="w-[180px] h-[56px] font-vazirM focus:ring-0 focus:ring-opacity-0">
               <SelectValue placeholder={t("TransactionType")} />

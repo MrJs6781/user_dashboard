@@ -34,8 +34,6 @@ export default function RenewCart({
 
   const handleSubmit = () => {
     if (isTraffic) {
-      // console.log('first')
-      console.log(data)
       TrafficMutation.mutate({
         ProductID: data.UserTrafficID,
         Description: data.Description,

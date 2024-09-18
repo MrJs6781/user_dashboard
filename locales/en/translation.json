@@ -68,5 +68,6 @@
   "Education": "Tutorial",
   "Loading" : "Loading ...",
   "TrafficService" : "TrafficService",
-  "LastTrafficList" : "LastTrafficList"
+  "LastTrafficList" : "LastTrafficList",
+  "FilterBy" : "Filter By"
 }

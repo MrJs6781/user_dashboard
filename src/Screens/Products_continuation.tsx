@@ -254,7 +254,8 @@ export default function Products_continuation() {
     1
   );
   const { data: fetchCategoryData } = useCategoryFetch(
-    +window.localStorage.getItem("ssss_language_id")!
+    +window.localStorage.getItem("ssss_language_id")!,
+    "r"
   );
 
   const [isShowLoading, setIsShowLoading] = useState(false);
@@ -539,6 +540,10 @@ export default function Products_continuation() {
     },
   });
 
+  const changeSelectHandler = (event: string) => {
+    setUserProductType(event);
+  };
+
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
       <Header
@@ -766,10 +771,11 @@ export default function Products_continuation() {
             <div className="w-full flex items-center justify-start gap-4 flex-wrap">
               <Select
                 value={userProductType}
-                onValueChange={setUserProductType}
+                onValueChange={(event) => changeSelectHandler(event)}
+                dir={languageID == "1" ? "rtl" : "ltr"}
               >
                 <SelectTrigger className="w-[180px] h-[56px] font-vazirM focus:ring-0 focus:ring-opacity-0">
-                  <SelectValue placeholder={t("TransactionType")} />
+                  <SelectValue placeholder={t("FilterBy")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem className="font-vazirM" value="All">
