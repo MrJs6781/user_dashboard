@@ -1,4 +1,3 @@
-import { UserProductResponse } from "@/types/UserProducts";
 import { UserRenewAdd } from "@/types/Renew";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
