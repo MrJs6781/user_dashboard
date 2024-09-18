@@ -25,7 +25,6 @@ import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
 import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
 import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
-import { useFetchUserTraffic } from "@/Hooks/useFetchUserTraffic";
 import { UserProductResponse } from "@/types/UserProducts";
 import RenewCart from "@/components/RenewCart";
 import { useCategoryFetch } from "@/Hooks/useFetchCategory";
@@ -38,6 +37,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UserRenewProductQuery } from "@/types/Renew";
+import { useFetchUserTraffic } from "@/Hooks/useFetchUserTraffic";
 
 const dashboardBoxes = [
   {
@@ -243,7 +243,9 @@ export default function Trafic() {
       1
     );
   const { isLoading: userTrafficLoading, data: userTraffic } =
-    useFetchUserTraffic(+window.localStorage.getItem("ssss_language_id")!);
+    useFetchUserTraffic({
+      languageId: +window.localStorage.getItem("ssss_language_id")!,
+    });
   const { data: fetchCategoryData } = useCategoryFetch(
     +window.localStorage.getItem("ssss_language_id")!,
     "t"
@@ -524,7 +526,7 @@ export default function Trafic() {
       TrafficMutation.mutate({
         Query: "",
         Operand: "%",
-        ProductType : "t",
+        ProductType: "t",
         PageNo: `${activePage}`,
         RowPerPage: `${perPage}`,
         SortIndex: 1,
@@ -534,7 +536,7 @@ export default function Trafic() {
       TrafficMutation.mutate({
         Query: "",
         Operand: "%",
-        ProductType : "t",
+        ProductType: "t",
         CategoryID: findItem?.CategoryID,
         PageNo: `${activePage}`,
         RowPerPage: `${perPage}`,

@@ -33,9 +33,9 @@ export default function RenewCart({
 
   const handleSubmit = () => {
     if (isTraffic) {
-      // console.log(data)
+      console.log(data)
       TrafficMutation.mutate({
-        ProductID: data.UserTrafficID,
+        ProductID: data.ProductID,
         Description: data.Description,
         LanguageID: +window.localStorage.getItem("ssss_language_id")!,
       });

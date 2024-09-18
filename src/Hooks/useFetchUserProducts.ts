@@ -26,7 +26,8 @@ export const useFetchUserProducts = ({
       Query,
       RowPerPage,
       SortIndex,
-      languageId
+      languageId,
+      ProductType : "r"
     };
 
     const response = await fetch(

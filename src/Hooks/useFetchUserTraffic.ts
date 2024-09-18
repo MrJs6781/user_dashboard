@@ -1,24 +1,42 @@
+import { UserProducts } from "@/types/UserProducts";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
-export const useFetchUserTraffic = (languageId?: number) => {
+export const useFetchUserTraffic = ({
+  Operand,
+  PageNo,
+  Query,
+  RowPerPage,
+  SortIndex,
+  languageId,
+}: UserProducts) => {
   const fetchData = async () => {
     // گرفتن توکن از کوکی
     const getToken = Cookies.get("authToken"); // تابع getCookie را خودتان پیاده‌سازی کنید
+
+    // console.log(token);
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${getToken}`);
 
+    const RequestBody = {
+      Operand,
+      PageNo,
+      Query,
+      RowPerPage,
+      SortIndex,
+      languageId,
+      ProductType: "t",
+    };
+
     const response = await fetch(
-      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}User/Traffic/Fetch?Type=User`,
+      `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}Product/Fetch?Type=User`,
       {
         method: "POST",
         headers: myHeaders,
-        body: JSON.stringify({
-          languageId,
-        }),
         redirect: "follow",
+        body: JSON.stringify(RequestBody),
       }
     );
     const data = response.json();
