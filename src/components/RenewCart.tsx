@@ -33,7 +33,6 @@ export default function RenewCart({
 
   const handleSubmit = () => {
     if (isTraffic) {
-      console.log(data)
       TrafficMutation.mutate({
         ProductID: data.ProductID,
         Description: data.Description,
@@ -136,6 +135,64 @@ export default function RenewCart({
     },
   });
 
+  if (isTraffic) {
+    return (
+      <div
+        className="w-full sm:max-w-[280px] md:max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation"
+        style={
+          {
+            "--i": index + 1, // تعیین مقدار --i برای هر آیتم
+          } as React.CSSProperties
+        }
+      >
+        <img
+          src={
+            (data as any)["ImageUrl"]
+              ? (data as any)["ImageUrl"]
+              : "/public/product_image.jpg"
+          }
+          alt="Image"
+          className="w-full h-full max-h-[150px] min-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
+        />
+        <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
+          {headerData?.map(({ name, title }, i) => {
+            if (
+              name != "ImageUrl" &&
+              name != "CategoryTitle" &&
+              name != "GroupTraffic" &&
+              name != "Fi" &&
+              name != "GroupTitle"
+            ) {
+              return (
+                <li
+                  key={i}
+                  className={cn(
+                    "flex items-center gap-2 text-[15px] font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#a1c4fd] dark:to-[#c2e9fb] from-[#4338ca] to-[#0f766e]",
+                    languageID == "1" ? "" : "font-robotoB"
+                  )}
+                >
+                  {title} :{" "}
+                  <h5 className="gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b]">
+                    {(data as any)[name] ? (data as any)[name] : "_"}
+                  </h5>
+                </li>
+              );
+            }
+          })}
+        </ul>
+        <button
+          className={cn(
+            "w-[95%] mx-auto mb-4 rounded-[12px] h-[50px] flex items-center justify-center outline-none cursor-pointer border-none bg-[#a855f7] dark:bg-[#1e293b]",
+            languageID == "1" ? "" : "font-robotoB"
+          )}
+          onClick={handleSubmit}
+        >
+          <p className="text-[15px] font-vazirB text-white">{t("Renew")}</p>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div
       className="w-full sm:max-w-[280px] md:max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation"
@@ -156,7 +213,13 @@ export default function RenewCart({
       />
       <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
         {headerData?.map(({ name, title }, i) => {
-          if (name != "ImageUrl") {
+          if (
+            name != "ImageUrl" &&
+            name != "CategoryTitle" &&
+            name != "Fi" &&
+            name != "Traffic" &&
+            name != "GroupTitle"
+          ) {
             return (
               <li
                 key={i}
