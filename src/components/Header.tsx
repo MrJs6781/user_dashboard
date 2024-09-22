@@ -66,7 +66,7 @@ const headerListData = [
   },
   {
     id: 3,
-    link: "/trafic",
+    link: "/traffic",
     title: "Traffic",
   },
   {

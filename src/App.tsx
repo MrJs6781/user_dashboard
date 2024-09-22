@@ -23,7 +23,7 @@ function App() {
           path="/renew"
           element={<Products_continuation />}
         />
-        <Route path="/trafic" element={<Trafic />} />
+        <Route path="/traffic" element={<Trafic />} />
         <Route path="/consume" element={<MicroConsumption />} />
         <Route path="/history" element={<ConnectionHistory />} />
         <Route path="/error_report" element={<ErrorReport />} />
