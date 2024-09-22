@@ -291,10 +291,10 @@ export default function ProfileUser({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <span className="w-fit min-w-[120px] cursor-pointer flex items-center gap-4 justify-between px-2 border h-[28px]">
+        <span className="w-fit min-w-[120px] cursor-pointer flex items-center gap-4 justify-between px-2 border min-h-[28px]">
           <span className="flex items-center justify-start gap-2">
             <FaUserTie className="text-[20px] w-[14px] h-[14px]" />
-            <p className="text-[14px] font-semibold">{titleNameInput}</p>
+            <p className={cn("text-[12px] sm:text-[14px] font-semibold" , languageID == "1" ? "font-vazirS" : "font-robotoS")}>{titleNameInput}</p>
           </span>
           <FaAngleDown className="text-[10px]" />
         </span>

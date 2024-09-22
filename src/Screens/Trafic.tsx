@@ -811,7 +811,7 @@ export default function Trafic() {
         </h5>
       </div>
       {isActiveService == "Data" ? (
-        <section className="w-[98%] mx-auto flex flex-col items-start gap-4 border-2 dark:border-white p-4">
+        <section className="w-[98%] mx-auto flex flex-col items-start gap-4 p-4 pt-8">
           <div className="w-full mx-auto flex items-center justify-start gap-4 flex-wrap">
             <Select
               value={userProductType}
@@ -897,7 +897,7 @@ export default function Trafic() {
           )}
         </section>
       ) : (
-        <div className="w-full h-auto flex flex-col items-start gap-5 px-6 overflow-y-hidden border-2 dark:border-white p-4">
+        <div className="w-full h-auto flex flex-col items-start gap-5 px-6 overflow-y-hidden pt-8 p-4">
           <div className="w-full flex items-center justify-start gap-6 flex-wrap">
             <span className="w-fit flex items-center justify-start gap-2">
               <Checkbox

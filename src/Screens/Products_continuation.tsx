@@ -796,7 +796,7 @@ export default function Products_continuation() {
           </h5>
         </div>
         {isActiveService == "Data" ? (
-          <section className="w-full flex flex-col items-start gap-4 border-2 dark:border-white p-4">
+          <section className="w-full flex flex-col items-start gap-4 p-4 pt-8">
             <div className="w-full flex items-center justify-start gap-4 flex-wrap">
               <Select
                 value={userProductType}
@@ -881,7 +881,7 @@ export default function Products_continuation() {
             )}
           </section>
         ) : (
-          <section className="w-full flex flex-col items-start gap-4 border-2 dark:border-white p-4">
+          <section className="w-full flex flex-col items-start gap-4 p-4 pt-8">
             <div className="w-full flex items-center justify-start gap-6 flex-wrap">
               <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
                 <input

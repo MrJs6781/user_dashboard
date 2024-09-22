@@ -206,7 +206,7 @@ export default function Header({ username , titleName }: HeaderProps) {
   });
 
   const showNotificationHandler = (notificationInput: notificaitonType) => {
-    console.log(notificationInput)
+    // console.log(notificationInput)
     mutation.mutate({
       NotificationID: `${notificationInput.ID}`,
     });
@@ -360,15 +360,15 @@ export default function Header({ username , titleName }: HeaderProps) {
                       <div className="mb-4 grid grid-cols-[0px_1fr] items-start pb-4 last:mb-0 last:pb-0 mt-4">
                         <span className="flex h-2 w-2 translate-y-1 rounded-full" />
                         <div className="space-y-2">
-                          <p className="text-[11px] sm:text-[17px] font-medium leading-none w-fit font-vazirB">
+                          <p className="text-[11px] sm:text-[17px] font-medium w-fit font-vazirB">
                             {showSingleNotification?.Title}
                           </p>
                           <p
                             className="text-[11px] sm:text-sm text-muted-foreground w-fit font-vazirM"
                             style={
                               getLanguageId == "1"
-                                ? { textAlign: "right" }
-                                : { textAlign: "left" }
+                                ? { textAlign: "right" , lineHeight : "30px" }
+                                : { textAlign: "left" , lineHeight : "30px" }
                             }
                           >
                             {showSingleNotification?.Text}
