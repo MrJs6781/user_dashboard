@@ -175,7 +175,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "ExpirePeriodDesc",
+    title: "ExpirationTime",
   },
   {
     id: 8,

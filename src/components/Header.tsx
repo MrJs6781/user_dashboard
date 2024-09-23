@@ -144,6 +144,7 @@ export default function Header({ username , titleName }: HeaderProps) {
   }, []);
 
   useEffect(() => {
+    // console.log(notificationData)
     setShowAllNotification(notificationData?.Data);
   }, [notificationData]);
 
@@ -219,7 +220,7 @@ export default function Header({ username , titleName }: HeaderProps) {
 
   return (
     <div
-      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] border-b dark:border-b fixed top-0 z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] border-b dark:border-b fixed top-0 left-0 z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
       style={{
         borderTopLeftRadius: "0",
         borderTopRightRadius: "0",
@@ -346,7 +347,7 @@ export default function Header({ username , titleName }: HeaderProps) {
                   ? { direction: "rtl" }
                   : { direction: "ltr" }
               }
-              className="w-[75%] sm:w-full"
+              className="w-[75%] sm:w-full max-h-[80vh] overflow-auto"
             >
               <DialogHeader>
                 <DialogTitle className="w-full flex items-center justify-center">
@@ -364,7 +365,7 @@ export default function Header({ username , titleName }: HeaderProps) {
                             {showSingleNotification?.Title}
                           </p>
                           <p
-                            className="text-[11px] sm:text-sm text-muted-foreground w-fit font-vazirM"
+                            className="text-[11px] sm:text-sm text-muted-foreground w-fit font-vazirM whitespace-pre-wrap"
                             style={
                               getLanguageId == "1"
                                 ? { textAlign: "right" , lineHeight : "30px" }

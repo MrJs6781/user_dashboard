@@ -153,7 +153,7 @@ const dashboardBoxes = [
       </svg>
     ),
     bg: "",
-    title: "ExpirePeriodDesc",
+    title: "ExpirationTime",
   },
   {
     id: 8,
@@ -216,9 +216,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (fetchedData) {
+      // console.log(fetchedData)
       if (fetchedData.Status == 0) {
         const NameData = fetchedData?.Name?.split(",");
+        // console.log(NameData)
         const TitleData = fetchedData?.Title?.split(",");
+        // console.log(TitleData)
         let arr: any = [];
 
         dashboardBoxes.map((itemBox) => {
