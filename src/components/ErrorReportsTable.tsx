@@ -26,7 +26,7 @@ const ErrorReportsTable: React.FC<{
   }, []);
 
   return (
-    <div className="overflow-x-auto w-full">
+    <div className="overflow-x-auto w-full min-w-[1100px]">
       <Table className="table-fixed w-full">
         <TableHeader>
           <TableRow>
@@ -64,7 +64,7 @@ const ErrorReportsTable: React.FC<{
                     return (
                       <TableCell
                         className={cn(
-                          "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                          "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[13px]",
                           languageID == "1" ? "" : "font-robotoB"
                         )}
                         key={index + 10000}
@@ -92,7 +92,7 @@ const ErrorReportsTable: React.FC<{
                     return (
                       <TableCell
                         className={cn(
-                          "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[15px]",
+                          "text-center px-4 py-5 font-vazirB gradiant_to_color bg-gradient-to-r dark:from-[#BFF098] dark:to-[#6FD6FF] from-[#fb7185] to-[#64748b] border text-[13px]",
                           languageID == "1" ? "" : "font-robotoB"
                         )}
                         key={index + 10000}

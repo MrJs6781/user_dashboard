@@ -220,7 +220,7 @@ export default function Header({ username , titleName }: HeaderProps) {
 
   return (
     <div
-      className="w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] border-b dark:border-b fixed top-0 left-0 z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      className={cn("w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] border-b dark:border-b fixed top-0  z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60" , languageID == "1" ? "left-0" : "right-0 left-0")}
       style={{
         borderTopLeftRadius: "0",
         borderTopRightRadius: "0",

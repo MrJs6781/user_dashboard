@@ -22,8 +22,9 @@ export const useFetchNotificationData = (languageId?: number) => {
 
     let data = await response.text();
 
-    const cleanedData = data.replace(/(\r\n|\n|\r)/gm, "\\n")
-    const jsonData = JSON.parse(cleanedData);
+    // حذف تمامی کاراکترهای اینتر و خط جدید از رشته
+    const cleanedData = data.replace(/(\r\n|\n|\r)/gm, ""); // حذف تمامی اینترها و کاراکترهای خط جدید
+    const jsonData = JSON.parse(cleanedData); // تبدیل رشته به JSON
 
     return jsonData;
   };
