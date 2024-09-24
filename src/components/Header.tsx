@@ -105,7 +105,7 @@ const headerListData = [
   },
 ];
 
-export default function Header({ username , titleName }: HeaderProps) {
+export default function Header({ username, titleName }: HeaderProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -120,7 +120,7 @@ export default function Header({ username , titleName }: HeaderProps) {
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language")) {
       const getLang = window.localStorage.getItem("ssss_language")!;
-      setLanguageID(getLang)
+      setLanguageID(getLang);
       if (getLang == "en") {
         const getHTML = window.document.getElementById("root_parent");
         getHTML?.style.setProperty("direction", "ltr");
@@ -144,7 +144,6 @@ export default function Header({ username , titleName }: HeaderProps) {
   }, []);
 
   useEffect(() => {
-    // console.log(notificationData)
     setShowAllNotification(notificationData?.Data);
   }, [notificationData]);
 
@@ -183,11 +182,7 @@ export default function Header({ username , titleName }: HeaderProps) {
       return ResponseData;
     },
     onSuccess: (data: any) => {
-      // console.log(data);
       if (data.Status == "0") {
-        showAllNotification.pop()
-        // setShowAllNotification(data?.Data);
-        // setTotalDataCount(data?.TotalDataCount);
       } else if (data.Status == "-103") {
         toast.info(data.Message);
         setTimeout(() => {
@@ -198,20 +193,21 @@ export default function Header({ username , titleName }: HeaderProps) {
       } else {
         toast.error(data.Message);
       }
-      // setIsShowLoading(false);
     },
     onError: (err: any) => {
       console.log(err);
-      // setIsShowLoading(false);
     },
   });
 
   const showNotificationHandler = (notificationInput: notificaitonType) => {
-    // console.log(notificationInput)
     mutation.mutate({
       NotificationID: `${notificationInput.ID}`,
     });
     setShowSingleNotification(notificationInput);
+    const filterItem = showAllNotification.filter(
+      (notif: notificaitonType) => notif.ID != notificationInput.ID
+    );
+    setShowAllNotification(filterItem);
   };
 
   const changeOpenHandler = () => {
@@ -220,7 +216,10 @@ export default function Header({ username , titleName }: HeaderProps) {
 
   return (
     <div
-      className={cn("w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] border-b dark:border-b fixed top-0  z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60" , languageID == "1" ? "left-0" : "right-0 left-0")}
+      className={cn(
+        "w-full flex items-center justify-between px-6 h-[60px] dark:border-b-[#eeeeee50] border-b dark:border-b fixed top-0  z-20 border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        languageID == "1" ? "left-0" : "right-0 left-0"
+      )}
       style={{
         borderTopLeftRadius: "0",
         borderTopRightRadius: "0",
@@ -335,8 +334,13 @@ export default function Header({ username , titleName }: HeaderProps) {
               <IoMdNotificationsOutline className="cursor-pointer w-[20px] h-[20px] relative" />
               {showAllNotification && showAllNotification.length > 0 && (
                 <span className="w-[18px] h-[18px] rounded-full flex items-center justify-center bg-red-500 absolute top-[-10px] right-[-10px]">
-                  <p className={cn("text-[12px] font-semibold text-white font-vazirB" , languageID == "1" ? "" : "font-robotoB")}>
-                    {notificationData?.Data?.length}
+                  <p
+                    className={cn(
+                      "text-[12px] font-semibold text-white font-vazirB",
+                      languageID == "1" ? "" : "font-robotoB"
+                    )}
+                  >
+                    {showAllNotification?.length}
                   </p>
                 </span>
               )}
@@ -368,8 +372,8 @@ export default function Header({ username , titleName }: HeaderProps) {
                             className="text-[11px] sm:text-sm text-muted-foreground w-fit font-vazirM whitespace-pre-wrap"
                             style={
                               getLanguageId == "1"
-                                ? { textAlign: "right" , lineHeight : "30px" }
-                                : { textAlign: "left" , lineHeight : "30px" }
+                                ? { textAlign: "right", lineHeight: "30px" }
+                                : { textAlign: "left", lineHeight: "30px" }
                             }
                           >
                             {showSingleNotification?.Text}
