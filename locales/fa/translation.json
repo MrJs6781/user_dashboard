@@ -69,5 +69,9 @@
   "Loading": "در حال پردازش اطلاعات ...",
   "TrafficService": "تمدید / خرید ترافیک",
   "LastTrafficList": "لیست تمدید های قبلی",
-  "FilterBy": "فیلتر بر اساس"
+  "FilterBy": "فیلتر بر اساس",
+  "Shop": "فروشگاه",
+  "buyProduct": "خرید محصول",
+  "renewalProduct": "تمدید محصول",
+  "buyTraffic": "خرید ترافیک"
 }

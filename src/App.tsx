@@ -11,6 +11,7 @@ import CardexTraffic from "./Screens/Cardex_traffic";
 import CardexFinancial from "./Screens/Cardex_financial";
 import ForgetPassword from "./Screens/Auth/ForgetPassword";
 import Education from "./Screens/Education";
+import Shop from "./Screens/Shop";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/traffic_cardex" element={<CardexTraffic />} />
         <Route path="/shop_cardex" element={<CardexFinancial />} />
         <Route path="/tutorial" element={<Education />} />
+        <Route path="/shop" element={<Shop />} />
       </Routes>
     </BrowserRouter>
   );

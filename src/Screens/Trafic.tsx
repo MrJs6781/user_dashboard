@@ -245,6 +245,7 @@ export default function Trafic() {
   const { isLoading: userTrafficLoading, data: userTraffic } =
     useFetchUserTraffic({
       languageId: +window.localStorage.getItem("ssss_language_id")!,
+      ProductType: "t",
     });
   const { data: fetchCategoryData } = useCategoryFetch(
     +window.localStorage.getItem("ssss_language_id")!,
@@ -669,7 +670,7 @@ export default function Trafic() {
             <li
               key={item.id}
               className={cn(
-                "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3 fade_in_animation"
+                "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3 fade_in_animation hover:outline-purple-800 hover:outline hover:shadow-xl"
               )}
               style={
                 {
@@ -792,7 +793,7 @@ export default function Trafic() {
             "font-vazirB text-[15px] cursor-pointer",
             isActiveService == "Chart"
               ? "opacity-70"
-              : "border-2 p-4 dark:border-white border-black"
+              : "border-2 p-4 dark:border-white border-black rounded-lg"
           )}
           onClick={() => setIsActiveService("Data")}
         >
@@ -803,7 +804,7 @@ export default function Trafic() {
             "font-vazirB text-[15px] cursor-pointer",
             isActiveService == "Data"
               ? "opacity-70"
-              : "border-2 p-4 dark:border-white border-black"
+              : "border-2 p-4 dark:border-white border-black rounded-lg"
           )}
           onClick={() => setIsActiveService("Chart")}
         >

@@ -9,6 +9,7 @@ export const useFetchUserTraffic = ({
   RowPerPage,
   SortIndex,
   languageId,
+  ProductType
 }: UserProducts) => {
   const fetchData = async () => {
     // گرفتن توکن از کوکی
@@ -27,7 +28,7 @@ export const useFetchUserTraffic = ({
       RowPerPage,
       SortIndex,
       languageId,
-      ProductType: "t",
+      ProductType,
     };
 
     const response = await fetch(

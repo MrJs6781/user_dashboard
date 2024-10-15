@@ -66,8 +66,12 @@
   "backToLoginPage": "Back To Login Page",
   "recoverPassword": "Recover Password",
   "Education": "Tutorial",
-  "Loading" : "Loading ...",
-  "TrafficService" : "TrafficService",
-  "LastTrafficList" : "LastTrafficList",
-  "FilterBy" : "Filter By"
+  "Loading": "Loading ...",
+  "TrafficService": "TrafficService",
+  "LastTrafficList": "LastTrafficList",
+  "FilterBy": "Filter By",
+  "Shop": "Shop",
+  "buyProduct": "Buy Product",
+  "renewalProduct": "Renewal Product",
+  "buyTraffic": "Buy Traffic"
 }

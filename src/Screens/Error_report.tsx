@@ -406,7 +406,7 @@ export default function ErrorReport() {
             <li
               key={item.id}
               className={cn(
-                "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3 fade_in_animation"
+                "w-full h-[65px] flex items-start justify-start p-4 rounded-[8px] shadow-xl dark:border gap-3 fade_in_animation hover:outline-purple-800 hover:outline hover:shadow-xl"
               )}
               style={
                 {

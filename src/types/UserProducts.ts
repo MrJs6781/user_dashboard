@@ -5,6 +5,7 @@ export interface UserProducts {
   RowPerPage?: string;
   SortIndex?: string;
   languageId?: number;
+  ProductType? : string;
 }
 
 // product.ts

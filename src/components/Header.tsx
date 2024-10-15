@@ -101,6 +101,11 @@ const headerListData = [
   },
   {
     id: 10,
+    link: "/shop",
+    title: "Shop",
+  },
+  {
+    id: 11,
     title: "Exit",
   },
 ];

@@ -138,7 +138,7 @@ export default function RenewCart({
   if (isTraffic) {
     return (
       <div
-        className="w-full sm:max-w-[280px] md:max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation"
+        className="w-full sm:max-w-[280px] md:max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation hover:outline-purple-800 hover:outline hover:shadow-xl"
         style={
           {
             "--i": index + 1, // تعیین مقدار --i برای هر آیتم
@@ -195,7 +195,7 @@ export default function RenewCart({
 
   return (
     <div
-      className="w-full sm:max-w-[280px] md:max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation"
+      className="w-full sm:max-w-[280px] md:max-w-[350px] flex flex-col items-start gap-4 rounded-[12px] border fade_in_animation hover:outline-purple-800 hover:outline hover:shadow-xl"
       style={
         {
           "--i": index + 1, // تعیین مقدار --i برای هر آیتم
