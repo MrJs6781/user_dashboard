@@ -301,7 +301,12 @@ export default function Header({ username, titleName }: HeaderProps) {
               <Link
                 key={item.id}
                 to={item.link}
-                className={cn("flex items-center gap-2 cursor-pointer")}
+                className={cn(
+                  "flex items-center gap-2 cursor-pointer",
+                  pathname != item.link
+                    ? "hover:border-b-2 hover:border-purple-700 hover:pb-2"
+                    : ""
+                )}
               >
                 {item.icon}
                 <p

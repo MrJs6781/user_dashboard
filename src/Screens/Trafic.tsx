@@ -5,7 +5,7 @@ import TrafficTable from "@/components/TrafficTable";
 import { Button } from "@/components/ui/button";
 import { useFetchTrafficData } from "@/Hooks/useFetchTrafficData";
 import { cn } from "@/lib/utils";
-import { TrafficQuery, UserTrafficQuery } from "@/types/Traffic";
+import { TrafficQuery } from "@/types/Traffic";
 import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
@@ -25,18 +25,8 @@ import { useTranslation } from "react-i18next";
 import PaginationComponent from "@/components/PaginationComponent";
 import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
 import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
-import { UserProductResponse } from "@/types/UserProducts";
-import RenewCart from "@/components/RenewCart";
 import { useCategoryFetch } from "@/Hooks/useFetchCategory";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { UserRenewProductQuery } from "@/types/Renew";
 import { useFetchUserTraffic } from "@/Hooks/useFetchUserTraffic";
 
 const dashboardBoxes = [
@@ -223,15 +213,6 @@ export default function Trafic() {
   const [listSliderBox, setListSliderBox] = useState([]);
   const [dateMiladi, setDateMiladi] = useState<DateRange | undefined>();
 
-  const [isActiveService, setIsActiveService] = useState("Data");
-  const [searchTraffic, setSearchTraffic] = useState("");
-  const [userTrafficHeader, setUserTrafficHeader]: any = useState([]);
-  const [userTrafficData, setUserTrafficData] = useState([]);
-
-  const [userProductType, setUserProductType] = useState("");
-  const [categoryData, setCategoryData] = useState<any>([]);
-  const [allCategoryData, setAllCategoryData] = useState<any>([]);
-
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardDataSlider(
       +window.localStorage.getItem("ssss_language_id")!
@@ -242,11 +223,10 @@ export default function Trafic() {
       perPage,
       1
     );
-  const { isLoading: userTrafficLoading, data: userTraffic } =
-    useFetchUserTraffic({
-      languageId: +window.localStorage.getItem("ssss_language_id")!,
-      ProductType: "t",
-    });
+  const { data: userTraffic } = useFetchUserTraffic({
+    languageId: +window.localStorage.getItem("ssss_language_id")!,
+    ProductType: "t",
+  });
   const { data: fetchCategoryData } = useCategoryFetch(
     +window.localStorage.getItem("ssss_language_id")!,
     "t"
@@ -285,6 +265,7 @@ export default function Trafic() {
 
   useEffect(() => {
     if (trafficData) {
+      console.log(trafficData);
       if (trafficData.Status == 0) {
         setCurrentItems(trafficData?.Data);
         setTotalDataCount(trafficData?.TotalDataCount);
@@ -321,8 +302,8 @@ export default function Trafic() {
             arr.push(object);
           }
         });
-        setUserTrafficHeader(arr);
-        setUserTrafficData(userTraffic.Data);
+        // setUserTrafficHeader(arr);
+        // setUserTrafficData(userTraffic.Data);
       } else if (userTraffic.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -345,8 +326,8 @@ export default function Trafic() {
             arr2.push(item);
           }
         });
-        setCategoryData(arr);
-        setAllCategoryData(arr2);
+        // setCategoryData(arr);
+        // setAllCategoryData(arr2);
       } else if (fetchCategoryData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -447,138 +428,6 @@ export default function Trafic() {
         setCurrentItems(data?.Data);
         setTrafficDataTable(data?.Data);
         setTotalDataCount(data?.TotalDataCount);
-      } else {
-        toast.error(data.Message);
-      }
-      setIsShowLoading(false);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      setIsShowLoading(false);
-    },
-  });
-
-  const changeSearchTrafficHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTraffic(e.target.value);
-  };
-
-  const searchTrafficData = () => {
-    setIsShowLoading(true);
-    productMutation.mutate({
-      Query: searchTraffic,
-      Operand: "%",
-      PageNo: `${activePage}`,
-      RowPerPage: `${perPage}`,
-      SortIndex: 1,
-      LanguageID: window.localStorage.getItem("ssss_language_id")!,
-    });
-  };
-
-  const productMutation = useMutation({
-    mutationKey: ["productFilterWithQuery"],
-    mutationFn: async (MutateData: UserTrafficQuery) => {
-      const getToken = Cookies.get("authToken");
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${getToken}`);
-
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_WEB_SERVICE_DOMAIN
-        }User/Traffic/Fetch?Type=User`,
-        {
-          method: "POST",
-          headers: myHeaders,
-          redirect: "follow",
-          body: JSON.stringify(MutateData),
-        }
-      );
-      const ResponseData = response.json();
-      return ResponseData;
-    },
-    onSuccess: (data: any) => {
-      if (data.Status == "0") {
-        setUserTrafficData(data?.Data);
-      } else if (data.Status == "-103") {
-        toast.info(data.Message);
-        setTimeout(() => {
-          Cookies.remove("authToken");
-          localStorage.removeItem("UserID");
-          navigate("/");
-        }, 1000);
-      } else {
-        toast.error(data.Message);
-      }
-      setIsShowLoading(false);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      setIsShowLoading(false);
-    },
-  });
-
-  const changeSelectHandler = (event: string) => {
-    setUserProductType(event);
-    setIsShowLoading(true);
-    setUserProductType(event);
-    const findItem = allCategoryData.find((item: any) => item.Title == event);
-    if (event == "All") {
-      TrafficMutation.mutate({
-        Query: "",
-        Operand: "%",
-        ProductType: "t",
-        PageNo: `${activePage}`,
-        RowPerPage: `${perPage}`,
-        SortIndex: 1,
-        languageID: window.localStorage.getItem("ssss_language_id")!,
-      });
-    } else {
-      TrafficMutation.mutate({
-        Query: "",
-        Operand: "%",
-        ProductType: "t",
-        CategoryID: findItem?.CategoryID,
-        PageNo: `${activePage}`,
-        RowPerPage: `${perPage}`,
-        SortIndex: 1,
-        languageID: window.localStorage.getItem("ssss_language_id")!,
-      });
-    }
-  };
-
-  const TrafficMutation = useMutation({
-    mutationKey: ["productFilterWithQuery"],
-    mutationFn: async (MutateData: UserRenewProductQuery) => {
-      const getToken = Cookies.get("authToken");
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${getToken}`);
-
-      const response = await fetch(
-        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}Product/Fetch?Type=User`,
-        {
-          method: "POST",
-          headers: myHeaders,
-          redirect: "follow",
-          body: JSON.stringify(MutateData),
-        }
-      );
-      const ResponseData = response.json();
-      return ResponseData;
-    },
-    onSuccess: (data: any) => {
-      if (data.Status == "0") {
-        // console.log(data);
-        setUserTrafficData(data?.Data);
-      } else if (data.Status == "-103") {
-        toast.info(data.Message);
-        setTimeout(() => {
-          Cookies.remove("authToken");
-          localStorage.removeItem("UserID");
-          navigate("/");
-        }, 1000);
       } else {
         toast.error(data.Message);
       }
@@ -787,220 +636,108 @@ export default function Trafic() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="w-full flex items-center justify-center gap-8 flex-col sm:flex-row mt-6">
-        <h5
-          className={cn(
-            "font-vazirB text-[15px] cursor-pointer",
-            isActiveService == "Chart"
-              ? "opacity-70"
-              : "border-2 p-4 dark:border-white border-black rounded-lg"
-          )}
-          onClick={() => setIsActiveService("Data")}
-        >
-          {t("TrafficService")}
-        </h5>
-        <h5
-          className={cn(
-            "font-vazirB text-[15px] cursor-pointer",
-            isActiveService == "Data"
-              ? "opacity-70"
-              : "border-2 p-4 dark:border-white border-black rounded-lg"
-          )}
-          onClick={() => setIsActiveService("Chart")}
-        >
-          {t("LastTrafficList")}
-        </h5>
-      </div>
-      {isActiveService == "Data" ? (
-        <section className="w-[98%] mx-auto flex flex-col items-start gap-4 p-4 pt-8">
-          <div className="w-full mx-auto flex items-center justify-start gap-4 flex-wrap">
-            <Select
-              value={userProductType}
-              onValueChange={(event) => changeSelectHandler(event)}
-              dir={languageID == "1" ? "rtl" : "ltr"}
+      <div className="w-full h-auto flex flex-col items-start gap-5 px-6 overflow-y-hidden pt-8 p-4">
+        <div className="w-full flex items-center justify-start gap-6 flex-wrap">
+          <span className="w-fit flex items-center justify-start gap-2">
+            <Checkbox
+              checked={justActiveState}
+              onCheckedChange={() => {
+                setJustActiveState(!justActiveState);
+              }}
+              id="terms1"
+            />
+            <label
+              htmlFor="terms1"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              <SelectTrigger className="w-[180px] h-[56px] font-vazirM focus:ring-0 focus:ring-opacity-0">
-                <SelectValue placeholder={t("FilterBy")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem className="font-vazirM" value="All">
-                  {t("All")}
-                </SelectItem>
-                {categoryData?.map((item: string, i: number) => (
-                  <SelectItem className="font-vazirM" value={item} key={i}>
-                    {item}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
-              <input
-                type="text"
-                placeholder={t("whatAreYouLookingFor")}
-                value={searchTraffic}
-                onChange={(e) => changeSearchTrafficHandler(e)}
-                className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-search cursor-pointer"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
-            </span>
-            <Button
-              className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
-              size="lg"
-              onClick={searchTrafficData}
+              {t("DisplayOnlyActive")}
+            </label>
+          </span>
+          <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
+            <input
+              type="text"
+              placeholder={t("whatAreYouLookingFor")}
+              value={searchValue}
+              onChange={(e) => changeSearchHandler(e)}
+              className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-search cursor-pointer"
             >
-              {t("Search")}
-            </Button>
-          </div>
-          {fetchedDataLoading ||
-          trafficDataLoading ||
-          userTrafficLoading ||
-          isShowLoading ? (
-            <LottiePlayer />
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </span>
+          {languageID == "1" ? (
+            <DatePickerWithRange date={date} setDate={setDate} />
           ) : (
-            <>
-              {userTrafficData && userTrafficData.length > 0 ? (
-                <ul className="flex items-start justify-start gap-6 flex-wrap w-full mx-auto mt-8">
-                  {userTrafficData &&
-                    userTrafficData?.map(
-                      (item: UserProductResponse, i: number) => (
-                        <RenewCart
-                          key={i}
-                          data={item}
-                          index={i + 1}
-                          headerData={userTrafficHeader}
-                          isTraffic={true}
-                        />
-                      )
-                    )}
-                </ul>
-              ) : (
-                <div className="w-full h-[40vh] flex items-center justify-center">
-                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-                    {t("CantFindData")}
-                  </h5>
-                </div>
-              )}
-            </>
+            <DatePickerWithRangeMiladi
+              date={dateMiladi}
+              setDate={setDateMiladi}
+            />
           )}
-        </section>
-      ) : (
-        <div className="w-full h-auto flex flex-col items-start gap-5 px-6 overflow-y-hidden pt-8 p-4">
-          <div className="w-full flex items-center justify-start gap-6 flex-wrap">
-            <span className="w-fit flex items-center justify-start gap-2">
-              <Checkbox
-                checked={justActiveState}
-                onCheckedChange={() => {
-                  setJustActiveState(!justActiveState);
-                }}
-                id="terms1"
-              />
-              <label
-                htmlFor="terms1"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {t("DisplayOnlyActive")}
-              </label>
-            </span>
-            <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
-              <input
-                type="text"
-                placeholder={t("whatAreYouLookingFor")}
-                value={searchValue}
-                onChange={(e) => changeSearchHandler(e)}
-                className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-search cursor-pointer"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
-            </span>
-            {languageID == "1" ? (
-              <DatePickerWithRange date={date} setDate={setDate} />
-            ) : (
-              <DatePickerWithRangeMiladi
-                date={dateMiladi}
-                setDate={setDateMiladi}
-              />
-            )}
-            <Button
-              className="bg-[#a855f7] dark:bg-[#1e293b] text-white md:text-[17px]"
-              onClick={searchProductsList}
-              size="lg"
-            >
-              {t("Search")}
-            </Button>
-          </div>
-          {fetchedDataLoading || trafficDataLoading || isShowLoading ? (
-            <LottiePlayer />
-          ) : (
-            <div
-              className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col"
-              style={{ scrollbarWidth: "none" }}
-            >
-              <>
-                {trafficDataTable?.length > 0 && (
-                  <>
-                    <TrafficTable
-                      data={currentItems}
-                      headerData={trafficTableHeader}
-                      headerDataName={trafficTableHeaderName}
-                    />
-                    <PaginationComponent
-                      perPage={perPage}
-                      setCurrentItems={setCurrentItems}
-                      setPerPage={setPerPage}
-                      TotalDataCount={TotalDataCount}
-                      TotalPageCount={TotalPageCount}
-                      setIsShowLoading={setIsShowLoading}
-                      setTotalPageCount={setTotalPageCount}
-                      activePage={activePage}
-                      setActivePage={setActivePage}
-                      date={languageID == "1" ? date : dateMiladi}
-                      Query={searchValue}
-                      domainInput="User/Traffic/Fetch?Type=User"
-                    />
-                  </>
-                )}
-                {trafficDataTable?.length == 0 &&
-                  fetchedDataLoading == false &&
-                  trafficDataLoading == false &&
-                  isShowLoading == false && (
-                    <div className="w-full h-[50vh] flex items-center justify-center">
-                      <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-                        {t("CantFindData")}
-                      </h5>
-                    </div>
-                  )}
-              </>
-            </div>
-          )}
+          <Button
+            className="bg-[#a855f7] dark:bg-[#1e293b] text-white md:text-[17px]"
+            onClick={searchProductsList}
+            size="lg"
+          >
+            {t("Search")}
+          </Button>
         </div>
-      )}
+        {fetchedDataLoading || trafficDataLoading || isShowLoading ? (
+          <LottiePlayer />
+        ) : (
+          <div
+            className="w-full flex items-center justify-center overflow-x-scroll min-w-[800px] flex-col"
+            style={{ scrollbarWidth: "none" }}
+          >
+            <>
+              {trafficDataTable?.length > 0 && (
+                <>
+                  <TrafficTable
+                    data={currentItems}
+                    headerData={trafficTableHeader}
+                    headerDataName={trafficTableHeaderName}
+                  />
+                  <PaginationComponent
+                    perPage={perPage}
+                    setCurrentItems={setCurrentItems}
+                    setPerPage={setPerPage}
+                    TotalDataCount={TotalDataCount}
+                    TotalPageCount={TotalPageCount}
+                    setIsShowLoading={setIsShowLoading}
+                    setTotalPageCount={setTotalPageCount}
+                    activePage={activePage}
+                    setActivePage={setActivePage}
+                    date={languageID == "1" ? date : dateMiladi}
+                    Query={searchValue}
+                    domainInput="User/Traffic/Fetch?Type=User"
+                  />
+                </>
+              )}
+              {trafficDataTable?.length == 0 &&
+                fetchedDataLoading == false &&
+                trafficDataLoading == false &&
+                isShowLoading == false && (
+                  <div className="w-full h-[50vh] flex items-center justify-center">
+                    <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                      {t("CantFindData")}
+                    </h5>
+                  </div>
+                )}
+            </>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

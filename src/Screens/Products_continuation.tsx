@@ -1,20 +1,18 @@
 import { DatePickerWithRange } from "@/components/DatePickerWithJalaliRange";
 import Header from "@/components/Header";
 import LottiePlayer from "@/components/Loading";
-import RenewCart from "@/components/RenewCart";
 import RenewTable from "@/components/RenewTable";
 import { Button } from "@/components/ui/button";
 import { useFetchRenew } from "@/Hooks/useFetchRenew";
 import { useFetchUserProducts } from "@/Hooks/useFetchUserProducts";
 import { cn } from "@/lib/utils";
-import { UserProductResponse } from "@/types/UserProducts";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { DateRange } from "react-day-picker";
 import { useMutation } from "@tanstack/react-query";
-import { UserRenewProductQuery, UserRenewQuery } from "@/types/Renew";
+import { UserRenewQuery } from "@/types/Renew";
 import dayjs from "dayjs";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -28,13 +26,6 @@ import PaginationComponent from "@/components/PaginationComponent";
 import { DatePickerWithRangeMiladi } from "@/components/DatePickerWithRange";
 import { useFetchDashboardDataSlider } from "@/Hooks/useFetchDashboardDataSlider";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useCategoryFetch } from "@/Hooks/useFetchCategory";
 
 const dashboardBoxes = [
@@ -204,10 +195,7 @@ const dashboardBoxes = [
 export default function Products_continuation() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [userProductsData, setUserProductsData] = useState([]);
-  const [searchProduct, setSearchProduct] = useState("");
   const [searchValue, setSearchValue] = useState("");
-  const [isActiveService, setIsActiveService] = useState("Data");
   const [date, setDate] = useState<DateRange | undefined>();
   const [userRenewDataTable, setUserRenewDataTable] = useState([]);
   const [listSliderBox, setListSliderBox] = useState([]);
@@ -236,17 +224,12 @@ export default function Products_continuation() {
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [renewTableHeader, setRenewTableHeader]: any = useState([]);
   const [renewTableHeaderName, setRenewTableHeaderName]: any = useState([]);
-  const [userProductsHeader, setUserProductsHeader]: any = useState([]);
   const [TotalDataCount, setTotalDataCount] = useState(0);
 
   const [TotalPageCount, setTotalPageCount] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const [languageID, setLanguageID] = useState("1");
   const [dateMiladi, setDateMiladi] = useState<DateRange | undefined>();
-  const [userProductType, setUserProductType] = useState("");
-
-  const [categoryData, setCategoryData] = useState<any>([]);
-  const [allCategoryData, setAllCategoryData] = useState<any>([]);
 
   useEffect(() => {
     if (window.localStorage.getItem("ssss_language_id")) {
@@ -296,8 +279,8 @@ export default function Products_continuation() {
             arr.push(object);
           }
         });
-        setUserProductsHeader(arr);
-        setUserProductsData(userProducts.Data);
+        // setUserProductsHeader(arr);
+        // setUserProductsData(userProducts.Data);
       } else if (userProducts.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -342,8 +325,8 @@ export default function Products_continuation() {
             arr2.push(item);
           }
         });
-        setCategoryData(arr);
-        setAllCategoryData(arr2);
+        // setCategoryData(arr);
+        // setAllCategoryData(arr2);
       } else if (fetchCategoryData.Status == "-103") {
         Cookies.remove("authToken");
         localStorage.removeItem("UserID");
@@ -357,10 +340,6 @@ export default function Products_continuation() {
 
   const changeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-  };
-
-  const changeSearchProductHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchProduct(e.target.value);
   };
 
   const searchProductsList = () => {
@@ -447,89 +426,6 @@ export default function Products_continuation() {
         setCurrentItems(data?.Data);
         setUserRenewDataTable(data?.Data);
         setTotalDataCount(data?.TotalDataCount);
-      } else if (data.Status == "-103") {
-        toast.info(data.Message);
-        setTimeout(() => {
-          Cookies.remove("authToken");
-          localStorage.removeItem("UserID");
-          navigate("/");
-        }, 1000);
-      } else {
-        toast.error(data.Message);
-      }
-      setIsShowLoading(false);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      setIsShowLoading(false);
-    },
-  });
-
-  const searchProductsData = () => {
-    setIsShowLoading(true);
-    mutation.mutate({
-      Query: searchProduct,
-      Operand: "%",
-      PageNo: `${activePage}`,
-      RowPerPage: `${perPage}`,
-      SortIndex: 1,
-      languageID: window.localStorage.getItem("ssss_language_id")!,
-    });
-  };
-
-  const changeSelectHandler = (event: string) => {
-    setIsShowLoading(true);
-    setUserProductType(event);
-    const findItem = allCategoryData.find((item: any) => item.Title == event);
-    if (event == "All") {
-      productMutation.mutate({
-        Query: "",
-        Operand: "%",
-        PageNo: `${activePage}`,
-        ProductType : "r",
-        RowPerPage: `${perPage}`,
-        SortIndex: 1,
-        languageID: window.localStorage.getItem("ssss_language_id")!,
-      });
-    } else {
-      productMutation.mutate({
-        Query: "",
-        Operand: "%",
-        CategoryID: findItem?.CategoryID,
-        ProductType : "r",
-        PageNo: `${activePage}`,
-        RowPerPage: `${perPage}`,
-        SortIndex: 1,
-        languageID: window.localStorage.getItem("ssss_language_id")!,
-      });
-    }
-  };
-
-  const productMutation = useMutation({
-    mutationKey: ["productFilterWithQueryTraffic"],
-    mutationFn: async (MutateData: UserRenewProductQuery) => {
-      const getToken = Cookies.get("authToken");
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${getToken}`);
-
-      const response = await fetch(
-        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}Product/Fetch?Type=User`,
-        {
-          method: "POST",
-          headers: myHeaders,
-          redirect: "follow",
-          body: JSON.stringify(MutateData),
-        }
-      );
-      const ResponseData = response.json();
-      return ResponseData;
-    },
-    onSuccess: (data: any) => {
-      if (data.Status == "0") {
-        // console.log(data)
-        setUserProductsData(data?.Data);
       } else if (data.Status == "-103") {
         toast.info(data.Message);
         setTimeout(() => {
@@ -746,204 +642,96 @@ export default function Products_continuation() {
         ))}
       </Swiper>
       <div className="w-full h-auto mt-8 flex flex-col items-start px-6 overflow-y-hidden">
-        <div className="w-full flex items-center justify-center gap-8 flex-col sm:flex-row">
-          <h5
-            className={cn(
-              "font-vazirB text-[15px] cursor-pointer",
-              isActiveService == "Chart"
-                ? "opacity-70"
-                : "border-2 p-4 dark:border-white border-black"
-            )}
-            onClick={() => setIsActiveService("Data")}
-          >
-            {t("RenewService")}
-          </h5>
-          <h5
-            className={cn(
-              "font-vazirB text-[15px] cursor-pointer",
-              isActiveService == "Data"
-                ? "opacity-70"
-                : "border-2 p-4 dark:border-white border-black"
-            )}
-            onClick={() => setIsActiveService("Chart")}
-          >
-            {t("LastRenewList")}
-          </h5>
-        </div>
-        {isActiveService == "Data" ? (
-          <section className="w-full flex flex-col items-start gap-4 p-4 pt-8">
-            <div className="w-full flex items-center justify-start gap-4 flex-wrap">
-              <Select
-                value={userProductType}
-                onValueChange={(event) => changeSelectHandler(event)}
-                dir={languageID == "1" ? "rtl" : "ltr"}
+        <section className="w-full flex flex-col items-start gap-4 p-4">
+          <div className="w-full flex items-center justify-start gap-6 flex-wrap">
+            <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
+              <input
+                type="text"
+                placeholder={t("whatAreYouLookingFor")}
+                value={searchValue}
+                onChange={(e) => changeSearchHandler(e)}
+                className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px]"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-search cursor-pointer"
               >
-                <SelectTrigger className="w-[180px] h-[56px] font-vazirM focus:ring-0 focus:ring-opacity-0">
-                  <SelectValue placeholder={t("FilterBy")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem className="font-vazirM" value="All">
-                    {t("All")}
-                  </SelectItem>
-                  {categoryData?.map((item: string, i: number) => (
-                    <SelectItem className="font-vazirM" value={item} key={i}>
-                      {item}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
-                <input
-                  type="text"
-                  placeholder={t("whatAreYouLookingFor")}
-                  value={searchProduct}
-                  onChange={(e) => changeSearchProductHandler(e)}
-                  className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
-                />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-search cursor-pointer"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.3-4.3" />
-                </svg>
-              </span>
-              <Button
-                className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
-                size="lg"
-                onClick={searchProductsData}
-              >
-                {t("Search")}
-              </Button>
-            </div>
-            {fetchedDataLoading ||
-            userProductsLoading ||
-            userRenewLoading ||
-            isShowLoading ? (
-              <LottiePlayer />
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </span>
+            {languageID == "1" ? (
+              <DatePickerWithRange date={date} setDate={setDate} />
             ) : (
-              <>
-                {userProductsData && userProductsData.length > 0 ? (
-                  <ul className="flex items-start justify-start gap-6 flex-wrap mt-4 w-full">
-                    {userProductsData &&
-                      userProductsData?.map(
-                        (item: UserProductResponse, i: number) => (
-                          <RenewCart
-                            key={i}
-                            data={item}
-                            index={i + 1}
-                            headerData={userProductsHeader}
-                          />
-                        )
-                      )}
-                  </ul>
-                ) : (
-                  <div className="w-full h-[40vh] flex items-center justify-center">
-                    <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-                      {t("CantFindData")}
-                    </h5>
-                  </div>
-                )}
-              </>
+              <DatePickerWithRangeMiladi
+                date={dateMiladi}
+                setDate={setDateMiladi}
+              />
             )}
-          </section>
-        ) : (
-          <section className="w-full flex flex-col items-start gap-4 p-4 pt-8">
-            <div className="w-full flex items-center justify-start gap-6 flex-wrap">
-              <span className="w-full max-w-[400px] h-[56px] flex items-center justify-between border px-4 rounded-[12px] outline-none">
-                <input
-                  type="text"
-                  placeholder={t("whatAreYouLookingFor")}
-                  value={searchValue}
-                  onChange={(e) => changeSearchHandler(e)}
-                  className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px]"
-                />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-search cursor-pointer"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.3-4.3" />
-                </svg>
-              </span>
-              {languageID == "1" ? (
-                <DatePickerWithRange date={date} setDate={setDate} />
-              ) : (
-                <DatePickerWithRangeMiladi
-                  date={dateMiladi}
-                  setDate={setDateMiladi}
-                />
+            <Button
+              className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
+              size="lg"
+              onClick={searchProductsList}
+            >
+              {t("Search")}
+            </Button>
+          </div>
+          {fetchedDataLoading ||
+          userProductsLoading ||
+          userRenewLoading ||
+          isShowLoading ? (
+            <LottiePlayer />
+          ) : (
+            <div
+              className="w-full flex items-center justify-center overflow-x-scroll min-w-[1200px] flex-col"
+              style={{ scrollbarWidth: "none" }}
+            >
+              {userRenewDataTable && userRenewDataTable?.length > 0 && (
+                <>
+                  <RenewTable
+                    data={currentItems}
+                    headerData={renewTableHeader}
+                    headerDataName={renewTableHeaderName}
+                  />
+                  <PaginationComponent
+                    perPage={perPage}
+                    setCurrentItems={setCurrentItems}
+                    setPerPage={setPerPage}
+                    TotalDataCount={TotalDataCount}
+                    TotalPageCount={TotalPageCount}
+                    setIsShowLoading={setIsShowLoading}
+                    setTotalPageCount={setTotalPageCount}
+                    activePage={activePage}
+                    setActivePage={setActivePage}
+                    date={languageID == "1" ? date : dateMiladi}
+                    Query={searchValue}
+                    domainInput="User/Renew/Fetch?Type=User"
+                  />
+                </>
               )}
-              <Button
-                className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
-                size="lg"
-                onClick={searchProductsList}
-              >
-                {t("Search")}
-              </Button>
             </div>
-            {fetchedDataLoading ||
-            userProductsLoading ||
-            userRenewLoading ||
-            isShowLoading ? (
-              <LottiePlayer />
-            ) : (
-              <div className="w-full flex items-center justify-center overflow-x-scroll min-w-[1200px] flex-col" style={{scrollbarWidth : "none"}}>
-                {userRenewDataTable && userRenewDataTable?.length > 0 && (
-                  <>
-                    <RenewTable
-                      data={currentItems}
-                      headerData={renewTableHeader}
-                      headerDataName={renewTableHeaderName}
-                    />
-                    <PaginationComponent
-                      perPage={perPage}
-                      setCurrentItems={setCurrentItems}
-                      setPerPage={setPerPage}
-                      TotalDataCount={TotalDataCount}
-                      TotalPageCount={TotalPageCount}
-                      setIsShowLoading={setIsShowLoading}
-                      setTotalPageCount={setTotalPageCount}
-                      activePage={activePage}
-                      setActivePage={setActivePage}
-                      date={languageID == "1" ? date : dateMiladi}
-                      Query={searchValue}
-                      domainInput="User/Renew/Fetch?Type=User"
-                    />
-                  </>
-                )}
+          )}
+          {userRenewDataTable &&
+            userRenewDataTable?.length == 0 &&
+            fetchedDataLoading == false &&
+            userProductsLoading == false &&
+            userRenewLoading == false &&
+            isShowLoading == false && (
+              <div className="w-full h-[50vh] flex items-center justify-center">
+                <h5 className="text-[15px] sm:text-[18px] font-vazirM">
+                  {t("CantFindData")}
+                </h5>
               </div>
             )}
-            {userRenewDataTable &&
-              userRenewDataTable?.length == 0 &&
-              fetchedDataLoading == false &&
-              userProductsLoading == false &&
-              userRenewLoading == false &&
-              isShowLoading == false && (
-                <div className="w-full h-[50vh] flex items-center justify-center">
-                  <h5 className="text-[15px] sm:text-[18px] font-vazirM">
-                    {t("CantFindData")}
-                  </h5>
-                </div>
-              )}
-          </section>
-        )}
+        </section>
       </div>
     </div>
   );

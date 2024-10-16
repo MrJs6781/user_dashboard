@@ -55,6 +55,7 @@ const PaginationComponent: React.FC<{
   }, []);
 
   useEffect(() => {
+    console.log(TotalPageCount)
     let arr = [];
     for (let index = 1; index <= TotalPageCount; index++) {
       arr.push(index);

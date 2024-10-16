@@ -3,7 +3,6 @@ import LottiePlayer from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { useFetchTrafficData } from "@/Hooks/useFetchTrafficData";
 import { cn } from "@/lib/utils";
-import { UserTrafficQuery } from "@/types/Traffic";
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -197,13 +196,16 @@ export default function Shop() {
   const [languageID, setLanguageID] = useState("1");
 
   const [isActiveService, setIsActiveService] = useState("renewalProduct");
-  const [searchTraffic, setSearchTraffic] = useState("");
   const [userTrafficHeader, setUserTrafficHeader]: any = useState([]);
   const [userTrafficData, setUserTrafficData] = useState([]);
 
   const [userProductType, setUserProductType] = useState("");
   const [categoryData, setCategoryData] = useState<any>([]);
   const [allCategoryData, setAllCategoryData] = useState<any>([]);
+
+  const [searchBuyProduct, setSearchBuyProduct] = useState("");
+  const [searchRenewalProduct, setSearchRenewalProduct] = useState("");
+  const [searchTraffic, setSearchTraffic] = useState("");
 
   const { data: fetchedData, isLoading: fetchedDataLoading } =
     useFetchDashboardDataSlider(
@@ -309,57 +311,14 @@ export default function Shop() {
 
   const searchTrafficData = () => {
     setIsShowLoading(true);
-    productMutation.mutate({
+    TrafficMutation.mutate({
       Query: searchTraffic,
       Operand: "%",
+      ProductType: "o",
       SortIndex: 1,
-      LanguageID: window.localStorage.getItem("ssss_language_id")!,
+      languageID: window.localStorage.getItem("ssss_language_id")!,
     });
   };
-
-  const productMutation = useMutation({
-    mutationKey: ["productFilterWithQuery"],
-    mutationFn: async (MutateData: UserTrafficQuery) => {
-      const getToken = Cookies.get("authToken");
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${getToken}`);
-
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_WEB_SERVICE_DOMAIN
-        }User/Traffic/Fetch?Type=User`,
-        {
-          method: "POST",
-          headers: myHeaders,
-          redirect: "follow",
-          body: JSON.stringify(MutateData),
-        }
-      );
-      const ResponseData = response.json();
-      return ResponseData;
-    },
-    onSuccess: (data: any) => {
-      if (data.Status == "0") {
-        setUserTrafficData(data?.Data);
-      } else if (data.Status == "-103") {
-        toast.info(data.Message);
-        setTimeout(() => {
-          Cookies.remove("authToken");
-          localStorage.removeItem("UserID");
-          navigate("/");
-        }, 1000);
-      } else {
-        toast.error(data.Message);
-      }
-      setIsShowLoading(false);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      setIsShowLoading(false);
-    },
-  });
 
   const changeSelectHandler = (event: string, type: string) => {
     setUserProductType(event);
@@ -504,6 +463,38 @@ export default function Shop() {
     });
   };
 
+  const changeSearchBuyProductHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchBuyProduct(e.target.value);
+  };
+
+  const changeSearchRenewalProductHandler = (
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchRenewalProduct(e.target.value);
+  };
+
+  const searchProductHandler = () => {
+    setIsShowLoading(true);
+    TrafficMutation.mutate({
+      Query: searchBuyProduct,
+      Operand: "%",
+      ProductType: "t",
+      SortIndex: 1,
+      languageID: window.localStorage.getItem("ssss_language_id")!,
+    });
+  };
+
+  const searchRenewalHandler = () => {
+    setIsShowLoading(true);
+    TrafficMutation.mutate({
+      Query: searchRenewalProduct,
+      Operand: "%",
+      ProductType: "r",
+      SortIndex: 1,
+      languageID: window.localStorage.getItem("ssss_language_id")!,
+    });
+  };
+
   return (
     <div className="w-full h-auto overflow-auto flex flex-col items-start mb-12">
       <Header
@@ -571,8 +562,8 @@ export default function Shop() {
               <input
                 type="text"
                 placeholder={t("whatAreYouLookingFor")}
-                value={searchTraffic}
-                onChange={(e) => changeSearchTrafficHandler(e)}
+                value={searchBuyProduct}
+                onChange={(e) => changeSearchBuyProductHandler(e)}
                 className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
               />
               <svg
@@ -594,7 +585,7 @@ export default function Shop() {
             <Button
               className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
               size="lg"
-              onClick={searchTrafficData}
+              onClick={searchProductHandler}
             >
               {t("Search")}
             </Button>
@@ -658,8 +649,8 @@ export default function Shop() {
               <input
                 type="text"
                 placeholder={t("whatAreYouLookingFor")}
-                value={searchTraffic}
-                onChange={(e) => changeSearchTrafficHandler(e)}
+                value={searchRenewalProduct}
+                onChange={(e) => changeSearchRenewalProductHandler(e)}
                 className="w-[90%] h-full border-none outline-none text-[14px] font-semibold bg-transparent placeholder:text-[13px] font-vazirS"
               />
               <svg
@@ -681,7 +672,7 @@ export default function Shop() {
             <Button
               className="bg-[#a855f7] dark:bg-[#1e293b] text-white text-[17px]"
               size="lg"
-              onClick={searchTrafficData}
+              onClick={searchRenewalHandler}
             >
               {t("Search")}
             </Button>
