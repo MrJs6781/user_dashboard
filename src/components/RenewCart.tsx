@@ -161,6 +161,8 @@ export default function RenewCart({
               name != "ImageUrl" &&
               name != "CategoryTitle" &&
               name != "GroupTraffic" &&
+              name != "RenewFi" &&
+              name != "Traffic" &&
               // name != "Fi" &&
               name != "GroupTitle"
             ) {
@@ -216,6 +218,7 @@ export default function RenewCart({
               name != "ImageUrl" &&
               name != "CategoryTitle" &&
               name != "GroupTraffic" &&
+              name != "RenewFi" &&
               // name != "Fi" &&
               name != "GroupTitle"
             ) {
