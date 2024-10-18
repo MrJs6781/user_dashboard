@@ -509,7 +509,7 @@ export default function Shop() {
               ? "border-2 p-4 border-purple-700 rounded-lg"
               : "opacity-70"
           )}
-          onClick={() => changeTabHandler("buyProduct", "t")}
+          onClick={() => changeTabHandler("buyProduct", "o")}
         >
           {t("buyProduct")}
         </h5>
@@ -531,7 +531,7 @@ export default function Shop() {
               ? "border-2 p-4 border-purple-700 rounded-lg"
               : "opacity-70"
           )}
-          onClick={() => changeTabHandler("buyTraffic", "o")}
+          onClick={() => changeTabHandler("buyTraffic", "t")}
         >
           {t("buyTraffic")}
         </h5>
@@ -607,7 +607,7 @@ export default function Shop() {
                           data={item}
                           index={i + 1}
                           headerData={userTrafficHeader}
-                          isTraffic={true}
+                          isBuyProduct={true}
                         />
                       )
                     )}
@@ -694,7 +694,6 @@ export default function Shop() {
                           data={item}
                           index={i + 1}
                           headerData={userTrafficHeader}
-                          isTraffic={true}
                         />
                       )
                     )}

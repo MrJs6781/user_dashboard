@@ -73,5 +73,6 @@
   "Shop": "Shop",
   "buyProduct": "Buy Product",
   "renewalProduct": "Renewal Product",
-  "buyTraffic": "Buy Traffic"
+  "buyTraffic": "Buy Traffic",
+  "buy" : "Buy"
 }
