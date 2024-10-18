@@ -258,6 +258,9 @@ export default function Shop() {
   useEffect(() => {
     if (userTraffic) {
       if (userTraffic.Status == 0) {
+        // console.log(userTraffic)
+        // console.log(userTraffic.Name)
+        // console.log(userTraffic.Title)
         let arr: any = [];
         userTraffic?.Title.split(",")?.map((renewData: string, i: number) => {
           if (renewData.length > 0) {
@@ -268,6 +271,7 @@ export default function Shop() {
             arr.push(object);
           }
         });
+        // console.log(arr)
         setUserTrafficHeader(arr);
         setUserTrafficData(userTraffic.Data);
       } else if (userTraffic.Status == "-103") {

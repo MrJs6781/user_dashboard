@@ -28,6 +28,7 @@ export default function RenewCart({
   const [languageID, setLanguageID] = useState("1");
 
   useEffect(() => {
+    // console.log(data)
     if (window.localStorage.getItem("ssss_language_id")) {
       setLanguageID(window.localStorage.getItem("ssss_language_id")!);
     }
@@ -147,22 +148,20 @@ export default function RenewCart({
           } as React.CSSProperties
         }
       >
-        <img
-          src={
-            (data as any)["ImageUrl"]
-              ? (data as any)["ImageUrl"]
-              : "/public/product_image.jpg"
-          }
-          alt="Image"
-          className="w-full h-full max-h-[150px] min-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
-        />
-        <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
+        {(data as any)["ImageUrl"] && (
+          <img
+            src={(data as any)["ImageUrl"]}
+            alt="Image"
+            className="w-full h-full max-h-[150px] min-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
+          />
+        )}
+        <ul className={cn("w-full h-full flex flex-col items-start gap-4 px-2 pb-4" , (data as any)["ImageUrl"] ? "" : "mt-4")}>
           {headerData?.map(({ name, title }, i) => {
             if (
               name != "ImageUrl" &&
               name != "CategoryTitle" &&
               name != "GroupTraffic" &&
-              name != "Fi" &&
+              // name != "Fi" &&
               name != "GroupTitle"
             ) {
               return (
@@ -204,22 +203,20 @@ export default function RenewCart({
           } as React.CSSProperties
         }
       >
-        <img
-          src={
-            (data as any)["ImageUrl"]
-              ? (data as any)["ImageUrl"]
-              : "/public/product_image.jpg"
-          }
-          alt="Image"
-          className="w-full h-full max-h-[150px] min-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
-        />
-        <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
+        {(data as any)["ImageUrl"] && (
+          <img
+            src={(data as any)["ImageUrl"]}
+            alt="Image"
+            className="w-full h-full max-h-[150px] min-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
+          />
+        )}
+        <ul className={cn("w-full h-full flex flex-col items-start gap-4 px-2 pb-4" , (data as any)["ImageUrl"] ? "" : "mt-4")}>
           {headerData?.map(({ name, title }, i) => {
             if (
               name != "ImageUrl" &&
               name != "CategoryTitle" &&
               name != "GroupTraffic" &&
-              name != "Fi" &&
+              // name != "Fi" &&
               name != "GroupTitle"
             ) {
               return (
@@ -261,22 +258,20 @@ export default function RenewCart({
         } as React.CSSProperties
       }
     >
-      <img
-        src={
-          (data as any)["ImageUrl"]
-            ? (data as any)["ImageUrl"]
-            : "/public/product_image.jpg"
-        }
-        alt="Image"
-        className="w-full h-full max-h-[150px] min-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
-      />
-      <ul className="w-full h-full flex flex-col items-start gap-4 px-2 pb-4">
+      {(data as any)["ImageUrl"] && (
+        <img
+          src={(data as any)["ImageUrl"]}
+          alt="Image"
+          className="w-full h-full max-h-[150px] min-h-[150px] object-cover bg-no-repeat rounded-tr-[12px] rounded-tl-[12px]"
+        />
+      )}
+        <ul className={cn("w-full h-full flex flex-col items-start gap-4 px-2 pb-4" , (data as any)["ImageUrl"] ? "" : "mt-4")}>
         {headerData?.map(({ name, title }, i) => {
           if (
             name != "ImageUrl" &&
             name != "CategoryTitle" &&
             name != "Fi" &&
-            name != "Traffic" &&
+            // name != "Traffic" &&
             name != "GroupTitle"
           ) {
             return (
