@@ -16,6 +16,7 @@ export interface LoginResponse {
 export interface LoginData {
   UserName: string;
   Password: string;
+  StaticToken: string;
   DeviceID?: string;
   Info?: string;
   languageID?: string;
