@@ -81,8 +81,8 @@ export default function Login() {
     mutationKey: ["loginKey"],
     mutationFn: async (data: LoginData) => {
       const response = await axios.post(
-        `/api/User/Login?Type=User`,
-        data
+        `http://test.cloudius.co/api/User/Login?Type=User`,
+        data,
       );
       return response.data;
     },
