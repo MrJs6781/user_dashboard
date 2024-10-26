@@ -81,7 +81,7 @@ export default function Login() {
     mutationKey: ["loginKey"],
     mutationFn: async (data: LoginData) => {
       const response = await axios.post(
-        `${import.meta.env.VITE_WEB_SERVICE_DOMAIN}api/User/Login?Type=User`,
+        `/api/User/Login?Type=User`,
         data
       );
       return response.data;
