@@ -71,7 +71,7 @@ export default function Login() {
     mutation.mutate({
       UserName: username,
       Password: password,
-      StaticToken : "#3F428B645C374B4882E7BD561F3E6BA6#",
+      StaticToken : import.meta.env.VITE_WEB_SERVICE_STATICTOKEN,
       DeviceID: "",
       Info: "",
       languageID: window.localStorage.getItem("ssss_language_id")!,
